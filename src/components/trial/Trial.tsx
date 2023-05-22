@@ -1,9 +1,11 @@
+import './style.css'
+
 const Trial = () => {
   return (
-    <a href="#" className="button">
-      <span className="m-5">ここに好きな文字</span>
-      <span className="highlight"></span>
-    </a>
+    <button className="button">
+      <span className="button-highlight"></span>
+      <span className="button-text">text</span>
+    </button>
   );
 };
 
