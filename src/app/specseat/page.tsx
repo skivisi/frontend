@@ -1,5 +1,4 @@
 'use client';
-import Image from 'next/image';
 import '../globals.css';
 import styles from './style.module.css';
 import Button from '@/components/specseat/button';
@@ -12,15 +11,14 @@ function handleBlur() {
 
 function Home() {
   return (
-    <section className="bg-blue-200 text-sky-900 max-w-4xl p-10 my-10 shadow-xl">
-      <h2 className="text-3xl font-bold mb-5">スペックシート登録</h2>
+    <section className=" bg-blue-200 text-sky-900 max-w-4xl p-10 my-10 shadow-xl">
+      <h2 className={`${styles.font} drop-shadow-white text-3xl font-bold mb-5`}>スペックシート登録</h2>
       <form action="/">
         <div>
           <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
             <label className="bg-slate-200 block w-1/4 p-1" htmlFor="stuff">
               スタッフID
             </label>
-            {/* className={`${Noto_Sans_JP_normal.className} flex justify-center`} */}
             <input
               className={`${styles.focus} block w-3/4 p-2`}
               id="stuff"

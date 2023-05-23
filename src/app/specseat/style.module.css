@@ -1,6 +1,9 @@
-
 .focus:focus {
-  border: 2px solid #EE0701;
+  border: 2px solid #ee0701;
   border-radius: 6px;
   outline: 0;
 }
+/* 
+.font {
+  text-shadow: 2px 2px 2px #fff;
+} */
