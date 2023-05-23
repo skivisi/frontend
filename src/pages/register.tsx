@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import '../styles/globals.css'
 
 const Register = () => {
   // 入社年月選択の記述
@@ -12,7 +13,7 @@ const Register = () => {
 
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-blue-50">
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             パワプロに登録☝️
@@ -88,7 +89,12 @@ const Register = () => {
                   <option value="" disabled selected hidden>
                     所属
                   </option>
-                  <option value="エンジニア">エンジニア</option>
+                  <option value="FR">FR</option>
+                  <option value="JAVA">JAVA</option>
+                  <option value="QA">QA</option>
+                  <option value="ML">ML</option>
+                  <option value="CL">CL</option>
+                  <option value="PHP">PHP</option>
                   <option value="営業">営業</option>
                 </select>
               </div>
