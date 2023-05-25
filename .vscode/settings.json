@@ -3,7 +3,9 @@
         "emali",
         "Maru",
         "qiita",
-        "skivisi"
+        "skillview",
+        "skivisi",
+        "specview"
     ],
     "search.useIgnoreFiles": false
 }
