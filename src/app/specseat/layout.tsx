@@ -16,8 +16,8 @@ const maru = Zen_Maru_Gothic({
 });
 
 export const metadata = {
-  title: 'PDF出力',
-  description: 'スペックシートをPDFとして出力します',
+  title: 'スペックシート編集',
+  description: 'スペックシートの編集画面です',
 };
 
 export default function SpecSeatEditLayout({

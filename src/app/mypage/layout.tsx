@@ -8,8 +8,8 @@ const Noto_Sans_JP_normal = Noto_Sans_JP({
 });
 
 export const metadata = {
-  title: 'PDF出力',
-  description: 'スペックシートをPDFとして出力します',
+  title: 'マイページ',
+  description: 'マイページです',
 };
 
 export default function SpecSeatEditLayout({

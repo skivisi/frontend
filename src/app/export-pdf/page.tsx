@@ -56,7 +56,7 @@ const offHours =
 function Home() {
   return (
     <section className="bg-blue-200 text-sky-900 max-w-4xl p-10 my-10 shadow-xl">
-      <h2 className="text-3xl font-bold mb-5">
+      <h2 className="text-3xl font-bold mb-5 drop-shadow-white">
         スペックシートをエクスポート(PDF化)
       </h2>
       <p className="mb-3">
@@ -64,20 +64,15 @@ function Home() {
       </p>
       <form action="/">
         <div>
-          <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label
-              className="bg-slate-200 block w-1/4 p-1"
-              htmlFor="stuff"
-            >
-              スタッフID
-            </label>
-            <input
-              className="block w-3/4 p-2"
-              id="stuff"
-              type="text"
-              readOnly
-              defaultValue={`${`職種`}-204-${'社員番号'}`}
-            />
+          <div className="w-1/2 flex border-2 border-slate-300 mt-2 ml-5 h-10 shadow-md">
+          <div
+            className="bg-slate-200 block w-1/2 p-1"
+          >
+            スタッフID
+          </div>
+          <div className="block w-1/2 p-2 bg-white">
+            {`${`職種`}-204-${'社員番号'}`}
+            </div>
           </div>
           <div className="">
             <h3 className="mt-10 text-xl font-bold">
@@ -108,7 +103,7 @@ function Home() {
         <div>
           <h3 className="mt-10 text-xl font-bold">スキル要約</h3>
 
-          <div className="mt-4">
+          <div className="mt-4 ml-5">
             {Object.entries(skillSummary).map(([key, value]) => (
               <div
                 key={key}
