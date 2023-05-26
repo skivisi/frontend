@@ -2,7 +2,7 @@
 
 ```bash
 git clone git@github.com:skivisi/frontend.git
-npm install
 cd frontend
+npm install
 npm run dev
 ```
