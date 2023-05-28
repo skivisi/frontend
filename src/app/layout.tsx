@@ -1,11 +1,17 @@
 import './globals.css';
-import { Noto_Sans_JP } from 'next/font/google';
+import { Noto_Sans_JP, Kosugi_Maru } from 'next/font/google';
 
-const Noto_Sans_JP_normal = Noto_Sans_JP({
-  weight: ['400','700'],
+const noto = Noto_Sans_JP({
+  weight: ['400', '700'],
+  subsets: ['latin'],
+  variable: '--font-noto',
   display: 'swap',
-  subsets: ["latin"],
-  preload: false,
+});
+const kosugi = Kosugi_Maru({
+  weight: ['400'],
+  subsets: ['latin'],
+  variable: '--font-kosugi',
+  display: 'swap',
 });
 
 export const metadata = {
@@ -21,7 +27,11 @@ export default function RootLayout({
   return (
     <>
       <html lang="ja">
-        <body className={Noto_Sans_JP_normal.className}>{children}</body>
+        <body
+          className={`${kosugi.variable} ${noto.variable} font-noto`}
+        >
+          {children}
+        </body>
       </html>
     </>
   );

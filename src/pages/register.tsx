@@ -76,7 +76,7 @@ const Register = () => {
                   selected={selectedDate}
                   onChange={handleDateChange}
                   showMonthYearPicker
-                  placeholderText="入社年月" 
+                  placeholderText="入社年月"
                 />
               </div>
             </div>
@@ -162,7 +162,6 @@ const Register = () => {
       </div>
     </>
   );
-}
-
+};
 
 export default Register;

@@ -1,11 +1,14 @@
 {
-    "cSpell.words": [
-        "emali",
-        "Maru",
-        "qiita",
-        "skillview",
-        "skivisi",
-        "specview"
-    ],
-    "search.useIgnoreFiles": false
+  "cSpell.words": [
+    "emali",
+    "kosugi",
+    "Maru",
+    "noto",
+    "qiita",
+    "skillview",
+    "skivisi",
+    "specseat",
+    "specview"
+  ],
+  "search.useIgnoreFiles": false
 }

@@ -12,11 +12,16 @@ function handleBlur() {
 function Home() {
   return (
     <section className=" bg-blue-200 text-sky-900 max-w-4xl p-10 my-10 shadow-xl">
-      <h2 className={`${styles.font} drop-shadow-white text-3xl font-bold mb-5`}>スペックシート登録</h2>
+      <h2 className="drop-shadow-white text-3xl font-bold mb-5">
+        スペックシート登録
+      </h2>
       <form action="/">
         <div>
           <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label className="bg-slate-200 block w-1/4 p-1" htmlFor="stuff">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor="stuff"
+            >
               スタッフID
             </label>
             <input
@@ -54,7 +59,10 @@ function Home() {
         <div>
           <h3 className="mt-10 text-xl font-bold">スキル要約</h3>
           <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               動作環境(OS)
             </label>
             <input
@@ -64,7 +72,10 @@ function Home() {
             />
           </div>
           <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               言語
             </label>
             <input
@@ -74,7 +85,10 @@ function Home() {
             />
           </div>
           <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               フレームワーク
             </label>
             <input
@@ -84,7 +98,10 @@ function Home() {
             />
           </div>
           <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               ライブラリ
             </label>
             <input
@@ -94,7 +111,10 @@ function Home() {
             />
           </div>
           <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               クラウド
             </label>
             <input
@@ -104,7 +124,10 @@ function Home() {
             />
           </div>
           <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               ツール･その他
             </label>
             <input
@@ -114,7 +137,10 @@ function Home() {
             />
           </div>
           <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               担当開発工程
             </label>
             <input
@@ -131,7 +157,10 @@ function Home() {
             アピールポイント
           </h3>
           <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               タイトル
             </label>
             <input
@@ -143,7 +172,10 @@ function Home() {
             />
           </div>
           <div className="w-full flex border-2 border-slate-300 mt-2 shadow-md">
-            <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               内容
             </label>
             <textarea
@@ -177,26 +209,46 @@ function Home() {
         <div>
           <h3 className="mt-10 text-xl font-bold">資格</h3>
           <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               取得年
             </label>
-            <select name="" id="" className={`${styles.focus} w-1/4 text-center`}>
+            <select
+              name=""
+              id=""
+              className={`${styles.focus} w-1/4 text-center`}
+            >
               <option defaultValue="2000">2000</option>
               <option defaultValue="2001">2001</option>
             </select>
-            <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               取得月
             </label>
-            <select name="" id="" className={`${styles.focus} w-1/4 text-center`}>
+            <select
+              name=""
+              id=""
+              className={`${styles.focus} w-1/4 text-center`}
+            >
               <option defaultValue="1">1</option>
               <option defaultValue="2">2</option>
             </select>
           </div>
           <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               資格
             </label>
-            <input className={`${styles.focus} block w-3/4 p-2`} type="text" />
+            <input
+              className={`${styles.focus} block w-3/4 p-2`}
+              type="text"
+            />
           </div>
           <Button name="資格" />
         </div>
@@ -205,19 +257,34 @@ function Home() {
         <div>
           <h3 className="mt-10 text-xl font-bold">前職</h3>
           <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               業界
             </label>
-            <input className={`${styles.focus} block w-3/4 p-2`} type="text" />
+            <input
+              className={`${styles.focus} block w-3/4 p-2`}
+              type="text"
+            />
           </div>
           <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               業種
             </label>
-            <input className={`${styles.focus} block w-3/4 p-2`} type="text" />
+            <input
+              className={`${styles.focus} block w-3/4 p-2`}
+              type="text"
+            />
           </div>
           <div className="w-full flex border-2 border-slate-300 mt-2 shadow-md">
-            <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               業務内容
             </label>
             <textarea
@@ -237,83 +304,157 @@ function Home() {
           <h3 className="mt-10 text-xl font-bold">開発経験</h3>
           <div className="">
             <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-              <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+              <label
+                className="bg-slate-200 block w-1/4 p-1"
+                htmlFor=""
+              >
                 開始年
               </label>
-              <select name="" id="" className={`${styles.focus} w-1/4 text-center`}>
+              <select
+                name=""
+                id=""
+                className={`${styles.focus} w-1/4 text-center`}
+              >
                 <option defaultValue="2000">2000</option>
                 <option defaultValue="2001">2001</option>
               </select>
-              <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+              <label
+                className="bg-slate-200 block w-1/4 p-1"
+                htmlFor=""
+              >
                 開始月
               </label>
-              <select name="" id="" className={`${styles.focus} w-1/4 text-center`}>
+              <select
+                name=""
+                id=""
+                className={`${styles.focus} w-1/4 text-center`}
+              >
                 <option defaultValue="1">1</option>
                 <option defaultValue="2">2</option>
               </select>
             </div>
             <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-              <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+              <label
+                className="bg-slate-200 block w-1/4 p-1"
+                htmlFor=""
+              >
                 期間
               </label>
-              <input className={`${styles.focus} block w-3/4 p-2`} type="text" />
+              <input
+                className={`${styles.focus} block w-3/4 p-2`}
+                type="text"
+              />
             </div>
             <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-              <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+              <label
+                className="bg-slate-200 block w-1/4 p-1"
+                htmlFor=""
+              >
                 担当役割
               </label>
-              <input className={`${styles.focus} block w-3/4 p-2`} type="text" />
+              <input
+                className={`${styles.focus} block w-3/4 p-2`}
+                type="text"
+              />
             </div>
             <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-              <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+              <label
+                className="bg-slate-200 block w-1/4 p-1"
+                htmlFor=""
+              >
                 チーム人数
               </label>
-              <input className={`${styles.focus} block w-3/4 p-2`} type="text" />
+              <input
+                className={`${styles.focus} block w-3/4 p-2`}
+                type="text"
+              />
             </div>
             <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-              <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+              <label
+                className="bg-slate-200 block w-1/4 p-1"
+                htmlFor=""
+              >
                 PJ全体人数
               </label>
-              <input className={`${styles.focus} block w-3/4 p-2`} type="text" />
+              <input
+                className={`${styles.focus} block w-3/4 p-2`}
+                type="text"
+              />
             </div>
             <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-              <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+              <label
+                className="bg-slate-200 block w-1/4 p-1"
+                htmlFor=""
+              >
                 プロジェクト名
               </label>
-              <input className={`${styles.focus} block w-3/4 p-2`} type="text" />
+              <input
+                className={`${styles.focus} block w-3/4 p-2`}
+                type="text"
+              />
             </div>
             <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-              <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+              <label
+                className="bg-slate-200 block w-1/4 p-1"
+                htmlFor=""
+              >
                 動作環境
               </label>
-              <input className={`${styles.focus} block w-3/4 p-2`} type="text" />
+              <input
+                className={`${styles.focus} block w-3/4 p-2`}
+                type="text"
+              />
             </div>
             <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-              <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+              <label
+                className="bg-slate-200 block w-1/4 p-1"
+                htmlFor=""
+              >
                 言語
               </label>
-              <input className={`${styles.focus} block w-3/4 p-2`} type="text" />
+              <input
+                className={`${styles.focus} block w-3/4 p-2`}
+                type="text"
+              />
             </div>
             <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-              <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+              <label
+                className="bg-slate-200 block w-1/4 p-1"
+                htmlFor=""
+              >
                 フレームワーク
               </label>
-              <input className={`${styles.focus} block w-3/4 p-2`} type="text" />
+              <input
+                className={`${styles.focus} block w-3/4 p-2`}
+                type="text"
+              />
             </div>
             <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-              <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+              <label
+                className="bg-slate-200 block w-1/4 p-1"
+                htmlFor=""
+              >
                 ツール･その他
               </label>
-              <input className={`${styles.focus} block w-3/4 p-2`} type="text" />
+              <input
+                className={`${styles.focus} block w-3/4 p-2`}
+                type="text"
+              />
             </div>
             <div className="w-full flex mt-2 h-10 ">
-              <label className="bg-slate-200 block w-1/4 pt-2 px-1 text-sm border-2 border-slate-300 shadow-md" htmlFor="">
+              <label
+                className="bg-slate-200 block w-1/4 pt-2 px-1 text-sm border-2 border-slate-300 shadow-md"
+                htmlFor=""
+              >
                 アーキテクチャ
               </label>
               <input className=" block w-3/4 mt-1 ml-2" type="file" />
             </div>
             <div className="w-full flex border-2 border-slate-300 mt-2 shadow-md">
-              <label className="bg-slate-200 block w-1/4 p-1" htmlFor="">
+              <label
+                className="bg-slate-200 block w-1/4 p-1"
+                htmlFor=""
+              >
                 業務内容
               </label>
               <textarea

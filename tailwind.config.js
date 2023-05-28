@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -7,6 +9,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        noto: ['var(--font-noto)'],
+        kosugi: ['var(--font-kosugi)'],
+      },
       backgroundImage: {
         'gradient-radial':
           'radial-gradient(var(--tw-gradient-stops))',

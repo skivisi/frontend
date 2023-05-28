@@ -65,7 +65,9 @@ const specview = () => {
             type="button"
             className="shadow-md h-12 ml-2 relative bottom-2 cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid"
           >
-            <span className="text-white font-bold m-5 text-lg">編集</span>
+            <span className="text-white font-bold m-5 text-lg">
+              編集
+            </span>
           </button>
         </div>
       </div>

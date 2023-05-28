@@ -46,7 +46,7 @@ const chartData: ChartData<'radar'> = {
 };
 
 const chartOptions: ChartOptions<'radar'> = {
-   scales: {
+  scales: {
     r: {
       min: 1,
       max: 10,
@@ -70,7 +70,7 @@ const skillview = () => {
 
   return (
     <>
-       <div className="flex">
+      <div className="flex">
         <h2 className="text-3xl font-bold mb-5 drop-shadow-white">
           スキルシート
         </h2>
@@ -80,7 +80,9 @@ const skillview = () => {
             type="button"
             className="shadow-md h-12 ml-2 relative bottom-2 cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid"
           >
-            <span className="text-white font-bold m-5 text-lg">編集</span>
+            <span className="text-white font-bold m-5 text-lg">
+              編集
+            </span>
           </button>
         </div>
       </div>

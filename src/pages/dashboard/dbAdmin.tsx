@@ -8,7 +8,7 @@ const DbAdmin = () => {
           </button>
           <div
             className="absolute flex items-center justify-center ml-1 h-10 w-10 rounded-full bg-blue-500 text-white font-bold"
-            style={{ top: '17%',right: "15%"}}
+            style={{ top: '17%', right: '15%' }}
           >
             3
           </div>

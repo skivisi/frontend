@@ -44,17 +44,15 @@ export default function ZodTemplate() {
       // https://zod.dev/?id=parse  .parse()について
       const validated = User.parse(user);
       console.log(user);
-      
+
       // チェック通過後の処理(非同期関数など)
       await AsyncTask(validated);
-
     } catch (e: any) {
       // バリデーションに引っかかった場合エラー文を`error`にセット
       // https://zod.dev/ERROR_HANDLING?id=flattening-errors .flatten()について
       setError(e.flatten().fieldErrors);
       console.log(e.flatten().fieldErrors);
     }
-
   };
 
   const AsyncTask = async (data: any) => {

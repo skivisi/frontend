@@ -4,7 +4,7 @@ const DbSales = () => {
       <div>
         <h2>エンジニア検索</h2>
         <div>
-            <input></input>
+          <input></input>
         </div>
       </div>
     </>
