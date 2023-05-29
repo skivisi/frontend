@@ -3,6 +3,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../styles/globals.css'
 
+// 新規登録(エンジニア・営業)
+
 const Register = () => {
   // 入社年月選択の記述
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);

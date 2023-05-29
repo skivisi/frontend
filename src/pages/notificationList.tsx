@@ -1,6 +1,8 @@
 import Header from '../components/header';
 import Footer from '@/components/footer';
 
+// 申請通知リスト(管理者)
+
 const NotificationList = () => {
   const items = [1, 2, 3, 4];
   return (

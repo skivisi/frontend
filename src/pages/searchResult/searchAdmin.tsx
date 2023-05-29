@@ -1,6 +1,8 @@
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 
+// 検索結果(管理者)
+
 const SearchAdmin = () => {
   const items = [1, 2, 3];
   return (

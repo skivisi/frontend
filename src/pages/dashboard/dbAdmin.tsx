@@ -1,6 +1,8 @@
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 
+// 管理者DB
+
 const DbAdmin = () => {
   return (
     <>

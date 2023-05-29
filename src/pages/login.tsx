@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import '../styles/globals.css'
 
+// ログイン(エンジニア・営業)
+
 const Login = () => {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(

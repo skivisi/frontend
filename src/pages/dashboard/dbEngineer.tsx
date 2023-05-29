@@ -2,6 +2,8 @@ import { useState } from 'react';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 
+// エンジニアDB
+
 const DbEngineer = () => {
   const [showTemplateButtons, setShowTemplateButtons] =
     useState(false);

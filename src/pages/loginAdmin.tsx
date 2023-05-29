@@ -1,3 +1,5 @@
+// ログイン(管理者)
+
 const LoginAdmin = () => {
   return (
     <>

@@ -1,6 +1,8 @@
 import Header from '../components/header';
 import Footer from '@/components/footer';
 
+// 通知一覧(エンジニア)
+
 const NotificationEngineer = () => {
   return (
     <>
