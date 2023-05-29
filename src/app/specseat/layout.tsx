@@ -1,3 +1,5 @@
+import Footer from '@/components/footer';
+import Header from '@/components/header';
 import { Noto_Sans_JP, Zen_Maru_Gothic } from 'next/font/google';
 
 const noto = Noto_Sans_JP({
@@ -27,11 +29,13 @@ export default function SpecSeatEditLayout({
 }) {
   return (
     <>
+      <Header />
       <main
         className={`${noto.variable} ${maru.variable} flex justify-center`}
       >
         {children}
       </main>
+      <Footer />
     </>
   );
 }

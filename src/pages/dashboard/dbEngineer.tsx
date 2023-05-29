@@ -1,4 +1,8 @@
 import { useState } from 'react';
+import Header from '@/components/header';
+import Footer from '@/components/footer';
+
+// エンジニアDB
 
 const DbEngineer = () => {
   const [showTemplateButtons, setShowTemplateButtons] =
@@ -11,7 +15,8 @@ const DbEngineer = () => {
   };
 
   return (
-    <>
+    <div>
+      <Header />
       <section>
         <div className="grid grid-cols-2 grid-rows-2 gap-4 justify-center mt-48 relative ml-32">
           <div className="relative">
@@ -31,6 +36,7 @@ const DbEngineer = () => {
           <button
             className="font-semibold text-white py-4 ml-96 my-8 w-80 rounded-xl shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 border-2 border-white border-solid"
             onClick={handleTemplateButton}
+            onMouseEnter={handleTemplateButton}
           >
             テンプレートを見る
           </button>
@@ -79,7 +85,10 @@ const DbEngineer = () => {
           </button>
         </div>
       </section>
-    </>
+      <div className="absolute w-full" style={{ bottom: '0%' }}>
+        <Footer />
+      </div>
+    </div>
   );
 };
 
