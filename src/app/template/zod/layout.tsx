@@ -1,12 +1,5 @@
-import './globals.css';
-import { Noto_Sans_JP } from 'next/font/google';
 
-const Noto_Sans_JP_normal = Noto_Sans_JP({
-  weight: ['400','700'],
-  display: 'swap',
-  subsets: ["latin"],
-  preload: false,
-});
+import './globals.css';
 
 export const metadata = {
   title: 'パワプロ',
@@ -21,7 +14,11 @@ export default function RootLayout({
   return (
     <>
       <html lang="ja">
-        <body className={Noto_Sans_JP_normal.className}>{children}</body>
+        <body
+          className={`font-noto`}
+        >
+          {children}
+        </body>
       </html>
     </>
   );

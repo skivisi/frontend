@@ -1,58 +1,21 @@
+/*
+① 編集ページ遷移
+
+ */
+
 'use client';
 
 import Image from 'next/image';
 import website from '../../public/Website.png';
+import Link from 'next/link';
 
-function mock() {}
 function handleBlur() {
   // ここでバリデーションチェックしたらサブミット前にクライアントに入力の誤りわかるからいいよね
   alert('フォーカスが外れました');
 }
 
-const portfolio = [
-  {
-    github: 'url...',
-  },
-  {
-    qiita: 'url...',
-  },
-];
-const skillSummary = {
-  os: ['Linux(CentOS)', 'macOS'],
-  lang: [
-    'JavaScript',
-    'TypeScript',
-    'SQL',
-    'HTML',
-    'CSS',
-    'シェルスクリプト',
-  ],
-  flame: ['Next.js(13)', 'Jest'],
-  lib: ['React(18)', 'jQuery'],
-  tool: ['Git', 'Vim', 'PostgreSQL14', 'VisualStudioCode'],
-  detail: [
-    '詳細設計',
-    '実装',
-    'デバッグ',
-    'テスト(ブラックボックステスト仕様書作成)',
-  ],
-};
-const sellingPoint = [
-  {
-    title: 'タイトル',
-    content:
-      'ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト\nダミーテキストダミーテキストダミーテキストダミーテキスト\nダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト',
-  },
-  {
-    title: 'タイトル',
-    content:
-      'ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト\nダミーテキストダミーテキストダミーテキストダミーテキスト\nダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト',
-  },
-];
-const offHours =
-  'ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト\nダミーテキストダミーテキストダミーテキストダミーテキスト\nダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト';
 
-const specview = () => {
+const specview = (data:any) => {
   return (
     <section>
       <div className="flex">
@@ -60,13 +23,17 @@ const specview = () => {
           スペックシート
         </h2>
         <div className="text-center">
+          <Link href="/specseat">
           <button
-            onClick={mock}
+            // onClick={mock}
             type="button"
             className="shadow-md h-12 ml-2 relative bottom-2 cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid"
-          >
-            <span className="text-white font-bold m-5 text-lg">編集</span>
+            >
+            <span className="text-white font-bold m-5 text-lg">
+              編集
+            </span>
           </button>
+            </Link>
         </div>
       </div>
 
@@ -272,3 +239,48 @@ const specview = () => {
 };
 
 export default specview;
+
+
+
+const portfolio = [
+  {
+    github: 'url...',
+  },
+  {
+    qiita: 'url...',
+  },
+];
+const skillSummary = {
+  os: ['Linux(CentOS)', 'macOS'],
+  lang: [
+    'JavaScript',
+    'TypeScript',
+    'SQL',
+    'HTML',
+    'CSS',
+    'シェルスクリプト',
+  ],
+  flame: ['Next.js(13)', 'Jest'],
+  lib: ['React(18)', 'jQuery'],
+  tool: ['Git', 'Vim', 'PostgreSQL14', 'VisualStudioCode'],
+  detail: [
+    '詳細設計',
+    '実装',
+    'デバッグ',
+    'テスト(ブラックボックステスト仕様書作成)',
+  ],
+};
+const sellingPoint = [
+  {
+    title: 'タイトル',
+    content:
+      'ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト\nダミーテキストダミーテキストダミーテキストダミーテキスト\nダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト',
+  },
+  {
+    title: 'タイトル',
+    content:
+      'ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト\nダミーテキストダミーテキストダミーテキストダミーテキスト\nダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト',
+  },
+];
+const offHours =
+  'ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト\nダミーテキストダミーテキストダミーテキストダミーテキスト\nダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト';

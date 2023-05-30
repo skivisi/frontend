@@ -1,0 +1,378 @@
+{
+  "user": [
+    {
+      "userId": 1,
+      "email": "john@example.com",
+      "employeeNumber": 12345,
+      "joinDate": "2023-05-29",
+      "userName": "John Doe",
+      "affiliation": "Engineering",
+      "businessSituation": false,
+      "password": "hashed_password",
+      "confirmPassword": "hashed_password",
+      "createdAt": "2023-05-29T10:30:00.000Z",
+      "updatedAt": "2023-05-29T15:45:00.000Z"
+    },
+    {
+      "userId": 2,
+      "email": "jane@example.com",
+      "employeeNumber": 54321,
+      "joinDate": "2023-05-28",
+      "userName": "Jane Smith",
+      "affiliation": "Marketing",
+      "businessSituation": true,
+      "password": "hashed_password",
+      "confirmPassword": "hashed_password",
+      "createdAt": "2023-05-28T09:15:00.000Z",
+      "updatedAt": "2023-05-29T13:20:00.000Z"
+    },
+    {
+      "userId": 3,
+      "email": "bob@example.com",
+      "employeeNumber": 98765,
+      "joinDate": "2023-05-27",
+      "userName": "Bob Johnson",
+      "affiliation": "Sales",
+      "businessSituation": false,
+      "password": "hashed_password",
+      "confirmPassword": "hashed_password",
+      "createdAt": "2023-05-27T08:00:00.000Z",
+      "updatedAt": "2023-05-29T11:50:00.000Z"
+    }
+  ],
+  "skill": [
+    {
+      "skillId": 1,
+      "userId": 1,
+      "InherentName": "Programming",
+      "InherentDescription": "Expertise in various programming languages",
+      "numericalNumber": 5,
+      "numericalExplain": "High proficiency",
+      "updatedAt": "2023-05-29T15:45:00.000Z"
+    },
+    {
+      "skillId": 2,
+      "userId": 2,
+      "InherentName": "Design",
+      "InherentDescription": "Graphic design and user interface",
+      "numericalNumber": 3,
+      "numericalExplain": "Intermediate level",
+      "updatedAt": "2023-05-29T13:20:00.000Z"
+    },
+    {
+      "skillId": 3,
+      "userId": 3,
+      "InherentName": "Sales",
+      "InherentDescription": "Persuasion and negotiation skills",
+      "numericalNumber": 4,
+      "numericalExplain": "Advanced level",
+      "updatedAt": "2023-05-29T11:50:00.000Z"
+    }
+  ],
+  "skillPoint": [
+    {
+      "skillPointId": 1,
+      "userId": 1,
+      "FR": 80,
+      "BK": 75,
+      "DB": 90,
+      "SBR": 85,
+      "AR": 70,
+      "TS": 95,
+      "COM": 88
+    },
+    {
+      "skillPointId": 2,
+      "userId": 2,
+      "FR": 70,
+      "BK": 65,
+      "DB": 80,
+      "SBR": 75,
+      "AR": 60,
+      "TS": 85,
+      "COM": 78
+    },
+    {
+      "skillPointId": 3,
+      "userId": 3,
+      "FR": 75,
+      "BK": 70,
+      "DB": 85,
+      "SBR": 80,
+      "AR": 65,
+      "TS": 90,
+      "COM": 82
+    }
+  ],
+  "spaecialAbility": [
+    {
+      "spaecialAbilityId": 1,
+      "userId": 1,
+      "skillList": "Programming, Problem Solving",
+      "skillSelection": true
+    },
+    {
+      "spaecialAbilityId": 2,
+      "userId": 2,
+      "skillList": "Design, Creativity",
+      "skillSelection": false
+    },
+    {
+      "spaecialAbilityId": 3,
+      "userId": 3,
+      "skillList": "Sales, Communication",
+      "skillSelection": true
+    }
+  ],
+  "spec": [
+    {
+      "specId": 1,
+      "userId": 1,
+      "github": "https://github.com/johndoe",
+      "offHours": "Evenings and weekends",
+      "createdAt": "2023-05-29T10:30:00.000Z"
+    },
+    {
+      "specId": 2,
+      "userId": 2,
+      "github": "https://github.com/janesmith",
+      "offHours": "Flexible schedule",
+      "createdAt": "2023-05-28T09:15:00.000Z"
+    },
+    {
+      "specId": 3,
+      "userId": 3,
+      "github": "https://github.com/bobjohnson",
+      "offHours": "Weekends",
+      "createdAt": "2023-05-27T08:00:00.000Z"
+    }
+  ],
+  "portfolio": [
+    {
+      "portfolioId": 1,
+      "specId": 1,
+      "heading": "Web Development Projects",
+      "url": "https://portfolio.example.com"
+    },
+    {
+      "portfolioId": 2,
+      "specId": 2,
+      "heading": "Graphic Design Portfolio",
+      "url": "https://portfolio.example.com"
+    },
+    {
+      "portfolioId": 3,
+      "specId": 3,
+      "heading": "Sales Achievements",
+      "url": "https://portfolio.example.com"
+    }
+  ],
+
+  "skillSummary": [
+    {
+      "skillSummaryId": 1,
+      "specId": 1,
+      "autoCalibrationId": 1
+    },
+    {
+      "skillSummaryId": 2,
+      "specId": 2,
+      "autoCalibrationId": 2
+    },
+    {
+      "skillSummaryId": 3,
+      "specId": 3,
+      "autoCalibrationId": 3
+    }
+  ],
+  "sellingPoint": [
+    {
+      "sellingPointId": 1,
+      "specId": 1,
+      "title": "Excellent Problem Solver",
+      "content": "I have a proven track record of solving complex problems efficiently."
+    },
+    {
+      "sellingPointId": 2,
+      "specId": 2,
+      "title": "Effective Communication Skills",
+      "content": "I excel in communicating ideas clearly and concisely."
+    },
+    {
+      "sellingPointId": 3,
+      "specId": 3,
+      "title": "Strong Leadership Abilities",
+      "content": "I have successfully led teams and delivered projects on time."
+    }
+  ],
+  "qualification": [
+    {
+      "qualificationId": 1,
+      "specId": 1,
+      "credential": "Bachelor's Degree in Computer Science",
+      "acquisitionDate": "May 2015"
+    },
+    {
+      "qualificationId": 2,
+      "specId": 2,
+      "credential": "Master's Degree in Business Administration",
+      "acquisitionDate": "August 2018"
+    },
+    {
+      "qualificationId": 3,
+      "specId": 3,
+      "credential": "Certified Scrum Master",
+      "acquisitionDate": "January 2020"
+    }
+  ],
+  "previousWork": [
+    {
+      "previousWorkId": 1,
+      "specId": 1,
+      "industry": "Technology",
+      "occupation": "Software Engineer",
+      "JobDuties": "Developed and maintained web applications."
+    },
+    {
+      "previousWorkId": 2,
+      "specId": 2,
+      "industry": "Finance",
+      "occupation": "Financial Analyst",
+      "JobDuties": "Conducted financial analysis and prepared reports."
+    },
+    {
+      "previousWorkId": 3,
+      "specId": 3,
+      "industry": "Healthcare",
+      "occupation": "Medical Researcher",
+      "JobDuties": "Performed data analysis and conducted medical research."
+    }
+  ],
+  "developmentExperience": [
+    {
+      "developmentExperienceId": 1,
+      "specId": 1,
+      "startDate": "January 2016",
+      "duration": "2 years",
+      "assignedTask": "Developed a scalable e-commerce platform.",
+      "teamSize": "10",
+      "totalProjectHeadcount": "50",
+      "projectName": "Project A",
+      "jobDuties": "Designed and implemented software solutions.",
+      "img": "project_a.jpg",
+      "autoCalibrationId": 1
+    },
+    {
+      "developmentExperienceId": 2,
+      "specId": 2,
+      "startDate": "March 2017",
+      "duration": "1年間",
+      "assignedTask": "Led the development of a mobile application.",
+      "teamSize": "5",
+      "totalProjectHeadcount": "20",
+      "projectName": "Project B",
+      "jobDuties": "Collaborated with cross-functional teams to deliver features.",
+      "img": "project_b.jpg",
+      "autoCalibrationId": 2
+    },
+    {
+      "developmentExperienceId": 3,
+      "specId": 3,
+      "startDate": "June 2019",
+      "duration": "3 years",
+      "assignedTask": "Managed a large-scale software project.",
+      "teamSize": "15",
+      "totalProjectHeadcount": "100",
+      "projectName": "Project C",
+      "jobDuties": "Oversaw the development process and ensured project milestones were met.",
+      "img": "project_c.jpg",
+      "autoCalibrationId": 3
+    }
+  ],
+  "autoCalibration": [
+    {
+      "autoCalibrationId": 1,
+      "skill": "Problem Solving",
+      "membership": 5,
+      "category": 2,
+      "FR": 4,
+      "CL": 3,
+      "ML": 4,
+      "QA": 4,
+      "JAVA": 5,
+      "PHP": 3
+    },
+    {
+      "autoCalibrationId": 2,
+      "skill": "Communication",
+      "membership": 4,
+      "category": 1,
+      "FR": 3,
+      "CL": 5,
+      "ML": 3,
+      "QA": 4,
+      "JAVA": 2,
+      "PHP": 3
+    },
+    {
+      "autoCalibrationId": 3,
+      "skill": "Leadership",
+      "membership": 4,
+      "category": 3,
+      "FR": 2,
+      "CL": 4,
+      "ML": 3,
+      "QA": 3,
+      "JAVA": 2,
+      "PHP": 4
+    }
+  ],
+  "request": [
+    {
+      "applicationId": 1,
+      "userId": 1,
+      "status": 1,
+      "adminComment": "Review in progress",
+      "engineerComment": "Pending",
+      "adminId": 1,
+      "createdAt": "2023-05-01T10:00:00.000Z",
+      "resultedAt": "2023-05-05T15:30:00.000Z"
+    },
+    {
+      "applicationId": 2,
+      "userId": 2,
+      "status": 2,
+      "adminComment": "Rejected",
+      "engineerComment": "Improvement needed",
+      "adminId": 2,
+      "createdAt": "2023-05-10T09:45:00.000Z",
+      "resultedAt": "2023-05-12T14:20:00.000Z"
+    },
+    {
+      "applicationId": 3,
+      "userId": 3,
+      "status": 3,
+      "adminComment": "Approved",
+      "engineerComment": "Excellent skills",
+      "adminId": 1,
+      "createdAt": "2023-05-20T11:30:00.000Z",
+      "resultedAt": "2023-05-25T16:15:00.000Z"
+    }
+  ],
+  "admin": [
+    {
+      "adminId": 1,
+      "email": "admin1@example.com",
+      "password": "admin123",
+      "name": "Admin 1",
+      "createdAt": "2023-01-01T09:00:00.000Z"
+    },
+    {
+      "adminId": 2,
+      "email": "admin2@example.com",
+      "password": "admin456",
+      "name": "Admin 2",
+      "createdAt": "2023-02-05T11:30:00.000Z"
+    }
+  ]
+}

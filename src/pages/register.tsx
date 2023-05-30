@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import '../styles/globals.css'
+import '../styles/globals.css';
 
 // 新規登録(エンジニア・営業)
 
@@ -79,7 +79,7 @@ const Register = () => {
                   selected={selectedDate}
                   onChange={handleDateChange}
                   showMonthYearPicker
-                  placeholderText="入社年月" 
+                  placeholderText="入社年月"
                 />
               </div>
             </div>
@@ -170,7 +170,6 @@ const Register = () => {
       </div>
     </>
   );
-}
-
+};
 
 export default Register;

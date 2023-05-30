@@ -7,6 +7,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        noto: ['var(--font-noto)'],
+        kosugi: ['var(--font-kosugi)'],
+      },
       backgroundImage: {
         'gradient-radial':
           'radial-gradient(var(--tw-gradient-stops))',
@@ -14,9 +18,8 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       dropShadow: {
-        'white': ' 2px 2px 2px #fff',
-
-      }
+        white: ' 2px 2px 2px #fff',
+      },
     },
   },
   plugins: [],
