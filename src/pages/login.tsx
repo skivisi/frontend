@@ -1,7 +1,7 @@
 import { ZodError, z } from 'zod';
 import React, { useState } from 'react';
 import Link from 'next/link';
-import '../styles/globals.css'
+import '../styles/globals.css';
 
 // ログイン(エンジニア・営業)
 
@@ -35,7 +35,8 @@ const Login = () => {
       setPasswordError(null); // パスワードのエラーをリセット
     } catch (error) {
       // バリデーションエラーが発生した場合の処理
-      if (error instanceof ZodError) { // ZodErrorのインスタンスであることを確認
+      if (error instanceof ZodError) {
+        // ZodErrorのインスタンスであることを確認
         if (error.errors[0]?.path[0] === 'email') {
           setEmailError(error.errors[0].message);
         } else if (error.errors[0]?.path[0] === 'password') {
@@ -115,7 +116,6 @@ const Login = () => {
                 ログイン
               </button>
             </div>
-            
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
@@ -132,6 +132,6 @@ const Login = () => {
       </div>
     </>
   );
-}
+};
 
 export default Login;

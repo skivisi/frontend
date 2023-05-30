@@ -1,8 +1,7 @@
 'use client';
-import { useState } from 'react';
 import '../globals.css';
 import Image from 'next/image';
-import website from '../../public/Website.png'
+import website from '../../public/Website.png';
 
 function mock() {}
 function handleBlur() {
@@ -65,13 +64,11 @@ function Home() {
       <form action="/">
         <div>
           <div className="w-1/2 flex border-2 border-slate-300 mt-2 ml-5 h-10 shadow-md">
-          <div
-            className="bg-slate-200 block w-1/2 p-1"
-          >
-            スタッフID
-          </div>
-          <div className="block w-1/2 p-2 bg-white">
-            {`${`職種`}-204-${'社員番号'}`}
+            <div className="bg-slate-200 block w-1/2 p-1">
+              スタッフID
+            </div>
+            <div className="block w-1/2 p-2 bg-white">
+              {`${`職種`}-204-${'社員番号'}`}
             </div>
           </div>
           <div className="">
@@ -236,7 +233,7 @@ function Home() {
           {/* 繰り返し処理入れる */}
           <div className="flex">
             <input type="checkbox" />
-            
+
             <div className=" w-full ml-2">
               <div className="flex border-2 border-slate-300 mt-2 h-10 shadow-md">
                 <div className="bg-slate-200 block w-1/4 p-1">
@@ -274,15 +271,14 @@ function Home() {
                 </div>
               </div>
             </div>
-              <div className=" items-center">
-              <Image 
+            <div className=" items-center">
+              <Image
                 src={website}
                 width={500}
                 height={100}
                 alt="Picture of the author"
               />
-              </div>
-
+            </div>
           </div>
         </div>
         {/* developmentExperience */}

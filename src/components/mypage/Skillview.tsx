@@ -1,87 +1,78 @@
+/*
+① 編集ページ遷移
+② スコアアルファベットカラー出しわけ
+ */
+
 'use client';
-
 import styles from './style.module.css';
-import {
-  Chart as ChartJS,
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend,
-  ChartData,
-  ChartOptions,
-} from 'chart.js';
-import { Radar } from 'react-chartjs-2';
+import { Chart } from './Chart';
+import Link from 'next/link';
 
-ChartJS.register(
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend
-);
+const skillview = ({ data }: { data: any }) => {
+  const skillScore = {
+    フロントエンド: data.skill.FR,
+    バック: data.skill.BK,
+    'データ\nベース': data.skill.DB,
+    サーバーレス: data.skill.SBR,
+    設計: data.skill.AR,
+    テスト: data.skill.TS,
+    コミュ力: data.skill.COM,
+  };
 
-const skills = [
-  'フロントエンド',
-  'バックエンド',
-  'データベース',
-  'サーバーレス',
-  '設計',
-  'テスト',
-  'コミュニケーション',
-];
-const chartData: ChartData<'radar'> = {
-  labels: skills,
-  datasets: [
-    {
-      label: '成熟度',
-      data: [5, 7, 6, 2, 5, 6, 5],
-      backgroundColor: 'rgba(19, 224, 145, 0.6)',
-      borderColor: 'rgba(19, 224, 145, 1)',
-      borderWidth: 1,
-    },
-  ],
-};
+  // 数字をA~Gランクに変換
+  const convertValueToRank = (value: number) => {
+    if (value === 10) {
+      return 'S';
+    } else if (value === 9) {
+      return 'A';
+    } else if (value <= 8 && value >= 7) {
+      return 'B';
+    } else if (value <= 6 && value >= 5) {
+      return 'C';
+    } else if (value === 4) {
+      return 'D';
+    } else if (value === 3) {
+      return 'E';
+    } else if (value === 2) {
+      return 'F';
+    } else {
+      return 'G';
+    }
+  };
 
-const chartOptions: ChartOptions<'radar'> = {
-   scales: {
-    r: {
-      min: 1,
-      max: 10,
-    },
-  },
-  plugins: {
-    legend: {
-      position: 'top',
-    },
-    tooltip: {
-      enabled: true,
-    },
-  },
-  responsive: true,
-  maintainAspectRatio: false,
-};
+  const transformedObject: any = {};
+  for (const [name, value] of Object.entries(skillScore)) {
+    const rank = convertValueToRank(value);
+    transformedObject[name] = rank;
+  }
 
-const skillview = () => {
-  const skillScore = Array(7).fill(null);
-  const skillItems = Array(21).fill(null);
+  const unselected =
+    'w-32 text-center m-1 bg-zinc-300 border-4 border-zinc-400 rounded-xl p-1 font-bold text-zinc-400';
+  const selected_1 =
+    'w-32 text-center m-1 bg-rose-300 border-4 border-rose-400 rounded-xl p-1 font-bold text-rose-800';
+  const selected_2 =
+    'w-32 text-center m-1 bg-sky-300 border-4 border-sky-400 rounded-xl p-1 font-bold text-sky-800';
+  const selected_3 =
+    'w-32 text-center m-1 bg-green-300 border-4 border-green-400 rounded-xl p-1 font-bold text-green-800';
 
   return (
     <>
-       <div className="flex">
+      <div className="flex">
         <h2 className="text-3xl font-bold mb-5 drop-shadow-white">
           スキルシート
         </h2>
         <div className="text-center">
+          <Link href="/mypage/skilledit">
           <button
             // onClick={mock}
             type="button"
             className="shadow-md h-12 ml-2 relative bottom-2 cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid"
-          >
-            <span className="text-white font-bold m-5 text-lg">編集</span>
+            >
+            <span className="text-white font-bold m-5 text-lg">
+              編集
+            </span>
           </button>
+            </Link>
         </div>
       </div>
 
@@ -90,13 +81,17 @@ const skillview = () => {
           <div className="bg-sky-50 p-5 shadow-md text-lg">
             <div className="mb-3">
               {/* 出しわけ */}
-              <span className="bg-rose-300 border-2 border-rose-400 rounded-xl p-1 font-bold text-rose-800">
-                待機中
-              </span>
-              <span className="bg-sky-300 border-2 border-sky-400 rounded-xl p-1 font-bold text-sky-800">
-                エントリー
-              </span>
+              {data.businessSituation ? (
+                <span className="bg-sky-300 border-2 border-sky-400 rounded-xl p-1 font-bold text-sky-800">
+                  エントリー
+                </span>
+              ) : (
+                <span className="bg-rose-300 border-2 border-rose-400 rounded-xl p-1 font-bold text-rose-800">
+                  待機中
+                </span>
+              )}
             </div>
+
             <div className="flex leading-8">
               <div className={`${styles.skillview_profile}`}>
                 <div className="">社員番号 :</div>
@@ -104,35 +99,34 @@ const skillview = () => {
                 <div className="">所属:</div>
               </div>
               <div className="ml-2 font-bold">
-                <div>{2312}</div>
-                <div>{'葉加瀬 太郎'}</div>
-                <div>{'フロントエンドエンジニア'}</div>
+                <div>{data.employeeNumber}</div>
+                <div>{data.userName}</div>
+                <div>{data.affiliation}</div>
               </div>
             </div>
           </div>
         </div>
-        <div className=" bg-white shadow-md">
-          <div
-            className=" bg-sky-50"
-            style={{ width: '400px', height: '400px' }}
-          >
-            <Radar data={chartData} options={chartOptions} />
-          </div>
-        </div>
+
+        {/* レーダーチャートコンポーネント */}
+        <Chart skill={data.skill} />
       </section>
 
       <section className="flex justify-center mt-10">
-        {skillScore.map((i, index) => (
-          <div
-            key={index}
-            className=" text-center bg-sky-50 p-2 rounded-t-xl border-2 shadow-md m-1"
-          >
-            <p className="font-bold">コミュニケーション</p>
-            <p className="text-4xl font-black drop-shadow-xl text-rose-500">
-              A
-            </p>
-          </div>
-        ))}
+        {Object.entries(transformedObject).map(
+          ([key, value]: any) => (
+            <div
+              key={key}
+              className=" text-center bg-sky-50 p-2 rounded-t-xl border-2 shadow-md m-1"
+            >
+              <p className="font-bold w-16 h-12 flex items-center justify-center">
+                {key}
+              </p>
+              <p className="text-4xl font-black drop-shadow-xl text-rose-500">
+                {value}
+              </p>
+            </div>
+          )
+        )}
       </section>
 
       <section className=" mt-10 bg-sky-50 p-5 shadow-md">
@@ -140,22 +134,38 @@ const skillview = () => {
           <div className=" text-center">
             <p className=" text-yellow-700 font-bold">特有スキル</p>
             <div className="mt-2 text-center text-yellow-800 bg-yellow-200 border-yellow-400 border-4 rounded-xl p-2 font-bold">
-              自分だけのスキル
+              {data.skill.InherentName}
             </div>
           </div>
-          <div className="">自分だけのスキルを書いてね</div>
+          <div className="ml-3">{data.skill.InherentDescription}</div>
         </div>
 
         <div className="flex flex-wrap justify-center mt-5">
           {/* 配列の要素を繰り返し処理して描画 */}
-          {skillItems.map((item, index) => (
-            <div
-              key={index}
-              className="w-32 text-center m-1 bg-rose-300 border-4 border-rose-400 rounded-xl p-1 font-bold text-rose-800"
-            >
-              スキル名 {index}
-            </div>
-          ))}
+          {data.skill.abilities.map(
+            (
+              ability: {
+                property: string;
+                value: any;
+              },
+              index: number
+            ) => (
+              <div
+                key={index}
+                className={
+                  ability.value === 0
+                    ? unselected
+                    : ability.value === 1
+                    ? selected_1
+                    : ability.value === 2
+                    ? selected_2
+                    : selected_3
+                }
+              >
+                {ability.property}
+              </div>
+            )
+          )}
         </div>
       </section>
     </>
@@ -163,11 +173,3 @@ const skillview = () => {
 };
 
 export default skillview;
-
-// userId	userのID
-// email	メールアドレス
-// employeeNumber	社員番号
-// joinDate	入社年月日
-// userName	ユーザーの名前
-// affiliation	所属
-// businessSituation	待機かアサインしているか（業務形態）

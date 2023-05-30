@@ -58,7 +58,9 @@ const Approval = () => {
   return (
     <>
       <Header />
-      <div className='text-sky-900 mt-10 ml-96 text-xl font-bold'>名前さんのスキルシート</div>
+      <div className="text-sky-900 mt-10 ml-96 text-xl font-bold">
+        名前さんのスキルシート
+      </div>
       <div className="text-sky-900 flex justify-center">
         <section className="bg-blue-200 text-sky-900 max-w-4xl p-10 my-10 shadow-xl">
           <form action="/">
