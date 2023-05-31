@@ -1,0 +1,14 @@
+{
+  "user": [
+    {
+      "email": "kagawa@gmail.com",
+      "employeeNumber": 4455,
+      "joinDate": "2022年7月",
+      "userName": "香川",
+      "affiliation": "CL",
+      "businessSituation": "待機中",
+      "password": "44556677",
+      "confirmPassword": "44556677"
+    }
+  ]
+}

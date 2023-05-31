@@ -316,7 +316,7 @@ const Approval = () => {
               className="shadow-md mt-10 h-12 cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid"
             >
               <span className="text-white font-bold m-5">
-                際し戻す
+                差し戻す
               </span>
             </button>
           </div>
