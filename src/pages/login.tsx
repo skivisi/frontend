@@ -1,38 +1,61 @@
 import { ZodError, z } from 'zod';
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import Link from 'next/link';
 import '../styles/globals.css';
+import { useCookies } from 'react-cookie';
+import axios from 'axios';
 
 // ログイン(エンジニア・営業)
 
 const Login = () => {
+  const [email, setEmail] = useState<string | null>(null);
+  const [password, setPassword] = useState<string | null>(null);
+  const [cookie, setCookie] = useCookies();
+
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(
     null
   );
 
-  const loginSchema = z.object({
-    email: z.string().email('有効なメールアドレスを入力してください'),
-    password: z
-      .string()
-      .min(8, 'パスワードは8文字以上で入力してください'),
-  });
-
-  const handleFormSubmit = async (
+  const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
 
-    const formData = new FormData(event.currentTarget); // フォーム要素から入力フィールドの値を取得
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
+    // ↓いらない？
+    // const formData = new FormData(event.currentTarget); // フォーム要素から入力フィールドの値を取得
+    // const emailValidation = formData.get('email') as string;
+    // const passwordValidation = formData.get('password') as string;
+
+    const loginSchema = z.object({
+      email: z
+        .string()
+        .email('有効なメールアドレスを入力してください'),
+      password: z
+        .string()
+        .min(4, 'パスワードは4文字以上で入力してください'),
+    });
 
     try {
-      const values = loginSchema.parse({ email, password });
+      const values = loginSchema.parse({
+        email,
+        password,
+      });
       // バリデーションが成功した場合の処理
       console.log('成功', values);
       setEmailError(null); // メールアドレスのエラーをリセット
       setPasswordError(null); // パスワードのエラーをリセット
+
+      axios
+        .get(`api/user?email=${email}&password=${password}`)
+        .then((response) => {
+          let userData = response.data;
+          console.log(userData);
+          let id = userData[0].id;
+          console.log(id);
+          setCookie('id', id);
+          return id;
+        });
     } catch (error) {
       // バリデーションエラーが発生した場合の処理
       if (error instanceof ZodError) {
@@ -45,6 +68,12 @@ const Login = () => {
       }
       console.log(error);
     }
+  };
+
+  const handleFormSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
   };
 
   return (
@@ -61,7 +90,7 @@ const Login = () => {
             className="space-y-6"
             action="#"
             method="POST"
-            onSubmit={handleFormSubmit}
+            onSubmit={handleSubmit}
           >
             <div>
               <label
@@ -77,6 +106,7 @@ const Login = () => {
                   required
                   placeholder="メールアドレス"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <div className="text-red-500 text-sm">
                   {emailError}
@@ -101,6 +131,7 @@ const Login = () => {
                   required
                   placeholder="パスワード"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <div className="text-red-500 text-sm">
                   {passwordError}
@@ -108,14 +139,12 @@ const Login = () => {
               </div>
             </div>
 
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center px-3 py-2.5 shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid text-white"
-              >
-                ログイン
-              </button>
-            </div>
+            <button
+              type="submit"
+              className="flex w-full justify-center px-3 py-2.5 shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid text-white"
+            >
+              ログイン
+            </button>
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">

@@ -11,7 +11,8 @@
       "password": "hashed_password",
       "confirmPassword": "hashed_password",
       "createdAt": "2023-05-29T10:30:00.000Z",
-      "updatedAt": "2023-05-29T15:45:00.000Z"
+      "updatedAt": "2023-05-29T15:45:00.000Z",
+      "id":1
     },
     {
       "userId": 2,
