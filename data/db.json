@@ -41,7 +41,7 @@
     },
     {
       "userName": "安田優斗",
-      "email": "yasuda@gmail.com",
+      "email": "yasuda@example.com",
       "employeeNumber": 1127,
       "joinDate": "2022-10-01T00:00:00.000Z",
       "affiliation": "FR",
@@ -52,7 +52,7 @@
     },
     {
       "userName": "山田涼介",
-      "email": "yamada@gmail.com",
+      "email": "yamada@example.com",
       "employeeNumber": 1111,
       "joinDate": "2023-05-01T00:00:00.000Z",
       "affiliation": "営業",
