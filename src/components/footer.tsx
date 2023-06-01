@@ -1,3 +1,5 @@
+
+
 const Footer = () => {
   return (
     <footer className="text-gray-600 body-font mt-32 body-font bg-gradient-to-r from-blue-500 to-blue-400">
@@ -7,9 +9,9 @@ const Footer = () => {
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
             className="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full"
             viewBox="0 0 24 24"
           >
