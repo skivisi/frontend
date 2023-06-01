@@ -1,46 +1,35 @@
-// ログイン(管理者)
-
-import { ZodError, z } from 'zod';
-import React, { FormEvent, useState } from 'react';
-import Link from 'next/link';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import '../styles/globals.css';
-import { useCookies } from 'react-cookie';
 import axios from 'axios';
 
-const LoginAdmin = () => {
+const RegisterAdmin = () => {
+  const [name, setName] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
-  const [cookie, setCookie] = useCookies();
 
   const handleSubmit = async (
-    event: React.FormEvent<HTMLFormElement>
+    e: React.FormEvent<HTMLFormElement>
   ) => {
-    event.preventDefault();
-
     try {
-      axios
-        .get(
-          `http://localhost:8000/admin?email=${email}&password=${password}`
-        )
-        .then((response) => {
-          let userData = response.data;
-          console.log(userData);
-          let id = userData[0].id;
-          console.log(id);
-          setCookie('id', id);
-          window.location.href = '/dashboard/dbAdmin';
-        });
+      const response = await axios.post('http://localhost:8000/admin', {
+        name,
+        email,
+        password,
+      });
+      console.log(response.data);
+      window.location.href = '/loginAdmin';
     } catch (error) {
       console.log(error);
     }
   };
-
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            管理者ログイン☝️
+            管理者登録☝️
           </h2>
         </div>
 
@@ -51,6 +40,23 @@ const LoginAdmin = () => {
             method="POST"
             onSubmit={handleSubmit}
           >
+            <div>
+              <label className="block text-sm font-medium leading-6 text-gray-900"></label>
+              <div className="mt-2">
+                <input
+                  id="userName"
+                  name="userName"
+                  autoComplete="userName"
+                  required
+                  placeholder="ユーザー"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+
             <div>
               <label
                 htmlFor="email"
@@ -65,7 +71,9 @@ const LoginAdmin = () => {
                   required
                   placeholder="メールアドレス"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                 />
               </div>
             </div>
@@ -93,21 +101,11 @@ const LoginAdmin = () => {
             </div>
 
             <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                ></label>
-                <div className="text-sm"></div>
-              </div>
-            </div>
-
-            <div>
               <button
                 type="submit"
                 className="flex w-full justify-center px-3 py-2.5 shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid text-white"
               >
-                ログイン
+                登録
               </button>
             </div>
           </form>
@@ -117,4 +115,4 @@ const LoginAdmin = () => {
   );
 };
 
-export default LoginAdmin;
+export default RegisterAdmin;

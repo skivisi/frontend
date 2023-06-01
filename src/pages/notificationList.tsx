@@ -1,10 +1,37 @@
+import axios from 'axios';
 import Header from '../components/header';
 import Footer from '@/components/footer';
+import { GetServerSideProps } from 'next';
+import { useEffect } from 'react';
 
 // 申請通知リスト(管理者)
 
-const NotificationList = () => {
+export const getServerSideProps:GetServerSideProps = async ({
+  req,
+}) => {
+  // ログイン中のadminのidを取得
+  const cookies = req.cookies
+  const cookie = cookies.id
+
+  console.log('adminId:', cookie)
+
+  try {
+    axios.get(`api/request`)
+  }catch(error){
+    console.log(error)
+  }
+  
+
+  return {
+    props: {
+      adminId:cookie,
+    }
+  }
+}
+
+const NotificationList = ({adminId}:any) => {
   const items = [1, 2, 3, 4];
+  console.log('adminId:', adminId)
   return (
     <>
       <Header />

@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import DatePicker,{ registerLocale } from 'react-datepicker';
+import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../styles/globals.css';
 import axios from 'axios';
@@ -21,6 +21,7 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState<
     string | null
   >(null);
+  const [userCount, setUserCount] = useState(0);
 
   const [emailError, setEmailError] = useState<string | null>(null);
   const [employeeNumberError, setEmployeeNumberError] = useState<
@@ -37,7 +38,6 @@ const Register = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState<
     string | null
   >(null);
-
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
@@ -81,6 +81,10 @@ const Register = () => {
       console.log('成功', values);
       setPasswordError(null); // パスワードのエラーをリセット
 
+
+      // userId追加する
+      setUserCount(userCount + 1);
+
       const response = await axios.post('api/user', {
         userName,
         email,
@@ -92,6 +96,7 @@ const Register = () => {
         confirmPassword,
       });
       console.log(response.data);
+      window.location.href = '/login';
     } catch (error) {
       if (error instanceof ZodError) {
         // ZodErrorのインスタンスであることを確認
@@ -115,8 +120,11 @@ const Register = () => {
 
   // 入社年月選択の記述
 
-  const handleDateChange = (date: Date | null) => {
-      setSelectedDate(date);
+  const handleDateChange = (date: Date) => {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 月は0から始まるため、1を加えて調整
+    const selectedDate = new Date(`${year}-${month}`);
+    setSelectedDate(selectedDate);
   };
 
   return (
@@ -190,7 +198,9 @@ const Register = () => {
                     setEmployeeNumber(parseInt(e.target.value));
                   }}
                 />
-                <div className="text-red-500 text-sm">{employeeNumberError}</div>
+                <div className="text-red-500 text-sm">
+                  {employeeNumberError}
+                </div>
               </div>
             </div>
 
@@ -198,14 +208,13 @@ const Register = () => {
               <label className="block text-sm font-medium leading-6 text-gray-900"></label>
               <div className="mt-2">
                 <DatePicker
-                  dateFormat="yyyy/MM"
+                  dateFormat="yyyy-MM"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   selected={selectedDate}
                   onChange={handleDateChange}
                   showMonthYearPicker
                   placeholderText="入社年月"
                   required
-                  locale="ja" // 日本語ロケールを指定します
                 />
               </div>
             </div>
@@ -252,6 +261,7 @@ const Register = () => {
                   </option>
                   <option value="待機中">待機中</option>
                   <option value="アサイン中">アサイン中</option>
+                  <option value="営業">本社勤務</option>
                 </select>
                 <div className="text-red-500 text-sm">
                   {businessSituationError}

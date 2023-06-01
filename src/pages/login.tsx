@@ -52,9 +52,21 @@ const Login = () => {
           let userData = response.data;
           console.log(userData);
           let id = userData[0].id;
-          console.log(id);
+          let affiliation = userData[0].affiliation;
           setCookie('id', id);
-          return id;
+          setCookie('affiliation', affiliation);
+          if (
+            affiliation === 'FR' ||
+            affiliation === 'JAVA' ||
+            affiliation === 'QA' ||
+            affiliation === 'ML' ||
+            affiliation === 'CL' ||
+            affiliation=== 'PHP'
+          ) {
+            window.location.href = '/dashboard/dbEngineer';
+          } else if (affiliation === '営業') {
+            window.location.href = '/dashboard/dbSales';
+          }
         });
     } catch (error) {
       // バリデーションエラーが発生した場合の処理
@@ -68,12 +80,6 @@ const Login = () => {
       }
       console.log(error);
     }
-  };
-
-  const handleFormSubmit = async (
-    event: React.FormEvent<HTMLFormElement>
-  ) => {
-    event.preventDefault();
   };
 
   return (

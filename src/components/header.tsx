@@ -1,6 +1,12 @@
+import Link from 'next/link';
 import favicon from '.././app/favicon.ico';
+import { useCookies } from 'react-cookie';
 
 const Header = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(['id']);
+  const handleLogout = () => {
+    removeCookie('id');
+  };
   return (
     <div>
       <header className="text-gray-600 body-font bg-gradient-to-r from-blue-500 to-blue-400">
@@ -14,9 +20,14 @@ const Header = () => {
           <button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0 text-sky-900">
             ダッシュボードへ
           </button>
-          <button className="ml-10 inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0 text-sky-900">
+          <Link href="/login">
+          <button
+            className="ml-10 inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0 text-sky-900"
+            onClick={handleLogout}
+          >
             ログアウト→
           </button>
+          </Link>
         </div>
       </header>
     </div>
