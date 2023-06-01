@@ -1,7 +1,6 @@
 {
   "user": [
     {
-      "userId": 1,
       "email": "john@example.com",
       "employeeNumber": 12345,
       "joinDate": "2023-05-29",
@@ -11,10 +10,10 @@
       "password": "hashed_password",
       "confirmPassword": "hashed_password",
       "createdAt": "2023-05-29T10:30:00.000Z",
-      "updatedAt": "2023-05-29T15:45:00.000Z"
+      "updatedAt": "2023-05-29T15:45:00.000Z",
+      "id": 1
     },
     {
-      "userId": 2,
       "email": "jane@example.com",
       "employeeNumber": 54321,
       "joinDate": "2023-05-28",
@@ -24,10 +23,10 @@
       "password": "hashed_password",
       "confirmPassword": "hashed_password",
       "createdAt": "2023-05-28T09:15:00.000Z",
-      "updatedAt": "2023-05-29T13:20:00.000Z"
+      "updatedAt": "2023-05-29T13:20:00.000Z",
+      "id": 2
     },
     {
-      "userId": 3,
       "email": "bob@example.com",
       "employeeNumber": 98765,
       "joinDate": "2023-05-27",
@@ -37,7 +36,30 @@
       "password": "hashed_password",
       "confirmPassword": "hashed_password",
       "createdAt": "2023-05-27T08:00:00.000Z",
-      "updatedAt": "2023-05-29T11:50:00.000Z"
+      "updatedAt": "2023-05-29T11:50:00.000Z",
+      "id": 3
+    },
+    {
+      "userName": "安田優斗",
+      "email": "yasuda@example.com",
+      "employeeNumber": 1127,
+      "joinDate": "2022-10-01T00:00:00.000Z",
+      "affiliation": "FR",
+      "businessSituation": "待機中",
+      "password": "1127",
+      "confirmPassword": "1127",
+      "id": 4
+    },
+    {
+      "userName": "山田涼介",
+      "email": "yamada@example.com",
+      "employeeNumber": 1111,
+      "joinDate": "2023-05-01T00:00:00.000Z",
+      "affiliation": "営業",
+      "businessSituation": "営業",
+      "password": "1111",
+      "confirmPassword": "1111",
+      "id": 5
     }
   ],
   "skill": [
@@ -126,21 +148,21 @@
   ],
   "spec": [
     {
-      "specId": 1,
+      "id": 1,
       "userId": 1,
       "github": "https://github.com/johndoe",
       "offHours": "Evenings and weekends",
       "createdAt": "2023-05-29T10:30:00.000Z"
     },
     {
-      "specId": 2,
+      "id": 2,
       "userId": 2,
       "github": "https://github.com/janesmith",
       "offHours": "Flexible schedule",
       "createdAt": "2023-05-28T09:15:00.000Z"
     },
     {
-      "specId": 3,
+      "id": 3,
       "userId": 3,
       "github": "https://github.com/bobjohnson",
       "offHours": "Weekends",
@@ -167,7 +189,6 @@
       "url": "https://portfolio.example.com"
     }
   ],
-
   "skillSummary": [
     {
       "skillSummaryId": 1,
@@ -329,7 +350,6 @@
   ],
   "request": [
     {
-      "applicationId": 1,
       "userId": 1,
       "status": 1,
       "adminComment": "Review in progress",
@@ -357,6 +377,13 @@
       "adminId": 1,
       "createdAt": "2023-05-20T11:30:00.000Z",
       "resultedAt": "2023-05-25T16:15:00.000Z"
+    },
+    {
+      "id": 4,
+      "userId": 4,
+      "status": 1,
+      "engineerComment": "Excellent skills",
+      "createdAt": "2023-05-20T11:30:00.000Z"
     }
   ],
   "admin": [
@@ -365,14 +392,22 @@
       "email": "admin1@example.com",
       "password": "admin123",
       "name": "Admin 1",
-      "createdAt": "2023-01-01T09:00:00.000Z"
+      "createdAt": "2023-01-01T09:00:00.000Z",
+      "id": 1
     },
     {
       "adminId": 2,
       "email": "admin2@example.com",
       "password": "admin456",
       "name": "Admin 2",
-      "createdAt": "2023-02-05T11:30:00.000Z"
+      "createdAt": "2023-02-05T11:30:00.000Z",
+      "id": 2
+    },
+    {
+      "name": "安田優斗",
+      "email": "yasuda@example.com",
+      "password": "1127",
+      "id": 3
     }
   ]
 }
