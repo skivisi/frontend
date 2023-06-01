@@ -17,7 +17,7 @@ const NotificationEngineer = () => {
         <div className="mx-96 pt-20 pb-20 border-black rounded-md ">
           <div className="shadow-2xl">
             <div className="flex bg-blue-200 text-xl space-x-10 py-5 pl-8 border-2 border-black">
-              <h4 className="font-semibold text-white py-2 w-24 rounded-xl shadow-md cursor-pointer bg-gradient-to-b from-blue-400 border-2 border-white border-solid text-center">
+              <h4 className="font-semibold text-white py-2 w-24 rounded-xl shadow-md bg-gradient-to-b from-blue-400 border-2 border-white border-solid text-center">
                 承認
               </h4>
               <div className="pt-3">2023/5/25</div>
@@ -52,7 +52,7 @@ const NotificationEngineer = () => {
 
             <div>
               <div className="flex bg-blue-200 text-xl space-x-10 py-5 pl-8 border-b-2 border-r-2 border-l-2 border-black">
-                <h4 className="font-semibold text-white py-2 w-24 rounded-xl shadow-md cursor-pointer bg-gradient-to-b from-blue-400 border-2 border-white border-solid text-center">
+                <h4 className="font-semibold text-white py-2 w-24 rounded-xl shadow-md bg-gradient-to-b from-blue-400 border-2 border-white border-solid text-center">
                   承認
                 </h4>
                 <div className="pt-3">2023/5/25</div>

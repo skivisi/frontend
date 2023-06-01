@@ -1,10 +1,37 @@
+import axios from 'axios';
 import Header from '../components/header';
 import Footer from '@/components/footer';
+import { GetServerSideProps } from 'next';
+import { useEffect } from 'react';
 
 // 申請通知リスト(管理者)
 
-const NotificationList = () => {
+export const getServerSideProps:GetServerSideProps = async ({
+  req,
+}) => {
+  // ログイン中のadminのidを取得
+  const cookies = req.cookies
+  const cookie = cookies.id
+
+  console.log('adminId:', cookie)
+
+  try {
+    axios.get(`api/request`)
+  }catch(error){
+    console.log(error)
+  }
+  
+
+  return {
+    props: {
+      adminId:cookie,
+    }
+  }
+}
+
+const NotificationList = ({adminId}:any) => {
   const items = [1, 2, 3, 4];
+  console.log('adminId:', adminId)
   return (
     <>
       <Header />
@@ -15,12 +42,12 @@ const NotificationList = () => {
           <div>件</div>
         </div>
         <div
-          className="mx-72 border-blue-200 rounded-md bg-blue-200"
-          style={{ borderWidth: '85px' }}
+          className="mx-auto border-blue-200 rounded-md bg-blue-200 max-w-6xl py-3 mb-2"
+         
         >
           <div className="text-center">
             <div className="">
-              <div className="flex justify-center text-xl space-x-32 pb-10">
+              <div className="flex justify-center mt-14 text-lg space-x-2 md:space-x-32 pr-24">
                 <div className="w-24">社員番号</div>
                 <div className="w-24">入社年月</div>
                 <div className="w-24">名前</div>
@@ -36,7 +63,7 @@ const NotificationList = () => {
                 >
                   <div
                     key={item}
-                    className="flex justify-center mt-14 pl-36 text-lg space-x-32"
+                    className="flex justify-center mt-14 md:pl-36 text-lg space-x-2 md:space-x-32 pr-24"
                   >
                     <a
                       href="#"
@@ -59,10 +86,10 @@ const NotificationList = () => {
                     </a>
                     <button>▼</button>
                   </div>
-                  <div className="pt-7 text-left">
+                  <div className="pt-7 text-left pl-40">
                     <p>○開発経験</p>
                     <p>SNS開発を追加しました</p>
-                    <p>ご確認の程よろしくお願いいたいます</p>
+                    <p>ご確認の程よろしくお願いいたします</p>
                   </div>
                 </div>
               ))}

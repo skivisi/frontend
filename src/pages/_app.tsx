@@ -1,6 +1,8 @@
+import Header from '@/components/header';
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { Noto_Sans_JP, Kosugi_Maru } from 'next/font/google';
+import Footer from '@/components/footer';
 
 
 const noto = Noto_Sans_JP({
