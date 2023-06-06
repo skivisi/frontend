@@ -101,7 +101,19 @@
       "SBR": 85,
       "AR": 70,
       "TS": 95,
-      "COM": 88
+      "COM": 88,
+      "abilities": [
+        { "property": "予知能力", "value": 1 },
+        { "property": "テックリード", "value": 0 },
+        { "property": "vim職人", "value": 0 },
+        { "property": "shell芸人", "value": 1 },
+        { "property": "超ポジティブ", "value": 0 },
+        { "property": "遅刻魔", "value": 2 },
+        { "property": "気分屋", "value": 0 },
+        { "property": "新人", "value": 1 },
+        { "property": "お喋り野郎", "value": 3 },
+        { "property": "ガヤ", "value": 2 }
+      ]
     },
     {
       "skillPointId": 2,
@@ -126,21 +138,21 @@
       "COM": 82
     }
   ],
-  "spaecialAbility": [
+  "specialAbility": [
     {
-      "spaecialAbilityId": 1,
+      "specialAbilityId": 1,
       "userId": 1,
       "skillList": "Programming, Problem Solving",
       "skillSelection": true
     },
     {
-      "spaecialAbilityId": 2,
+      "specialAbilityId": 2,
       "userId": 2,
       "skillList": "Design, Creativity",
       "skillSelection": false
     },
     {
-      "spaecialAbilityId": 3,
+      "specialAbilityId": 3,
       "userId": 3,
       "skillList": "Sales, Communication",
       "skillSelection": true
@@ -152,7 +164,7 @@
       "userId": 1,
       "github": "https://github.com/johndoe",
       "offHours": "Evenings and weekends",
-      "createdAt": "2023-05-29T10:30:00.000Z"
+      "createdAt": "2023-06-20T08:00:00.000Z"
     },
     {
       "id": 2,
@@ -167,6 +179,27 @@
       "github": "https://github.com/bobjohnson",
       "offHours": "Weekends",
       "createdAt": "2023-05-27T08:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "github": "https://github.com/bobjohnson",
+      "offHours": "Weekends",
+      "createdAt": "2023-05-29T10:30:00.000Z"
+    },
+    {
+      "id": 5,
+      "userId": 1,
+      "github": "https://github.com/bobjohnson",
+      "offHours": "Weekends",
+      "createdAt": "2023-05-20T08:00:00.000Z"
+    },
+    {
+      "id": 6,
+      "userId": 1,
+      "github": "https://github.com/bobjohnson",
+      "offHours": "Weekends",
+      "createdAt": "2023-05-22T10:30:00.000Z"
     }
   ],
   "portfolio": [
@@ -178,12 +211,18 @@
     },
     {
       "portfolioId": 2,
-      "specId": 2,
+      "specId": 1,
       "heading": "Graphic Design Portfolio",
       "url": "https://portfolio.example.com"
     },
     {
       "portfolioId": 3,
+      "specId": 2,
+      "heading": "Sales Achievements",
+      "url": "https://portfolio.example.com"
+    },
+    {
+      "portfolioId": 4,
       "specId": 3,
       "heading": "Sales Achievements",
       "url": "https://portfolio.example.com"
@@ -197,11 +236,61 @@
     },
     {
       "skillSummaryId": 2,
-      "specId": 2,
-      "autoCalibrationId": 2
+      "specId": 1,
+      "autoCalibrationId": 3
     },
     {
       "skillSummaryId": 3,
+      "specId": 1,
+      "autoCalibrationId": 2
+    },
+    {
+      "skillSummaryId": 4,
+      "specId": 1,
+      "autoCalibrationId": 4
+    },
+    {
+      "skillSummaryId": 5,
+      "specId": 1,
+      "autoCalibrationId": 7
+    },
+    {
+      "skillSummaryId": 6,
+      "specId": 1,
+      "autoCalibrationId": 10
+    },
+    {
+      "skillSummaryId": 7,
+      "specId": 1,
+      "autoCalibrationId": 13
+    },
+    {
+      "skillSummaryId": 8,
+      "specId": 1,
+      "autoCalibrationId": 16
+    },
+    {
+      "skillSummaryId": 9,
+      "specId": 1,
+      "autoCalibrationId": 18
+    },
+    {
+      "skillSummaryId": 10,
+      "specId": 1,
+      "autoCalibrationId": 30
+    },
+    {
+      "skillSummaryId": 11,
+      "specId": 1,
+      "autoCalibrationId": 37
+    },
+    {
+      "skillSummaryId": 12,
+      "specId": 1,
+      "autoCalibrationId": 57
+    },
+    {
+      "skillSummaryId": 30,
       "specId": 3,
       "autoCalibrationId": 3
     }
@@ -222,6 +311,12 @@
     {
       "sellingPointId": 3,
       "specId": 3,
+      "title": "Strong Leadership Abilities",
+      "content": "I have successfully led teams and delivered projects on time."
+    },
+    {
+      "sellingPointId": 4,
+      "specId": 1,
       "title": "Strong Leadership Abilities",
       "content": "I have successfully led teams and delivered projects on time."
     }
@@ -312,40 +407,1104 @@
   ],
   "autoCalibration": [
     {
-      "autoCalibrationId": 1,
-      "skill": "Problem Solving",
-      "membership": 5,
-      "category": 2,
-      "FR": 4,
-      "CL": 3,
-      "ML": 4,
-      "QA": 4,
-      "JAVA": 5,
-      "PHP": 3
-    },
-    {
-      "autoCalibrationId": 2,
-      "skill": "Communication",
-      "membership": 4,
+      "id": 1,
+      "skill": "Linux",
+      "membership": "",
       "category": 1,
-      "FR": 3,
-      "CL": 5,
-      "ML": 3,
-      "QA": 4,
-      "JAVA": 2,
-      "PHP": 3
-    },
-    {
-      "autoCalibrationId": 3,
-      "skill": "Leadership",
-      "membership": 4,
-      "category": 3,
       "FR": 2,
-      "CL": 4,
+      "CL": 3,
       "ML": 3,
       "QA": 3,
-      "JAVA": 2,
-      "PHP": 4
+      "BR": 3
+    },
+    {
+      "id": 2,
+      "skill": "Windows",
+      "membership": "",
+      "category": 1,
+      "FR": 2,
+      "CL": 3,
+      "ML": 3,
+      "QA": 3,
+      "BR": 2
+    },
+    {
+      "id": 3,
+      "skill": "Mac OS",
+      "membership": "",
+      "category": 1,
+      "FR": 2,
+      "CL": 2,
+      "ML": 2,
+      "QA": 3,
+      "BR": 2
+    },
+    {
+      "id": 4,
+      "skill": "JavaScript",
+      "membership": "",
+      "category": 2,
+      "FR": 3,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 5,
+      "skill": "Python",
+      "membership": "",
+      "category": 2,
+      "FR": 1,
+      "CL": 2,
+      "ML": 3,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 6,
+      "skill": "Java",
+      "membership": "",
+      "category": 2,
+      "FR": 1,
+      "CL": 2,
+      "ML": 2,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 7,
+      "skill": "React",
+      "membership": "",
+      "category": 3,
+      "FR": 3,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 8,
+      "skill": "Angular",
+      "membership": "",
+      "category": 3,
+      "FR": 3,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 9,
+      "skill": "Vue",
+      "membership": "",
+      "category": 3,
+      "FR": 3,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 10,
+      "skill": "jQuery",
+      "membership": "",
+      "category": 4,
+      "FR": 3,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 11,
+      "skill": "Bootstrap",
+      "membership": "",
+      "category": 4,
+      "FR": 3,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 12,
+      "skill": "D3.js",
+      "membership": "",
+      "category": 4,
+      "FR": 3,
+      "CL": 1,
+      "ML": 2,
+      "QA": 2,
+      "BR": 1
+    },
+    {
+      "id": 13,
+      "skill": "AWS",
+      "membership": "",
+      "category": 5,
+      "FR": 1,
+      "CL": 3,
+      "ML": 3,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 14,
+      "skill": "GCP",
+      "membership": "",
+      "category": 5,
+      "FR": 1,
+      "CL": 3,
+      "ML": 3,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 15,
+      "skill": "Azure",
+      "membership": "",
+      "category": 5,
+      "FR": 1,
+      "CL": 3,
+      "ML": 3,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 16,
+      "skill": "Git",
+      "membership": "",
+      "category": 6,
+      "FR": 3,
+      "CL": 3,
+      "ML": 3,
+      "QA": 3,
+      "BR": 3
+    },
+    {
+      "id": 17,
+      "skill": "Docker",
+      "membership": "",
+      "category": 6,
+      "FR": 2,
+      "CL": 3,
+      "ML": 2,
+      "QA": 3,
+      "BR": 3
+    },
+    {
+      "id": 18,
+      "skill": "Jenkins",
+      "membership": "",
+      "category": 6,
+      "FR": 1,
+      "CL": 2,
+      "ML": 2,
+      "QA": 3,
+      "BR": 3
+    },
+    {
+      "id": 19,
+      "skill": "Full Stack Development",
+      "membership": "",
+      "category": 7,
+      "FR": 3,
+      "CL": 3,
+      "ML": 1,
+      "QA": 3,
+      "BR": 3
+    },
+    {
+      "id": 20,
+      "skill": "Frontend Development",
+      "membership": "",
+      "category": 7,
+      "FR": 3,
+      "CL": 1,
+      "ML": 1,
+      "QA": 3,
+      "BR": 1
+    },
+    {
+      "id": 21,
+      "skill": "Backend Development",
+      "membership": "",
+      "category": 7,
+      "FR": 1,
+      "CL": 1,
+      "ML": 1,
+      "QA": 3,
+      "BR": 3
+    },
+    {
+      "id": 22,
+      "skill": "Ubuntu",
+      "membership": "",
+      "category": 1,
+      "FR": 2,
+      "CL": 3,
+      "ML": 3,
+      "QA": 3,
+      "BR": 2
+    },
+    {
+      "id": 23,
+      "skill": "CentOS",
+      "membership": "",
+      "category": 1,
+      "FR": 1,
+      "CL": 3,
+      "ML": 3,
+      "QA": 3,
+      "BR": 2
+    },
+    {
+      "id": 24,
+      "skill": "Debian",
+      "membership": "",
+      "category": 1,
+      "FR": 1,
+      "CL": 2,
+      "ML": 2,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 25,
+      "skill": "PHP",
+      "membership": "",
+      "category": 2,
+      "FR": 2,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 26,
+      "skill": "Ruby",
+      "membership": "",
+      "category": 2,
+      "FR": 2,
+      "CL": 1,
+      "ML": 2,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 27,
+      "skill": "C#",
+      "membership": "",
+      "category": 2,
+      "FR": 1,
+      "CL": 2,
+      "ML": 1,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 28,
+      "skill": "Laravel",
+      "membership": "",
+      "category": 3,
+      "FR": 2,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 29,
+      "skill": "Spring",
+      "membership": "",
+      "category": 3,
+      "FR": 2,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 30,
+      "skill": "Express.js",
+      "membership": "",
+      "category": 3,
+      "FR": 2,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 31,
+      "skill": "Lodash",
+      "membership": "",
+      "category": 4,
+      "FR": 2,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 32,
+      "skill": "Underscore.js",
+      "membership": "",
+      "category": 4,
+      "FR": 2,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 33,
+      "skill": "Moment.js",
+      "membership": "",
+      "category": 4,
+      "FR": 3,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 34,
+      "skill": "IBM Cloud",
+      "membership": "",
+      "category": 5,
+      "FR": 1,
+      "CL": 3,
+      "ML": 3,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 35,
+      "skill": "Alibaba Cloud",
+      "membership": "",
+      "category": 5,
+      "FR": 1,
+      "CL": 3,
+      "ML": 3,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 36,
+      "skill": "Oracle Cloud",
+      "membership": "",
+      "category": 5,
+      "FR": 1,
+      "CL": 3,
+      "ML": 3,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 37,
+      "skill": "GitLab",
+      "membership": "",
+      "category": 6,
+      "FR": 3,
+      "CL": 3,
+      "ML": 3,
+      "QA": 3,
+      "BR": 3
+    },
+    {
+      "id": 38,
+      "skill": "Kubernetes",
+      "membership": "",
+      "category": 6,
+      "FR": 1,
+      "CL": 3,
+      "ML": 2,
+      "QA": 3,
+      "BR": 3
+    },
+    {
+      "id": 39,
+      "skill": "Terraform",
+      "membership": "",
+      "category": 6,
+      "FR": 1,
+      "CL": 3,
+      "ML": 2,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 40,
+      "skill": "Mobile Development",
+      "membership": "",
+      "category": 7,
+      "FR": 3,
+      "CL": 1,
+      "ML": 1,
+      "QA": 3,
+      "BR": 1
+    },
+    {
+      "id": 41,
+      "skill": "Game Development",
+      "membership": "",
+      "category": 7,
+      "FR": 3,
+      "CL": 1,
+      "ML": 2,
+      "QA": 3,
+      "BR": 1
+    },
+    {
+      "id": 42,
+      "skill": "Embedded Systems Development",
+      "membership": "",
+      "category": 7,
+      "FR": 1,
+      "CL": 1,
+      "ML": 1,
+      "QA": 3,
+      "BR": 3
+    },
+    {
+      "id": 43,
+      "skill": "Fedora",
+      "membership": "",
+      "category": 1,
+      "FR": 1,
+      "CL": 2,
+      "ML": 2,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 44,
+      "skill": "RHEL",
+      "membership": "",
+      "category": 1,
+      "FR": 1,
+      "CL": 3,
+      "ML": 3,
+      "QA": 3,
+      "BR": 2
+    },
+    {
+      "id": 45,
+      "skill": "Arch Linux",
+      "membership": "",
+      "category": 1,
+      "FR": 1,
+      "CL": 2,
+      "ML": 2,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 46,
+      "skill": "Go",
+      "membership": "",
+      "category": 2,
+      "FR": 1,
+      "CL": 2,
+      "ML": 2,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 47,
+      "skill": "Kotlin",
+      "membership": "",
+      "category": 2,
+      "FR": 2,
+      "CL": 1,
+      "ML": 2,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 48,
+      "skill": "Swift",
+      "membership": "",
+      "category": 2,
+      "FR": 3,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 1
+    },
+    {
+      "id": 49,
+      "skill": "Django",
+      "membership": "",
+      "category": 3,
+      "FR": 2,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 50,
+      "skill": "ASP.NET",
+      "membership": "",
+      "category": 3,
+      "FR": 2,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 52,
+      "skill": "NumPy",
+      "membership": "",
+      "category": 4,
+      "FR": 1,
+      "CL": 1,
+      "ML": 3,
+      "QA": 2,
+      "BR": 1
+    },
+    {
+      "id": 53,
+      "skill": "Pandas",
+      "membership": "",
+      "category": 4,
+      "FR": 1,
+      "CL": 1,
+      "ML": 3,
+      "QA": 2,
+      "BR": 1
+    },
+    {
+      "id": 54,
+      "skill": "Matplotlib",
+      "membership": "",
+      "category": 4,
+      "FR": 1,
+      "CL": 1,
+      "ML": 3,
+      "QA": 2,
+      "BR": 1
+    },
+    {
+      "id": 55,
+      "skill": "DigitalOcean",
+      "membership": "",
+      "category": 5,
+      "FR": 1,
+      "CL": 3,
+      "ML": 2,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 56,
+      "skill": "Heroku",
+      "membership": "",
+      "category": 5,
+      "FR": 1,
+      "CL": 3,
+      "ML": 2,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 57,
+      "skill": "Vercel",
+      "membership": "",
+      "category": 5,
+      "FR": 1,
+      "CL": 2,
+      "ML": 1,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 58,
+      "skill": "Jira",
+      "membership": "",
+      "category": 6,
+      "FR": 2,
+      "CL": 2,
+      "ML": 2,
+      "QA": 3,
+      "BR": 2
+    },
+    {
+      "id": 59,
+      "skill": "Trello",
+      "membership": "",
+      "category": 6,
+      "FR": 2,
+      "CL": 2,
+      "ML": 2,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 60,
+      "skill": "Asana",
+      "membership": "",
+      "category": 6,
+      "FR": 2,
+      "CL": 2,
+      "ML": 2,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 61,
+      "skill": "Data Science",
+      "membership": "",
+      "category": 7,
+      "FR": 1,
+      "CL": 2,
+      "ML": 3,
+      "QA": 3,
+      "BR": 1
+    },
+    {
+      "id": 62,
+      "skill": "Blockchain Development",
+      "membership": "",
+      "category": 7,
+      "FR": 1,
+      "CL": 2,
+      "ML": 2,
+      "QA": 3,
+      "BR": 3
+    },
+    {
+      "id": 63,
+      "skill": "Cybersecurity",
+      "membership": "",
+      "category": 7,
+      "FR": 1,
+      "CL": 2,
+      "ML": 2,
+      "QA": 3,
+      "BR": 3
+    },
+    {
+      "id": 64,
+      "skill": "Rust",
+      "membership": "",
+      "category": 2,
+      "FR": 1,
+      "CL": 2,
+      "ML": 3,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 65,
+      "skill": "Elixir",
+      "membership": "",
+      "category": 2,
+      "FR": 1,
+      "CL": 2,
+      "ML": 2,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 66,
+      "skill": "Groovy",
+      "membership": "",
+      "category": 2,
+      "FR": 1,
+      "CL": 2,
+      "ML": 2,
+      "QA": 3,
+      "BR": 3
+    },
+    {
+      "id": 67,
+      "skill": "F#",
+      "membership": "",
+      "category": 2,
+      "FR": 1,
+      "CL": 2,
+      "ML": 3,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 68,
+      "skill": "Haskell",
+      "membership": "",
+      "category": 2,
+      "FR": 1,
+      "CL": 2,
+      "ML": 3,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 69,
+      "skill": "Clojure",
+      "membership": "",
+      "category": 2,
+      "FR": 1,
+      "CL": 2,
+      "ML": 3,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 70,
+      "skill": "Scheme",
+      "membership": "",
+      "category": 2,
+      "FR": 1,
+      "CL": 2,
+      "ML": 3,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 71,
+      "skill": "Common Lisp",
+      "membership": "",
+      "category": 2,
+      "FR": 1,
+      "CL": 2,
+      "ML": 3,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 72,
+      "skill": "Erlang",
+      "membership": "",
+      "category": 2,
+      "FR": 1,
+      "CL": 2,
+      "ML": 3,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 73,
+      "skill": "Fortran",
+      "membership": "",
+      "category": 2,
+      "FR": 1,
+      "CL": 2,
+      "ML": 3,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 76,
+      "skill": "Spring Boot",
+      "membership": "",
+      "category": 3,
+      "FR": 1,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 77,
+      "skill": "Ruby on Rails",
+      "membership": "",
+      "category": 3,
+      "FR": 2,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 79,
+      "skill": "Flask",
+      "membership": "",
+      "category": 3,
+      "FR": 1,
+      "CL": 1,
+      "ML": 3,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 80,
+      "skill": "Phoenix Framework",
+      "membership": "",
+      "category": 3,
+      "FR": 2,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 81,
+      "skill": "Sinatra",
+      "membership": "",
+      "category": 3,
+      "FR": 2,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 82,
+      "skill": "Deno",
+      "membership": "",
+      "category": 3,
+      "FR": 2,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 83,
+      "skill": "Mojolicious",
+      "membership": "",
+      "category": 3,
+      "FR": 1,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 84,
+      "skill": "Meteor.js",
+      "membership": "",
+      "category": 3,
+      "FR": 2,
+      "CL": 1,
+      "ML": 1,
+      "QA": 2,
+      "BR": 3
+    },
+    {
+      "id": 85,
+      "skill": "NumPy",
+      "membership": "",
+      "category": 4,
+      "FR": 1,
+      "CL": 1,
+      "ML": 3,
+      "QA": 2,
+      "BR": 1
+    },
+    {
+      "id": 87,
+      "skill": "Scikit-learn",
+      "membership": "",
+      "category": 4,
+      "FR": 1,
+      "CL": 1,
+      "ML": 3,
+      "QA": 2,
+      "BR": 1
+    },
+    {
+      "id": 88,
+      "skill": "TensorFlow",
+      "membership": "",
+      "category": 4,
+      "FR": 1,
+      "CL": 1,
+      "ML": 3,
+      "QA": 2,
+      "BR": 1
+    },
+    {
+      "id": 89,
+      "skill": "PyTorch",
+      "membership": "",
+      "category": 4,
+      "FR": 1,
+      "CL": 1,
+      "ML": 3,
+      "QA": 2,
+      "BR": 1
+    },
+    {
+      "id": 90,
+      "skill": "Keras",
+      "membership": "",
+      "category": 4,
+      "FR": 1,
+      "CL": 1,
+      "ML": 3,
+      "QA": 2,
+      "BR": 1
+    },
+    {
+      "id": 92,
+      "skill": "Seaborn",
+      "membership": "",
+      "category": 4,
+      "FR": 1,
+      "CL": 1,
+      "ML": 3,
+      "QA": 2,
+      "BR": 1
+    },
+    {
+      "id": 93,
+      "skill": "SciPy",
+      "membership": "",
+      "category": 4,
+      "FR": 1,
+      "CL": 1,
+      "ML": 3,
+      "QA": 2,
+      "BR": 1
+    },
+    {
+      "id": 94,
+      "skill": "NLTK",
+      "membership": "",
+      "category": 4,
+      "FR": 1,
+      "CL": 1,
+      "ML": 3,
+      "QA": 2,
+      "BR": 1
+    },
+    {
+      "id": 95,
+      "skill": "Plotly",
+      "membership": "",
+      "category": 4,
+      "FR": 1,
+      "CL": 1,
+      "ML": 3,
+      "QA": 2,
+      "BR": 1
+    },
+    {
+      "id": 96,
+      "skill": "Amazon Web Services",
+      "membership": "",
+      "category": 5,
+      "FR": 1,
+      "CL": 3,
+      "ML": 3,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 97,
+      "skill": "Google Cloud Platform",
+      "membership": "",
+      "category": 5,
+      "FR": 1,
+      "CL": 3,
+      "ML": 3,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 98,
+      "skill": "Microsoft Azure",
+      "membership": "",
+      "category": 5,
+      "FR": 1,
+      "CL": 3,
+      "ML": 3,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 99,
+      "skill": "IBM Cloud",
+      "membership": "",
+      "category": 5,
+      "FR": 1,
+      "CL": 3,
+      "ML": 3,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 100,
+      "skill": "Oracle Cloud",
+      "membership": "",
+      "category": 5,
+      "FR": 1,
+      "CL": 3,
+      "ML": 3,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 101,
+      "skill": "Alibaba Cloud",
+      "membership": "",
+      "category": 5,
+      "FR": 1,
+      "CL": 3,
+      "ML": 3,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 102,
+      "skill": "DigitalOcean",
+      "membership": "",
+      "category": 5,
+      "FR": 1,
+      "CL": 3,
+      "ML": 2,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 103,
+      "skill": "Heroku",
+      "membership": "",
+      "category": 5,
+      "FR": 1,
+      "CL": 3,
+      "ML": 2,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 104,
+      "skill": "Vultr",
+      "membership": "",
+      "category": 5,
+      "FR": 1,
+      "CL": 3,
+      "ML": 2,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 105,
+      "skill": "Linode",
+      "membership": "",
+      "category": 5,
+      "FR": 1,
+      "CL": 3,
+      "ML": 2,
+      "QA": 2,
+      "BR": 2
+    },
+    {
+      "id": 106,
+      "skill": "OVHcloud",
+      "membership": "",
+      "category": 5,
+      "FR": 1,
+      "CL": 3,
+      "ML": 2,
+      "QA": 2,
+      "BR": 2
     }
   ],
   "request": [
