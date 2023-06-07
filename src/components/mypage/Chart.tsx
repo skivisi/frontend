@@ -53,8 +53,8 @@ export const Chart = ({ skill }: { skill: any }) => {
   const chartOptions: ChartOptions<'radar'> = {
     scales: {
       r: {
-        min: 1,
-        max: 10,
+        min: 10,
+        max: 100,
       },
     },
     plugins: {

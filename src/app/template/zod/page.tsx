@@ -70,7 +70,7 @@ export default function ZodTemplate() {
           <input
             type="text"
             id="email"
-            name="emali"
+            name="emali" 
             value={user.email}
             onChange={(e) =>
               setUser({ ...user, email: e.target.value })

@@ -1,18 +1,22 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/*
-① 動的ページ化
-② モックオブジェクトをAPIにする(安田さん同期)
-③ データがない場合の出しわけ
-*/
-
 'use client';
+
 // import { useState } from 'react';
 import '../globals.css';
 import Skillview from '@/components/mypage/Skillview';
 import Specview from '@/components/mypage/Specview';
+import Link from 'next/link';
 import { useState } from 'react';
+import { userFetch } from './_lib/userFetch';
 
-const page = () => {
+// export async function getAllPostIds() {
+//   const res = await axios.get('http://127.0.0.1:8000/user?id=1');
+//   return res.data;
+// }
+
+const Page = () => {
+  const userData = userFetch();
+  // console.log(userData)
+
   // タブの切り替え
   const selected =
     'w-32 bg-blue-700 text-white text-xl font-black border-x-4 border-t-4 border-blue-300 rounded-t-2xl px-5 py-3 transition-all';
@@ -26,7 +30,9 @@ const page = () => {
 
   return (
     <div className="w-full">
-      <p className="ml-20 mt-20">{data.userName}のプロフィール! ▼</p>
+      <p className="ml-20 mt-20">
+        {userData && userData.user.userName}のプロフィール! ▼
+      </p>
 
       {/* スイッチのボタン スペックシート切り替え */}
       <div className="flex justify-center mt-10">
@@ -61,20 +67,38 @@ const page = () => {
       </div>
 
       <section className="bg-blue-200 text-sky-900 max-w-4xl p-10 shadow-xl m-auto border-4 border-sky-800">
+        <div className="flex">
+          <h2 className="text-3xl font-bold mb-5 drop-shadow-white">
+            {pageState ? 'スキルシート' : 'スペックシート'}
+          </h2>
+          <div className="text-center">
+            <Link
+              href={pageState ? '/mypage/skilledit' : '/specseat'}
+            >
+              <button
+                type="button"
+                className="shadow-md h-12 ml-2 relative bottom-2 cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid"
+              >
+                <span className="text-white font-bold m-5 text-lg">
+                  編集
+                </span>
+              </button>
+            </Link>
+          </div>
+        </div>
+
         {/* タブ切り替えの内容 */}
         {pageState ? (
-          <Skillview data={data} />
+          <Skillview userData={userData} />
         ) : (
-          <Specview data={data} />
+          <Specview userData={userData} />
         )}
-        <Specview data={data} />
       </section>
     </div>
   );
 };
 
-export default page;
-
+export default Page;
 
 // 仮データ
 const data = {
@@ -92,13 +116,13 @@ const data = {
   skill: {
     InherentName: 'スキル',
     InherentDescription: 'スキルが高い',
-    FR: 10,
-    BK: 9,
-    DB: 8,
-    SBR: 7,
-    AR: 3,
-    TS: 2,
-    COM: 1,
+    FR: 8,
+    BK: 7,
+    DB: 6,
+    SBR: 8,
+    AR: 5,
+    TS: 5,
+    COM: 6,
     abilities: [
       { property: '予知能力', value: 1 },
       { property: 'テックリード', value: 0 },
