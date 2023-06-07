@@ -17,6 +17,7 @@ const RegisterAdmin = () => {
         name,
         email,
         password,
+        createdAt: new Date(), 
       });
       console.log(response.data);
       window.location.href = '/loginAdmin';

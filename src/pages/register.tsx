@@ -94,6 +94,7 @@ const Register = () => {
         businessSituation,
         password,
         confirmPassword,
+        createdAt: new Date(), 
       });
       console.log(response.data);
       window.location.href = '/login';

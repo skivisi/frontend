@@ -2,36 +2,79 @@ import axios from 'axios';
 import Header from '../components/header';
 import Footer from '@/components/footer';
 import { GetServerSideProps } from 'next';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import requestHandler from './api/request';
+import useSWR from 'swr';
+import Link from 'next/link';
 
 // 申請通知リスト(管理者)
+const fetcher = (
+  resource: Request | URL,
+  init: RequestInit | undefined
+) => fetch(resource, init).then((res) => res.json());
 
-export const getServerSideProps:GetServerSideProps = async ({
+export const getServerSideProps: GetServerSideProps = async ({
   req,
 }) => {
   // ログイン中のadminのidを取得
-  const cookies = req.cookies
-  const cookie = cookies.id
+  const cookies = req.cookies;
+  const cookie = cookies.id;
 
-  console.log('adminId:', cookie)
-
-  try {
-    axios.get(`api/request`)
-  }catch(error){
-    console.log(error)
-  }
-  
+  //userのデータ
+  const { data: userData } = await axios.get(
+    'http://localhost:8000/user'
+  );
 
   return {
     props: {
-      adminId:cookie,
-    }
-  }
-}
+      adminId: cookie,
+      userData: userData,
+    },
+  };
+};
 
-const NotificationList = ({adminId}:any) => {
-  const items = [1, 2, 3, 4];
-  console.log('adminId:', adminId)
+const NotificationList = ({ userData }: { userData: any }) => {
+  // トグル状態管理
+  const [expanded, setExpanded] = useState<{ [id: number]: boolean }>(
+    {}
+  );
+
+  // requestのデータ取得
+  const { data, error } = useSWR('/api/request', fetcher);
+  console.log(data);
+  console.log(userData);
+
+  if (!data) {
+    return <div>Loading...</div>; // データの取得中に表示
+  }
+
+  // ステータスが申請中のみに絞る
+  const requests = data.filter(
+    (request: any) => request.status === 1
+  );
+  console.log(requests);
+
+  // ステータスを絞った後、userのidとrequestのuserIdを結びつける
+  const filteredRequests = requests.map((request: any) => {
+    const user = userData.find(
+      (user: any) => user.id === request.userId
+    );
+
+    return {
+      ...request,
+      user: user,
+    };
+  });
+  console.log(filteredRequests);
+
+  // エンジニアコメントのトグル
+  const handleToggle = (id: number) => {
+    setExpanded((prevExpanded) => ({
+      ...prevExpanded,
+      [id]: !prevExpanded[id],
+    }));
+  };
+
   return (
     <>
       <Header />
@@ -41,10 +84,7 @@ const NotificationList = ({adminId}:any) => {
           <div>{3}</div>
           <div>件</div>
         </div>
-        <div
-          className="mx-auto border-blue-200 rounded-md bg-blue-200 max-w-6xl py-3 mb-2"
-         
-        >
+        <div className="mx-auto border-blue-200 rounded-md bg-blue-200 max-w-6xl py-3 mb-2">
           <div className="text-center">
             <div className="">
               <div className="flex justify-center mt-14 text-lg space-x-2 md:space-x-32 pr-24">
@@ -56,42 +96,49 @@ const NotificationList = ({adminId}:any) => {
             </div>
 
             <div>
-              {items.map((item) => (
-                <div
-                  key={item}
-                  className="border-b-2 border-light-blue-500 pb-2"
-                >
+              {filteredRequests.map((request: any, index: number) => (
                   <div
-                    key={item}
-                    className="flex justify-center mt-14 md:pl-36 text-lg space-x-2 md:space-x-32 pr-24"
+                    key={request.user.id}
+                    className="border-b-2 border-light-blue-500 pb-2"
                   >
-                    <a
-                      href="#"
-                      className="relative flex justify-center space-x-32"
-                    >
-                      <div className="w-24">2276</div>
-                      <div
-                        className="w-24 relative"
-                        style={{ left: '1%' }}
+                    <div className="flex justify-center mt-14 md:pl-36 text-lg space-x-2 md:space-x-32 pr-24">
+                      <Link legacyBehavior href={`/approval/${request.user.id}`}>
+                      <a
+                       
+                        className="relative flex justify-center space-x-32"
                       >
-                        2024/1
-                      </div>
-                      <div className="w-28">青山 真太郎</div>
-                      <div
-                        className="w-24 relative"
-                        style={{ right: '1%' }}
+                        <div className="w-24">
+                          {request.user.employeeNumber}
+                        </div>
+                        <div
+                          className="w-24 relative"
+                          style={{ left: '1%' }}
+                        >
+                          {request.user.joinDate}
+                        </div>
+                        <div className="w-28">
+                          {request.user.userName}
+                        </div>
+                        <div
+                          className="w-24 relative"
+                          style={{ right: '1%' }}
+                        >
+                          {request.user.affiliation}
+                        </div>
+                      </a>
+                      </Link>
+                      <button
+                        onClick={() => handleToggle(request.user.id)}
                       >
-                        FR
+                        {expanded[request.user.id] ? '▲' : '▼'}
+                      </button>
+                    </div>
+                    {expanded[request.user.id] && (
+                      <div className="pt-7 text-left pl-40">
+                        <p>{request.engineerComment}</p>
                       </div>
-                    </a>
-                    <button>▼</button>
+                    )}
                   </div>
-                  <div className="pt-7 text-left pl-40">
-                    <p>○開発経験</p>
-                    <p>SNS開発を追加しました</p>
-                    <p>ご確認の程よろしくお願いいたします</p>
-                  </div>
-                </div>
               ))}
             </div>
           </div>
