@@ -1,9 +1,7 @@
-import Header from '@/components/header';
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { Noto_Sans_JP, Kosugi_Maru } from 'next/font/google';
-import Footer from '@/components/footer';
-
+import { useEffect } from 'react';
 
 const noto = Noto_Sans_JP({
   weight: ['400', '700'],
@@ -19,6 +17,9 @@ const kosugi = Kosugi_Maru({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    document.documentElement.className = document.body.className;
+  }, []);
   return (
     // <main >
     <main className={`${kosugi.variable} ${noto.variable} font-noto`}>
