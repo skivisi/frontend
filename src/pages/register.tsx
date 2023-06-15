@@ -85,7 +85,7 @@ const Register = () => {
       // userId追加する
       setUserCount(userCount + 1);
 
-      const response = await axios.post('api/user', {
+      const response = await axios.post('http://localhost:8000/user', {
         userName,
         email,
         employeeNumber,

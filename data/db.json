@@ -43,7 +43,7 @@
       "userName": "安田優斗",
       "email": "yasuda@example.com",
       "employeeNumber": 1127,
-      "joinDate": "2022-10-01T00:00:00.000Z",
+      "joinDate": "2022-10-01",
       "affiliation": "FR",
       "businessSituation": "待機中",
       "password": "1127",
@@ -73,6 +73,30 @@
       "confirmPassword": "saito",
       "createdAt": "2023-06-06T14:47:01.051Z",
       "id": 6
+    },
+    {
+      "userName": "安田優斗",
+      "email": "yasuda2@example.com",
+      "employeeNumber": 1127,
+      "joinDate": "2023-01-01T00:00:00.000Z",
+      "affiliation": "CL",
+      "businessSituation": "待機中",
+      "password": "1127",
+      "confirmPassword": "1127",
+      "createdAt": "2023-06-09T03:50:37.731Z",
+      "id": 7
+    },
+    {
+      "userName": "山本五十六",
+      "email": "yamamoto@example.com",
+      "employeeNumber": 5555,
+      "joinDate": "2023-06-01T00:00:00.000Z",
+      "affiliation": "PHP",
+      "businessSituation": "アサイン中",
+      "password": "yamamoto",
+      "confirmPassword": "yamamoto",
+      "createdAt": "2023-06-14T06:28:13.361Z",
+      "id": 8
     }
   ],
   "skill": [
@@ -116,16 +140,46 @@
       "TS": 95,
       "COM": 88,
       "abilities": [
-        { "property": "予知能力", "value": 1 },
-        { "property": "テックリード", "value": 0 },
-        { "property": "vim職人", "value": 0 },
-        { "property": "shell芸人", "value": 1 },
-        { "property": "超ポジティブ", "value": 0 },
-        { "property": "遅刻魔", "value": 2 },
-        { "property": "気分屋", "value": 0 },
-        { "property": "新人", "value": 1 },
-        { "property": "お喋り野郎", "value": 3 },
-        { "property": "ガヤ", "value": 2 }
+        {
+          "property": "予知能力",
+          "value": 1
+        },
+        {
+          "property": "テックリード",
+          "value": 0
+        },
+        {
+          "property": "vim職人",
+          "value": 0
+        },
+        {
+          "property": "shell芸人",
+          "value": 1
+        },
+        {
+          "property": "超ポジティブ",
+          "value": 0
+        },
+        {
+          "property": "遅刻魔",
+          "value": 2
+        },
+        {
+          "property": "気分屋",
+          "value": 0
+        },
+        {
+          "property": "新人",
+          "value": 1
+        },
+        {
+          "property": "お喋り野郎",
+          "value": 3
+        },
+        {
+          "property": "ガヤ",
+          "value": 2
+        }
       ]
     },
     {
@@ -238,7 +292,13 @@
     {
       "skillSummaryId": 1,
       "specId": 1,
-      "autoCalibrationId": 1
+      "environment": "macOS",
+      "programmingLanguage": "Javascript",
+      "framework": "Next.js",
+      "library": "React",
+      "cloud": "",
+      "tool": "",
+      "developmentDomain": ""
     },
     {
       "skillSummaryId": 2,

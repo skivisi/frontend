@@ -15,8 +15,6 @@ const fetcher = (
   init: RequestInit | undefined
 ) => fetch(resource, init).then((res) => res.json());
 
-// export async function getServerSideProps(context: { query: any },req:NextApiRequest) {
-
 export const getServerSideProps = async (
   context: { query: any; req: NextApiRequest },
   req: NextApiRequest
