@@ -6,6 +6,10 @@ import { useCookies } from 'react-cookie';
 import axios from 'axios';
 
 // ログイン(エンジニア・営業)
+const fetcher = (
+  resource: Request | URL,
+  init: RequestInit | undefined
+) => fetch(resource, init).then((res) => res.json());
 
 const Login = () => {
   const [email, setEmail] = useState<string | null>(null);
@@ -17,15 +21,12 @@ const Login = () => {
     null
   );
 
+
+
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
-
-    // ↓いらない？
-    // const formData = new FormData(event.currentTarget); // フォーム要素から入力フィールドの値を取得
-    // const emailValidation = formData.get('email') as string;
-    // const passwordValidation = formData.get('password') as string;
 
     const loginSchema = z.object({
       email: z
@@ -47,7 +48,7 @@ const Login = () => {
       setPasswordError(null); // パスワードのエラーをリセット
 
       axios
-        .get(`api/user?email=${email}&password=${password}`)
+        .get(`http://localhost:8000/user?email=${email}&password=${password}`)
         .then((response) => {
           let userData = response.data;
           console.log(userData);

@@ -41,8 +41,8 @@ const NotificationList = ({ userData }: { userData: any }) => {
 
   // requestのデータ取得
   const { data, error } = useSWR('/api/request', fetcher);
-  console.log(data);
-  console.log(userData);
+  // console.log(data);
+  // console.log(userData);
 
   if (!data) {
     return <div>Loading...</div>; // データの取得中に表示
@@ -52,7 +52,7 @@ const NotificationList = ({ userData }: { userData: any }) => {
   const requests = data.filter(
     (request: any) => request.status === 1
   );
-  console.log(requests);
+  // console.log(requests);
 
   // ステータスを絞った後、userのidとrequestのuserIdを結びつける
   const filteredRequests = requests.map((request: any) => {
@@ -65,7 +65,7 @@ const NotificationList = ({ userData }: { userData: any }) => {
       user: user,
     };
   });
-  console.log(filteredRequests);
+  // console.log(filteredRequests);
 
   // エンジニアコメントのトグル
   const handleToggle = (id: number) => {
