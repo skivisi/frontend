@@ -17,17 +17,23 @@ const LoginAdmin = () => {
   ) => {
     event.preventDefault();
 
+    const loginAdmin:any = {
+      email:email,
+      password:password
+    }
+
     try {
       axios
-        .get(
-          `http://localhost:8000/admin?email=${email}&password=${password}`
+        .post(
+          // `http://localhost:8080/admin?email=${email}&password=${password}`
+          `http://localhost:8000/api/auth/admin/login`,loginAdmin
         )
         .then((response) => {
           let userData = response.data;
           console.log(userData);
-          let id = userData[0].id;
+          let id = userData.adminId;
           console.log(id);
-          setCookie('id', id);
+          setCookie('adminId', id);
           window.location.href = '/dashboard/dbAdmin';
         });
     } catch (error) {

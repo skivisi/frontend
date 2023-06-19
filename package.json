@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
-    "mock-api": "json-server --watch data/db.json --port 8000",
+    "mock-api": "json-server --watch data/db.json --port 8080",
     "format": "prettier --write --ignore-path .gitignore './**/*.{ts,tsx,json}'"
   },
   "dependencies": {

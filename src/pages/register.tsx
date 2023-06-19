@@ -85,16 +85,17 @@ const Register = () => {
       // userId追加する
       setUserCount(userCount + 1);
 
-      const response = await axios.post('http://localhost:8000/user', {
-        userName,
+      const response = await axios.post('http://localhost:8000/api/auth/register', {
         email,
         employeeNumber,
         joinDate: selectedDate,
+        userName,
         affiliation,
         businessSituation,
         password,
         confirmPassword,
         createdAt: new Date(), 
+        updatedAt: new Date(), 
       });
       console.log(response.data);
       window.location.href = '/login';

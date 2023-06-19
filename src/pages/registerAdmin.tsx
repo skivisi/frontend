@@ -13,7 +13,7 @@ const RegisterAdmin = () => {
     e: React.FormEvent<HTMLFormElement>
   ) => {
     try {
-      const response = await axios.post('http://localhost:8000/admin', {
+      const response = await axios.post('http://localhost:8000/api/auth/admin/register', {
         name,
         email,
         password,

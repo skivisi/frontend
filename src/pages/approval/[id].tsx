@@ -19,143 +19,159 @@ export const getServerSideProps = async (
   context: { query: any; req: NextApiRequest },
   req: NextApiRequest
 ) => {
-  const { query, req: serverRequest } = context;
-  const { id } = query;
+  const { query: userId, req: serverRequest } = context;
+  // const { userId } = query;
 
   const cookies = serverRequest.cookies;
-  const cookie = cookies.id;
+  const cookie = cookies.adminId;
   console.log(cookie);
 
   // idを使用してデータを取得
-  const responseUser = await axios.get(
-    `http://localhost:8000/user/${id}`
-  );
-  const user = responseUser.data;
+  // const responseUser = await axios.get(
+  //   `http://localhost:8000/api/user/${id}`
+  // );
+  // const user = responseUser.data;
 
   // spec.userIdとuser.idを結びつける
-  const responseSpec = await axios.get(
-    `http://localhost:8000/spec?userId=${user.id}`
-  );
-  const spec = responseSpec.data;
+  // const responseSpec = await axios.get(
+  //   `http://localhost:8080/spec?userId=${user.id}`
+  // );
+  // const spec = responseSpec.data;
 
-  const responsePortfolio = await axios.get(
-    `http://localhost:8000/portfolio`
-  );
-  const portfolio = responsePortfolio.data;
+  // const responsePortfolio = await axios.get(
+  //   `http://localhost:8080/portfolio`
+  // );
+  // const portfolio = responsePortfolio.data;
 
-  const responseSellingPoint = await axios.get(
-    `http://localhost:8000/sellingPoint`
-  );
-  const sellingPoint = responseSellingPoint.data;
+  // const responseSellingPoint = await axios.get(
+  //   `http://localhost:8080/sellingPoint`
+  // );
+  // const sellingPoint = responseSellingPoint.data;
 
-  const responseQualification = await axios.get(
-    `http://localhost:8000/qualification`
-  );
-  const qualification = responseQualification.data;
+  // const responseQualification = await axios.get(
+  //   `http://localhost:8080/qualification`
+  // );
+  // const qualification = responseQualification.data;
 
   // createdAtの一番新しい日付のデータを取得
-  const sortedSpec = spec.sort((a: any, b: any) => {
-    return (
-      new Date(b.createdAt).getTime() -
-      new Date(a.createdAt).getTime()
-    );
-  });
+  // const sortedSpec = spec.sort((a: any, b: any) => {
+  //   return (
+  //     new Date(b.createdAt).getTime() -
+  //     new Date(a.createdAt).getTime()
+  //   );
+  // });
 
   // スペックシートのデータが一つの時と、複数の時の場合分け
-  let latestSpec: { id: any };
-  if (sortedSpec.length === 1) {
-    latestSpec = spec[0];
-  } else {
-    latestSpec = sortedSpec[0];
-  }
+  // let latestSpec: { id: any };
+  // if (sortedSpec.length === 1) {
+  //   latestSpec = spec[0];
+  // } else {
+  //   latestSpec = sortedSpec[0];
+  // }
 
   // ログイン中のadminのidを取得
 
   return {
     props: {
-      user,
-      spec: latestSpec,
-      portfolio,
-      sellingPoint,
-      qualification,
+      // user,
+      // spec: latestSpec,
+      // portfolio,
+      // sellingPoint,
+      // qualification,
       cookie,
-      query,
+      userId,
     },
   };
 };
 
 const Approval = ({
-  user,
-  spec,
-  portfolio,
-  sellingPoint,
-  qualification,
-  query,
+  // user,
+  // spec,
+  // portfolio,
+  // sellingPoint,
+  // qualification,
+  userId,
   cookie,
 }: {
-  user: any;
-  spec: any;
-  portfolio: any;
-  sellingPoint: any;
-  qualification: any;
-  query: any;
-  cookie: number;
+  // user: any;
+  // spec: any;
+  // portfolio: any;
+  // sellingPoint: any;
+  // qualification: any;
+  userId: any;
+  cookie: number | null;
 }) => {
+  const [adminComment, setAdminComment] = useState('');
   // requestのデータ取得
-  const { data, error } = useSWR('/api/request', fetcher);
+  // const { data, error } = useSWR(`/api/request/`, fetcher);
+  // const data = axios.get(`http://localhost:8000/api/request/:applicationId`)
+  // console.log(data);
+  console.log(userId.id);
+  let queryId = Number(userId.id);
+
+  const { data, error } = useSWR(`/api/request/`, fetcher);
   console.log(data);
-  console.log(query);
+
+  if (!data) {
+    return <div>Loading...</div>;
+  }
+
+  const filteredrequest = data.filter(
+    (item: any) => item.userId === queryId
+  );
+  console.log(filteredrequest);
+  console.log(filteredrequest[0].applicationId);
+
+  // const data = await axios.get(`/api/request/`)
+  // console.log(data)
 
   // 承認の処理
-  const approvalSubmit = async (cookie: number, query: any) => {
+  const approvalSubmit = async (e: any) => {
     try {
       const requestBody = {
         adminId: Number(cookie), // 現在のログイン中のcookieの
-        status: 3, // 変更後のstatusの値
-        resultedAt: new Date(), // 現在の日時を設定
+        // status: 3, // 変更後のstatusの値
+        // resultedAt: new Date(), // 現在の日時を設定
       };
-      const response = await axios.patch(
-        `http://localhost:8000/request/${query.id}`,
+      const response = await axios.put(
+        `http://localhost:8000/api/request/approval/${filteredrequest[0].applicationId}`,
         requestBody
       );
       console.log(response);
     } catch (error) {
       console.log(error);
-      // console.log(cookie);
-      // console.log(query.id)
     }
   };
 
   // 差し戻しの処理
-  const [adminComment, setAdminComment] = useState('');
-  const sendBackSubmit = async (cookie: number, query: any) => {
+  
+  const sendBackSubmit = async (e:any) => {
     try {
       const requestBody = {
         adminId: Number(cookie), // 現在のログイン中のcookieのid
-        status: 2, // 変更後のstatusの値
-        resultedAt: new Date(), // 現在の日時を設定
+        // status: 2, // 変更後のstatusの値
+        // resultedAt: new Date(), // 現在の日時を設定
         adminComment: adminComment, // 差し戻しコメント
       };
-      const response = await axios.patch(
-        `http://localhost:8000/request/${query.id}`,
+      const response = await axios.put(
+        `http://localhost:8000/api/request/denial/${filteredrequest[0].applicationId}`,
         requestBody
       );
       console.log(response);
     } catch (error) {
       console.log(error);
       console.log(cookie);
-      console.log(query.id);
     }
   };
   const handleAdminComment = (event: any) => {
     setAdminComment(event.target.value);
   };
 
-  console.log(user);
-  console.log(spec);
-  console.log(portfolio);
-  console.log(sellingPoint);
-  console.log(qualification);
+  // console.log(user);
+  // console.log(spec);
+  // console.log(portfolio);
+  // console.log(sellingPoint);
+  // console.log(qualification);
 
   const skillSummary = {
     os: ['Linux(CentOS)', 'macOS'],
@@ -182,7 +198,7 @@ const Approval = ({
     <>
       <Header />
       <div className="text-sky-900 mt-10 ml-96 text-xl font-bold">
-        {user.userName}さんのスキルシート
+        {/* {user.userName}さんのスキルシート */}
       </div>
       <div className="text-sky-900 flex justify-center">
         <form className="bg-blue-200 text-sky-900 max-w-4xl p-10 my-10 shadow-xl">
@@ -192,7 +208,7 @@ const Approval = ({
                 スタッフID
               </div>
               <div className="block w-1/2 p-2 bg-white">
-                {`${user.affiliation}-204-${user.employeeNumber}`}
+                {/* {`${user.affiliation}-204-${user.employeeNumber}`} */}
               </div>
             </div>
             <div className="">
@@ -201,7 +217,7 @@ const Approval = ({
               </h3>
 
               <div className="mt-4">
-                {portfolio
+                {/* {portfolio
                   .filter((item: any) => item.id === spec.id) // 同じidのportfolioだけをフィルタリングする
                   .map((item: any, index: any) => (
                     <div key={index} className="w-full flex">
@@ -214,7 +230,7 @@ const Approval = ({
                         </div>
                       </div>
                     </div>
-                  ))}
+                  ))} */}
               </div>
             </div>
           </div>
@@ -224,7 +240,7 @@ const Approval = ({
             <h3 className="mt-10 text-xl font-bold">スキル要約</h3>
 
             <div className="mt-4 ml-2">
-              {Object.entries(skillSummary).map(([key, value]) => (
+              {/* {Object.entries(skillSummary).map(([key, value]) => (
                 <div
                   key={key}
                   className="w-full flex border-2 border-slate-300 h-10 shadow-md"
@@ -236,7 +252,7 @@ const Approval = ({
                     {value.join(',')}
                   </div>
                 </div>
-              ))}
+              ))} */}
             </div>
           </div>
           {/* skillSummary */}
@@ -247,7 +263,7 @@ const Approval = ({
             </h3>
             <div className="mt-4">
               <div>
-                {sellingPoint
+                {/* {sellingPoint
                   .filter((item: any) => item.id === spec.id) // 同じidのportfolioだけをフィルタリングする
                   .map((item: any, index: number) => (
                     <div key={index} className="w-full flex">
@@ -264,7 +280,7 @@ const Approval = ({
                         </div>
                       </div>
                     </div>
-                  ))}
+                  ))} */}
               </div>
             </div>
           </div>
@@ -276,7 +292,7 @@ const Approval = ({
             </h3>
             <div className="flex mt-2">
               <div className="block w-3/4 p-2 bg-white border-2 border-slate-300 ml-2 shadow-md">
-                {spec.offHours.split('\n')}
+                {/* {spec.offHours.split('\n')} */}
               </div>
             </div>
           </div>
@@ -287,7 +303,7 @@ const Approval = ({
             <h3 className="mt-10 text-xl font-bold">資格</h3>
 
             <div className=" flex">
-              {qualification
+              {/* {qualification
                 .filter((item: any) => item.id === spec.id)
                 .map((item: any, index: number) => (
                   <div className=" w-full ml-2" key={index}>
@@ -309,7 +325,7 @@ const Approval = ({
                       </div>
                     </div>
                   </div>
-                ))}
+                ))} */}
             </div>
           </div>
           {/* qualification資格 */}
@@ -409,7 +425,7 @@ const Approval = ({
 
           <div className="text-center">
             <button
-              onClick={() => approvalSubmit(cookie, query)}
+              onClick={(e) => approvalSubmit(e)}
               type="button"
               className="shadow-md mt-10 h-12  cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid"
             >
@@ -441,7 +457,7 @@ const Approval = ({
           </div>
           <div className="text-center">
             <button
-              onClick={() => sendBackSubmit(cookie, query)}
+              onClick={(e) => sendBackSubmit(e)}
               type="button"
               className="shadow-md mt-10 h-12 cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid"
             >

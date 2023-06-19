@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 
 // 営業DB(検索機能)
 export const getServerSideProps: GetServerSideProps = async () => {
-  const userData = await axios.get(`http://localhost:8000/user`);
+  const userData = await axios.get(`http://localhost:8080/user`);
   const userList = userData.data;
   console.log(userList);
 

@@ -21,19 +21,21 @@ export const getServerSideProps: GetServerSideProps = async ({
   const cookie = cookies.id;
 
   //userのデータ
-  const { data: userData } = await axios.get(
-    'http://localhost:8000/user'
-  );
+  // const { data: userData } = await axios.get(
+  //   'http://localhost:8000/api/users'
+  // );
 
   return {
     props: {
-      adminId: cookie,
-      userData: userData,
+      // adminId: cookie,
+      // userData: userData,
     },
   };
 };
 
-const NotificationList = ({ userData }: { userData: any }) => {
+const NotificationList = (
+  // { userData }: { userData: any }
+  ) => {
   // トグル状態管理
   const [expanded, setExpanded] = useState<{ [id: number]: boolean }>(
     {}
@@ -41,7 +43,7 @@ const NotificationList = ({ userData }: { userData: any }) => {
 
   // requestのデータ取得
   const { data, error } = useSWR('/api/request', fetcher);
-  // console.log(data);
+  console.log(data);
   // console.log(userData);
 
   if (!data) {
@@ -49,22 +51,22 @@ const NotificationList = ({ userData }: { userData: any }) => {
   }
 
   // ステータスが申請中のみに絞る
-  const requests = data.filter(
-    (request: any) => request.status === 1
-  );
+  // const requests = data.filter(
+  //   (request: any) => request.status === 1
+  // );
   // console.log(requests);
 
   // ステータスを絞った後、userのidとrequestのuserIdを結びつける
-  const filteredRequests = requests.map((request: any) => {
-    const user = userData.find(
-      (user: any) => user.id === request.userId
-    );
+  // const filteredRequests = requests.map((request: any) => {
+  //   const user = userData.find(
+  //     (user: any) => user.id === request.userId
+  //   );
 
-    return {
-      ...request,
-      user: user,
-    };
-  });
+  //   return {
+  //     ...request,
+  //     user: user,
+  //   };
+  // });
   // console.log(filteredRequests);
 
   // エンジニアコメントのトグル
@@ -96,13 +98,13 @@ const NotificationList = ({ userData }: { userData: any }) => {
             </div>
 
             <div>
-              {filteredRequests.map((request: any, index: number) => (
+              {data.map((request: any, index: number) => (
                   <div
-                    key={request.user.id}
+                    key={request.id}
                     className="border-b-2 border-light-blue-500 pb-2"
                   >
                     <div className="flex justify-center mt-14 md:pl-36 text-lg space-x-2 md:space-x-32 pr-24">
-                      <Link legacyBehavior href={`/approval/${request.user.id}`}>
+                      <Link legacyBehavior href={`/approval/${request.user.userId}`}>
                       <a
                        
                         className="relative flex justify-center space-x-32"
@@ -128,12 +130,12 @@ const NotificationList = ({ userData }: { userData: any }) => {
                       </a>
                       </Link>
                       <button
-                        onClick={() => handleToggle(request.user.id)}
+                        onClick={() => handleToggle(request.user.userId)}
                       >
-                        {expanded[request.user.id] ? '▲' : '▼'}
+                        {expanded[request.user.userId] ? '▲' : '▼'}
                       </button>
                     </div>
-                    {expanded[request.user.id] && (
+                    {expanded[request.user.userId] && (
                       <div className="pt-7 text-left pl-40">
                         <p>{request.engineerComment}</p>
                       </div>

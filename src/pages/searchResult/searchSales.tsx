@@ -39,7 +39,7 @@ const SearchSales = ({
       const requestBody = {
         businessSituation: changedBusinessSituation,
       };
-      await axios.patch(`http://localhost:8000/user/${user.id}`, requestBody);
+      await axios.patch(`http://localhost:8080/user/${user.id}`, requestBody);
       
       setBusinessSituation(changedBusinessSituation);
 

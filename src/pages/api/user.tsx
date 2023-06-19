@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 const requestHandler = async(req: NextApiRequest, res: NextApiResponse) => {
     switch (req.method) {
       case "GET":
-        const { data: userData } = await axios.get(`http://localhost:8000/user`)
+        const { data: userData } = await axios.get(`http://localhost:8080/user`)
         res.status(200).json(userData);
         console.log(userData)
       
