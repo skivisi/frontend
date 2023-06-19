@@ -5,8 +5,8 @@ import { useCookies } from 'react-cookie';
 const Header = () => {
   const [cookies, setCookie, removeCookie] = useCookies();
   const handleLogout = () => {
-    if (cookies.id) {
-      removeCookie('id');
+    if (cookies.userId) {
+      removeCookie('userId');
     }
     if (cookies.affiliation) {
       removeCookie('affiliation');

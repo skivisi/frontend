@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
   // エンジニアのuserIdとcookieのidを結びつける
   const { data: requestData } = await axios.get(
-    `http://localhost:8000/request?userId=${cookie}`
+    `http://localhost:8080/request?userId=${cookie}`
   );
 
   return {
