@@ -8,10 +8,15 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
-    "mock-api": "json-server --watch data/db.json --port 8000",
+    "mock-api": "json-server --watch data/db.json --port 8080",
     "format": "prettier --write --ignore-path .gitignore './**/*.{ts,tsx,json}'"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/lab": "^5.0.0-alpha.134",
+    "@mui/material": "^5.13.5",
     "@types/node": "20.1.7",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",

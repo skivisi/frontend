@@ -3,12 +3,30 @@ import styles from './style.module.css';
 const SkillScores = ({
   skillName,
   skillTag,
+  skillPoint,
+  setSkills,
 }: {
   skillName: string;
   skillTag: string;
+  skillPoint: any;
+  setSkills: any;
 }) => {
+
+  // ラジオボタングループごとに一意のname属性を指定
   const className = `${skillTag}_scores`;
-  const inputName = `${skillTag}_scores`; // ラジオボタングループごとに一意のname属性を指定
+  const inputName = `${skillTag}_scores`; 
+
+// スコア編集
+  const handleChange = (event: any) => {
+    setSkills((prevSkills: any) => ({
+      ...prevSkills,
+      skillPoint: {
+        ...prevSkills.skillPoint,
+        [skillTag]: Number(event.target.value),
+      },
+    }));
+  };
+
   return (
     <div className="flex justify-center bg-teal-800 p-2">
       <div
@@ -23,6 +41,8 @@ const SkillScores = ({
           id={`${inputName}_1`}
           value={1}
           className="hidden"
+          onChange={handleChange}
+          checked={skillPoint[skillTag] === 1}
         />
         <label
           htmlFor={`${inputName}_1`}
@@ -36,6 +56,8 @@ const SkillScores = ({
           id={`${inputName}_2`}
           value={2}
           className="hidden"
+          onChange={handleChange}
+          checked={skillPoint[skillTag] === 2}
         />
         <label
           htmlFor={`${inputName}_2`}
@@ -49,6 +71,8 @@ const SkillScores = ({
           id={`${inputName}_3`}
           value={3}
           className="hidden"
+          onChange={handleChange}
+          checked={skillPoint[skillTag] === 3}
         />
         <label
           htmlFor={`${inputName}_3`}
@@ -62,6 +86,8 @@ const SkillScores = ({
           id={`${inputName}_4`}
           value={4}
           className="hidden"
+          onChange={handleChange}
+          checked={skillPoint[skillTag] === 4}
         />
         <label
           htmlFor={`${inputName}_4`}
@@ -75,6 +101,8 @@ const SkillScores = ({
           id={`${inputName}_5`}
           value={5}
           className="hidden"
+          onChange={handleChange}
+          checked={skillPoint[skillTag] === 5}
         />
         <label
           htmlFor={`${inputName}_5`}
@@ -88,6 +116,8 @@ const SkillScores = ({
           id={`${inputName}_6`}
           value={6}
           className="hidden"
+          onChange={handleChange}
+          checked={skillPoint[skillTag] === 6}
         />
         <label
           htmlFor={`${inputName}_6`}
@@ -101,6 +131,8 @@ const SkillScores = ({
           id={`${inputName}_7`}
           value={7}
           className="hidden"
+          onChange={handleChange}
+          checked={skillPoint[skillTag] === 7}
         />
         <label
           htmlFor={`${inputName}_7`}
@@ -114,6 +146,8 @@ const SkillScores = ({
           id={`${inputName}_8`}
           value={8}
           className="hidden"
+          onChange={handleChange}
+          checked={skillPoint[skillTag] === 8}
         />
         <label
           htmlFor={`${inputName}_8`}
@@ -127,6 +161,8 @@ const SkillScores = ({
           id={`${inputName}_9`}
           value={9}
           className="hidden"
+          onChange={handleChange}
+          checked={skillPoint[skillTag] === 9}
         />
         <label
           htmlFor={`${inputName}_9`}

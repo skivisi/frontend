@@ -15,19 +15,19 @@ const skillview = ({ userData }: { userData: any }) => {
 
   // 数字をA~Gランクに変換
   const convertValueToRank = (value: number) => {
-    if (value >= 95) {
+    if (value >= 9) {
       return 'S';
-    } else if (value < 95 && value >= 80) {
+    } else if (value < 9 && value >= 8) {
       return 'A';
-    } else if (value < 80 && value >= 65) {
+    } else if (value < 8 && value >= 6) {
       return 'B';
-    } else if (value < 65 && value >= 50) {
+    } else if (value < 6 && value >= 5) {
       return 'C';
-    } else if (value < 50 && value >= 40) {
+    } else if (value < 5 && value >= 4) {
       return 'D';
-    } else if (value < 40 && value >= 25) {
+    } else if (value < 4 && value >= 2) {
       return 'E';
-    } else if (value < 25 && value >= 10) {
+    } else if (value === 2) {
       return 'F';
     } else {
       return 'G';
@@ -130,18 +130,19 @@ const skillview = ({ userData }: { userData: any }) => {
                   (
                     ability: {
                       property: string;
-                      value: any;
+                      value: boolean;
+                      tagColor: number
                     },
                     index: number
                   ) => (
                     <div
                       key={index}
                       className={
-                        ability.value === 0
+                        ability.value === false
                           ? unselected
-                          : ability.value === 1
+                          : ability.tagColor === 1
                           ? selected_1
-                          : ability.value === 2
+                          : ability.tagColor === 2
                           ? selected_2
                           : selected_3
                       }
