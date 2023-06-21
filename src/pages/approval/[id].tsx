@@ -11,7 +11,7 @@ import { useState } from 'react';
 
 // 申請承認(管理者)
 const fetcher = (
-  resource: Request | URL,
+  resource: RequestInfo,
   init: RequestInit | undefined
 ) => fetch(resource, init).then((res) => res.json());
 
@@ -144,7 +144,7 @@ const Approval = ({
   };
 
   // 差し戻しの処理
-  
+
   const sendBackSubmit = async (e:any) => {
     try {
       const requestBody = {

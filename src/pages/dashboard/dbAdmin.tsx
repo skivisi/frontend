@@ -5,7 +5,7 @@ import useSWR from 'swr';
 
 // 管理者DB
 const fetcher = (
-  resource: Request | URL,
+  resource: RequestInfo,
   init: RequestInit | undefined
 ) => fetch(resource, init).then((res) => res.json());
 
