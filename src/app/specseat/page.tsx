@@ -1,31 +1,279 @@
+/* eslint-disable react/jsx-key */
 'use client';
+
 import '../globals.css';
 import styles from './style.module.css';
-import Button from '@/components/specseat/button';
+import { useState } from 'react';
+import { userFetch } from '../mypage/_lib/userFetch';
+import { autoComplete } from './_lib/autoComplete';
+import axios from 'axios';
 
-function mock() {}
+import Chip from '@mui/material/Chip';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+
 function handleBlur() {
   // ここでバリデーションチェックしたらサブミット前にクライアントに入力の誤りわかるからいいよね
   alert('フォーカスが外れました');
 }
 
 function Home() {
+  const userData = userFetch();
+  const autocomplete = autoComplete();
+  // スキル要約
+  const [skillSummary, setSkillSummary] = useState<any>([]);
+
+  // ポートフォリオ
+  const [portfolios, setPortfolios] = useState<any>([]);
+  // 増やすボタンの関数
+  const handleAddPortfoliosForm = () => {
+    setPortfolios([...portfolios, { heading: '', url: '' }]);
+  };
+  // 削除
+  const handleRemovePortfoliosFormSet = (setIndex: number) => {
+    const newPortfolios = [...portfolios];
+    newPortfolios.splice(setIndex, 1);
+    setPortfolios(newPortfolios);
+  };
+
+  // 入力された値を格納
+  const handleChangePortfolios = (
+    e: any,
+    setIndex: number,
+    formIndex: number
+  ) => {
+    const newPortfolios = [...portfolios];
+    if (formIndex === 1) {
+      newPortfolios[setIndex]['heading'] = e.target.value;
+    } else {
+      newPortfolios[setIndex]['url'] = e.target.value;
+    }
+    setPortfolios(newPortfolios);
+  };
+
+  // アピールポイント
+  const [selling, setSelling] = useState<any>([]);
+  // 増やすボタンの関数
+  const handleAddSellingForm = () => {
+    setSelling([...selling, { title: '', content: '' }]);
+  };
+  // 削除
+  const handleRemoveSellingFormSet = (setIndex: number) => {
+    const newSelling = [...selling];
+    newSelling.splice(setIndex, 1);
+    setSelling(newSelling);
+  };
+
+  // 入力された値を格納
+  const handleChangeSelling = (
+    e: any,
+    setIndex: number,
+    formIndex: number
+  ) => {
+    const newSelling = [...selling];
+    if (formIndex === 1) {
+      newSelling[setIndex]['title'] = e.target.value;
+    } else {
+      newSelling[setIndex]['content'] = e.target.value;
+    }
+    setSelling(newSelling);
+  };
+
+  // 資格
+  const [qualifications, setQualifications] = useState<any>([]);
+  const [qls, setQls] = useState<any>([]);
+  // 増やすボタンの関数
+  const handleAddQualificationsForm = () => {
+    setQualifications([
+      ...qualifications,
+      { credential: '', year: '', month: '' },
+    ]);
+    setQls([...qls, { credential: '', acquisitionDate: '' }]);
+  };
+  // 削除
+  const handleRemoveQualificationsFormSet = (setIndex: number) => {
+    const newQualifications = [...qualifications];
+    newQualifications.splice(setIndex, 1);
+    setQualifications(newQualifications);
+  };
+  // 入力された値を格納
+  const handleChangeQualifications = (
+    e: any,
+    setIndex: number,
+    formIndex: number
+  ) => {
+    const newQualifications = [...qualifications];
+    if (formIndex === 1) {
+      newQualifications[setIndex]['year'] = e.target.value;
+    } else if (formIndex === 2) {
+      newQualifications[setIndex]['month'] = e.target.value;
+    } else {
+      newQualifications[setIndex]['credential'] = e.target.value;
+    }
+    setQualifications(newQualifications);
+
+    // 年月データ変換
+    const newQls = [...qls];
+    newQls[setIndex]['credential'] =
+      qualifications[setIndex].credential;
+    newQls[setIndex][
+      'acquisitionDate'
+    ] = `${qualifications[setIndex].year}年${qualifications[setIndex].month}月`;
+    setQls(newQls);
+  };
+
+  // 前職
+  const [previousWorks, setPreviousWorks] = useState<any>([]);
+  console.log(previousWorks);
+  // 増やすボタンの関数
+  const handleAddPreviousWorksForm = () => {
+    setPreviousWorks([
+      ...previousWorks,
+      { industry: '', occupation: '', JobDuties: '' },
+    ]);
+  };
+  // 削除
+  const handleRemovePreviousWorksFormSet = (setIndex: number) => {
+    const newPreviousWorks = [...previousWorks];
+    newPreviousWorks.splice(setIndex, 1);
+    setPreviousWorks(newPreviousWorks);
+  };
+
+  // 入力された値を格納
+  const handleChangePreviousWorks = (
+    e: any,
+    setIndex: number,
+    formIndex: number
+  ) => {
+    const newPreviousWorks = [...previousWorks];
+    if (formIndex === 1) {
+      newPreviousWorks[setIndex]['industry'] = e.target.value;
+    } else if (formIndex === 2) {
+      newPreviousWorks[setIndex]['occupation'] = e.target.value;
+    } else {
+      newPreviousWorks[setIndex]['JobDuties'] = e.target.value;
+    }
+    setPreviousWorks(newPreviousWorks);
+  };
+
+  // 開発経験
+  const [developmentExperiences, setDevelopmentExperiences] =
+    useState<any>([]);
+  console.log(developmentExperiences);
+  // 増やすボタンの関数
+  const handleAddDevelopmentExperiencesForm = () => {
+    setDevelopmentExperiences([
+      ...developmentExperiences,
+      {
+        startYear: '',
+        startDate: '',
+        duration: '',
+        assignedTask: '',
+        teamSize: '',
+        totalProjectHeadcount: '',
+        projectName: '',
+        jobDuties: '',
+        img: '',
+        environments: '',
+        programmingLanguages: '',
+        frameworks: '',
+        tools: '',
+      },
+    ]);
+  };
+  // 削除
+  const handleRemoveDevelopmentExperiencesFormSet = (
+    setIndex: number
+  ) => {
+    const newDevelopmentExperiences = [...developmentExperiences];
+    newDevelopmentExperiences.splice(setIndex, 1);
+    setDevelopmentExperiences(newDevelopmentExperiences);
+  };
+
+  // 入力された値を格納
+  const handleChangeDevelopmentExperiences = (
+    e: any,
+    setIndex: number,
+    formIndex: number
+  ) => {
+    const newDevelopmentExperiences = [...developmentExperiences];
+    if (formIndex === 1) {
+      newDevelopmentExperiences[setIndex]['startYear'] =
+        e.target.value;
+    } else if (formIndex === 2) {
+      newDevelopmentExperiences[setIndex]['startDate'] =
+        e.target.value;
+    } else if (formIndex === 3) {
+      newDevelopmentExperiences[setIndex]['duration'] =
+        e.target.value;
+    } else if (formIndex === 4) {
+      newDevelopmentExperiences[setIndex]['assignedTask'] =
+        e.target.value;
+    } else if (formIndex === 5) {
+      newDevelopmentExperiences[setIndex]['teamSize'] =
+        e.target.value;
+    } else if (formIndex === 6) {
+      newDevelopmentExperiences[setIndex]['totalProjectHeadcount'] =
+        e.target.value;
+    } else if (formIndex === 7) {
+      newDevelopmentExperiences[setIndex]['projectName'] =
+        e.target.value;
+    } else if (formIndex === 8) {
+      newDevelopmentExperiences[setIndex]['environments'] =
+        e.target.value;
+    } else if (formIndex === 9) {
+      newDevelopmentExperiences[setIndex]['programmingLanguages'] =
+        e.target.value;
+    } else if (formIndex === 10) {
+      newDevelopmentExperiences[setIndex]['frameworks'] =
+        e.target.value;
+    } else if (formIndex === 11) {
+      newDevelopmentExperiences[setIndex]['tools'] = e.target.value;
+    } else if (formIndex === 12) {
+      newDevelopmentExperiences[setIndex]['img'] = e.target.files[0];
+    } else {
+      newDevelopmentExperiences[setIndex]['jobDuties'] =
+        e.target.value;
+    }
+    setDevelopmentExperiences(newDevelopmentExperiences);
+  };
+
+  const submitHandler = async (e: any) => {
+    e.preventDefault();
+    
+    const formData = {
+      skillSummary: skillSummary,
+      portfolios: portfolios,
+      selling: selling,
+      qls: qls,
+      previousWorks: previousWorks,
+      developmentExperiences: developmentExperiences,
+    };
+
+    try {
+      const response = await axios.post('/specseat/api', formData);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <section className=" bg-blue-200 text-sky-900 max-w-4xl p-10 my-10 shadow-xl">
       <h2 className="drop-shadow-white text-3xl font-bold mb-5">
         スペックシート登録
       </h2>
-      <form action="/">
+      <form onSubmit={submitHandler}>
         <div>
-          <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
+          <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
             <label
-              className="bg-slate-200 block w-1/4 p-1"
+              className="bg-slate-200 block w-32 p-1"
               htmlFor="stuff"
             >
               スタッフID
             </label>
             <input
-              className={`${styles.focus} block w-3/4 p-2`}
+              className={`${styles.focus} block w-96 p-2`}
               id="stuff"
               type="text"
               readOnly
@@ -36,118 +284,342 @@ function Home() {
             <h3 className="mt-10 text-xl font-bold">
               ポートフォリオ
             </h3>
-            <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
+            <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
               <label
-                className="bg-slate-200 block w-1/4 p-1"
+                className="bg-slate-200 block w-32 p-1"
                 htmlFor="portfolio"
               >
                 {'github'}
               </label>
               <input
-                className={`${styles.focus} block w-3/4 p-2`}
+                className={`${styles.focus} block w-96 p-2`}
                 type="text"
                 name=""
                 id="portfolio"
                 onBlur={handleBlur}
               />
             </div>
-            <Button name="ポートフォリオ" />
+
+            {portfolios.map((formSet: any, setIndex: number) => (
+              <div
+                className="w-full flex flex-row border-2 border-slate-300 shadow-md"
+                key={setIndex}
+              >
+                <button
+                  onClick={() =>
+                    handleRemovePortfoliosFormSet(setIndex)
+                  }
+                >
+                  x
+                </button>
+                <input
+                  className={`${styles.focus} bg-slate-200 block w-32 p-1`}
+                  type="text"
+                  name=""
+                  placeholder="qiita"
+                  value={formSet.heading}
+                  onChange={(e) =>
+                    handleChangePortfolios(e, setIndex, 1)
+                  }
+                />
+
+                <input
+                  className={`${styles.focus} block w-96 p-2`}
+                  type="text"
+                  name=""
+                  placeholder="http://..."
+                  value={formSet.url}
+                  onChange={(e) =>
+                    handleChangePortfolios(e, setIndex, 2)
+                  }
+                />
+              </div>
+            ))}
+
+            <div className="mt-5">
+              <button
+                onClick={handleAddPortfoliosForm}
+                type="button"
+                className={`${styles.focus} shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 h-10 rounded-xl border-2 border-white border-solid`}
+              >
+                <span className="text-white font-bold m-4">
+                  + ポートフォリオの追加
+                </span>
+              </button>
+            </div>
           </div>
         </div>
         {/* portfolio */}
 
         <div>
           <h3 className="mt-10 text-xl font-bold">スキル要約</h3>
-          <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label
-              className="bg-slate-200 block w-1/4 p-1"
-              htmlFor=""
-            >
+          <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+            <label className="bg-slate-200 block w-32 p-1" htmlFor="">
               動作環境(OS)
             </label>
-            <input
-              className={`${styles.focus} block w-3/4 p-2`}
-              type="text"
-              defaultValue={`mock`}
-            />
+
+            {autocomplete.os && (
+              <Autocomplete
+                className={`${styles.focus} block w-96 bg-white px-1`}
+                multiple
+                id="tags-filled"
+                options={autocomplete.os.map(
+                  (option: any) => option.skill
+                )}
+                onChange={(event, newValue) => {
+                  setSkillSummary((p: any) => ({
+                    ...p,
+                    os: newValue,
+                  }));
+                }}
+                freeSolo
+                renderTags={(value: readonly any[], getTagProps) =>
+                  value.map((option: string, index: number) => (
+                    <Chip
+                      variant="outlined"
+                      label={option}
+                      {...getTagProps({ index })}
+                    />
+                  ))
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    placeholder="Mac OS"
+                  />
+                )}
+              />
+            )}
           </div>
-          <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label
-              className="bg-slate-200 block w-1/4 p-1"
-              htmlFor=""
-            >
+
+          <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+            <label className="bg-slate-200 block w-32 p-1" htmlFor="">
               言語
             </label>
-            <input
-              className={`${styles.focus} block w-3/4 p-2`}
-              type="text"
-              defaultValue={`mock`}
-            />
+            {autocomplete.lang && (
+              <Autocomplete
+                className={`${styles.focus} block w-96 bg-white px-1`}
+                multiple
+                id="tags-filled"
+                options={autocomplete.lang.map(
+                  (option: any) => option.skill
+                )}
+                onChange={(event, newValue) => {
+                  setSkillSummary((p: any) => ({
+                    ...p,
+                    lang: newValue,
+                  }));
+                }}
+                freeSolo
+                renderTags={(value: readonly any[], getTagProps) =>
+                  value.map((option: string, index: number) => (
+                    <Chip
+                      variant="outlined"
+                      label={option}
+                      {...getTagProps({ index })}
+                    />
+                  ))
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    placeholder="Javascript"
+                  />
+                )}
+              />
+            )}
           </div>
-          <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label
-              className="bg-slate-200 block w-1/4 p-1"
-              htmlFor=""
-            >
+          <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+            <label className="bg-slate-200 block w-32 p-1" htmlFor="">
               フレームワーク
             </label>
-            <input
-              className={`${styles.focus} block w-3/4 p-2`}
-              type="text"
-              defaultValue={`mock`}
-            />
+            {autocomplete.framework && (
+              <Autocomplete
+                className={`${styles.focus} block w-96 bg-white px-1`}
+                multiple
+                id="tags-filled"
+                options={autocomplete.framework.map(
+                  (option: any) => option.skill
+                )}
+                onChange={(event, newValue) => {
+                  setSkillSummary((p: any) => ({
+                    ...p,
+                    framework: newValue,
+                  }));
+                }}
+                freeSolo
+                renderTags={(value: readonly any[], getTagProps) =>
+                  value.map((option: string, index: number) => (
+                    <Chip
+                      variant="outlined"
+                      label={option}
+                      {...getTagProps({ index })}
+                    />
+                  ))
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    placeholder="Mac OS"
+                  />
+                )}
+              />
+            )}
           </div>
-          <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label
-              className="bg-slate-200 block w-1/4 p-1"
-              htmlFor=""
-            >
+          <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+            <label className="bg-slate-200 block w-32 p-1" htmlFor="">
               ライブラリ
             </label>
-            <input
-              className={`${styles.focus} block w-3/4 p-2`}
-              type="text"
-              defaultValue={`mock`}
-            />
+            {autocomplete.library && (
+              <Autocomplete
+                className={`${styles.focus} block w-96 bg-white px-1`}
+                multiple
+                id="tags-filled"
+                options={autocomplete.library.map(
+                  (option: any) => option.skill
+                )}
+                onChange={(event, newValue) => {
+                  setSkillSummary((p: any) => ({
+                    ...p,
+                    library: newValue,
+                  }));
+                }}
+                freeSolo
+                renderTags={(value: readonly any[], getTagProps) =>
+                  value.map((option: string, index: number) => (
+                    <Chip
+                      variant="outlined"
+                      label={option}
+                      {...getTagProps({ index })}
+                    />
+                  ))
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    placeholder="Mac OS"
+                  />
+                )}
+              />
+            )}
           </div>
-          <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label
-              className="bg-slate-200 block w-1/4 p-1"
-              htmlFor=""
-            >
+          <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+            <label className="bg-slate-200 block w-32 p-1" htmlFor="">
               クラウド
             </label>
-            <input
-              className={`${styles.focus} block w-3/4 p-2`}
-              type="text"
-              defaultValue={`mock`}
-            />
+            {autocomplete.cloud && (
+              <Autocomplete
+                className={`${styles.focus} block w-96 bg-white px-1`}
+                multiple
+                id="tags-filled"
+                options={autocomplete.cloud.map(
+                  (option: any) => option.skill
+                )}
+                onChange={(event, newValue) => {
+                  setSkillSummary((p: any) => ({
+                    ...p,
+                    cloud: newValue,
+                  }));
+                }}
+                freeSolo
+                renderTags={(value: readonly any[], getTagProps) =>
+                  value.map((option: string, index: number) => (
+                    <Chip
+                      variant="outlined"
+                      label={option}
+                      {...getTagProps({ index })}
+                    />
+                  ))
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    placeholder="Mac OS"
+                  />
+                )}
+              />
+            )}
           </div>
-          <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label
-              className="bg-slate-200 block w-1/4 p-1"
-              htmlFor=""
-            >
+          <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+            <label className="bg-slate-200 block w-32 p-1" htmlFor="">
               ツール･その他
             </label>
-            <input
-              className={`${styles.focus} block w-3/4 p-2`}
-              type="text"
-              defaultValue={`mock`}
-            />
+            {autocomplete.tool && (
+              <Autocomplete
+                className={`${styles.focus} block w-96 bg-white px-1`}
+                multiple
+                id="tags-filled"
+                options={autocomplete.tool.map(
+                  (option: any) => option.skill
+                )}
+                onChange={(event, newValue) => {
+                  setSkillSummary((p: any) => ({
+                    ...p,
+                    tool: newValue,
+                  }));
+                }}
+                freeSolo
+                renderTags={(value: readonly any[], getTagProps) =>
+                  value.map((option: string, index: number) => (
+                    <Chip
+                      variant="outlined"
+                      label={option}
+                      {...getTagProps({ index })}
+                    />
+                  ))
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    placeholder="Mac OS"
+                  />
+                )}
+              />
+            )}
           </div>
-          <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label
-              className="bg-slate-200 block w-1/4 p-1"
-              htmlFor=""
-            >
+          <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+            <label className="bg-slate-200 block w-32 p-1" htmlFor="">
               担当開発工程
             </label>
-            <input
-              className={`${styles.focus} block w-3/4 p-2`}
-              type="text"
-              defaultValue={`mock`}
-            />
+            {autocomplete.assignedDevelopment && (
+              <Autocomplete
+                className={`${styles.focus} block w-96 bg-white px-1`}
+                multiple
+                id="tags-filled"
+                options={autocomplete.assignedDevelopment.map(
+                  (option: any) => option.skill
+                )}
+                onChange={(event, newValue) => {
+                  setSkillSummary((p: any) => ({
+                    ...p,
+                    assignedDevelopment: newValue,
+                  }));
+                }}
+                freeSolo
+                renderTags={(value: readonly any[], getTagProps) =>
+                  value.map((option: string, index: number) => (
+                    <Chip
+                      variant="outlined"
+                      label={option}
+                      {...getTagProps({ index })}
+                    />
+                  ))
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    placeholder="Mac OS"
+                  />
+                )}
+              />
+            )}
           </div>
         </div>
         {/* skillSummary */}
@@ -156,24 +628,21 @@ function Home() {
           <h3 className="mt-10 text-xl font-bold">
             アピールポイント
           </h3>
-          <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label
-              className="bg-slate-200 block w-1/4 p-1"
-              htmlFor=""
-            >
+          <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+            <label className="bg-slate-200 block w-32 p-1" htmlFor="">
               タイトル
             </label>
             <input
-              className={`${styles.focus} block w-3/4 p-2`}
+              className={`${styles.focus} block w-96 p-2`}
               type="text"
               name=""
               id=""
               defaultValue={'mock'}
             />
           </div>
-          <div className="w-full flex border-2 border-slate-300 mt-2 shadow-md">
+          <div className="flex-row w-full flex border-2 border-slate-300 shadow-md">
             <label
-              className="bg-slate-200 block w-1/4 p-1"
+              className="bg-slate-200 block w-40 pt-1 px-2"
               htmlFor=""
             >
               内容
@@ -181,13 +650,67 @@ function Home() {
             <textarea
               name=""
               id=""
-              className={`${styles.focus} p-2`}
-              cols={42}
-              rows={10}
+              className={`${styles.focus} p-2 w-full`}
+              rows={8}
               defaultValue={'mock'}
             ></textarea>
           </div>
-          <Button name="アピールポイント" />
+
+          {selling.map((states: any, setIndex: number) => (
+            <div key={setIndex} className="mt-6">
+              <button
+                onClick={() => handleRemoveSellingFormSet(setIndex)}
+              >
+                x
+              </button>
+              <div className="w-full flex flex-row border-2 border-slate-300shadow-md">
+                <label
+                  className="bg-slate-200 block w-32 p-1"
+                  htmlFor="appealTitle"
+                >
+                  タイトル
+                </label>
+                <input
+                  className={`${styles.focus} block w-96 p-2`}
+                  type="text"
+                  id="appealTitle"
+                  value={states.title}
+                  onChange={(e) =>
+                    handleChangeSelling(e, setIndex, 1)
+                  }
+                />
+              </div>
+              <div className="flex-row w-full flex border-2 border-slate-300 shadow-md">
+                <label
+                  className="bg-slate-200 block w-40 pt-1 px-2"
+                  htmlFor="appealContent"
+                >
+                  内容
+                </label>
+                <textarea
+                  id="appealContent"
+                  className={`${styles.focus} p-2 w-full`}
+                  rows={8}
+                  value={states.content}
+                  onChange={(e) =>
+                    handleChangeSelling(e, setIndex, 2)
+                  }
+                ></textarea>
+              </div>
+            </div>
+          ))}
+
+          <div className="mt-5">
+            <button
+              onClick={handleAddSellingForm}
+              type="button"
+              className={`${styles.focus} shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 h-10 rounded-xl border-2 border-white border-solid`}
+            >
+              <span className="text-white font-bold m-4">
+                + アピールポイントの追加
+              </span>
+            </button>
+          </div>
         </div>
         {/* sellingPoint */}
 
@@ -198,9 +721,8 @@ function Home() {
           <textarea
             name=""
             id=""
-            className={`${styles.focus} border-2 border-slate-300 p-2`}
-            cols={56}
-            rows={10}
+            className={`${styles.focus} border-2 border-slate-300 p-2 w-full`}
+            rows={8}
             defaultValue={'mock'}
           ></textarea>
         </div>
@@ -208,7 +730,7 @@ function Home() {
 
         <div>
           <h3 className="mt-10 text-xl font-bold">資格</h3>
-          <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
+          <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
             <label
               className="bg-slate-200 block w-1/4 p-1"
               htmlFor=""
@@ -238,72 +760,211 @@ function Home() {
               <option defaultValue="2">2</option>
             </select>
           </div>
-          <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label
-              className="bg-slate-200 block w-1/4 p-1"
-              htmlFor=""
-            >
+          <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+            <label className="bg-slate-200 block w-32 p-1" htmlFor="">
               資格
             </label>
             <input
-              className={`${styles.focus} block w-3/4 p-2`}
+              className={`${styles.focus} block w-96 p-2`}
               type="text"
             />
           </div>
-          <Button name="資格" />
+
+          {qualifications.map((states: any, setIndex: number) => (
+            <div key={setIndex} className="mt-6">
+              <button
+                onClick={() =>
+                  handleRemoveQualificationsFormSet(setIndex)
+                }
+              >
+                x
+              </button>
+              <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+                <label
+                  className="bg-slate-200 block w-1/4 p-1"
+                  htmlFor=""
+                >
+                  取得年
+                </label>
+                <select
+                  name=""
+                  id=""
+                  className={`${styles.focus} w-1/4 text-center`}
+                  value={states.year}
+                  onChange={(e) =>
+                    handleChangeQualifications(e, setIndex, 1)
+                  }
+                >
+                  <option defaultValue="2000">2000</option>
+                  <option defaultValue="2001">2001</option>
+                </select>
+                <label
+                  className="bg-slate-200 block w-1/4 p-1"
+                  htmlFor=""
+                >
+                  取得月
+                </label>
+                <select
+                  name=""
+                  id=""
+                  className={`${styles.focus} w-1/4 text-center`}
+                  value={states.month}
+                  onChange={(e) =>
+                    handleChangeQualifications(e, setIndex, 2)
+                  }
+                >
+                  <option defaultValue="1">1</option>
+                  <option defaultValue="2">2</option>
+                </select>
+              </div>
+              <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+                <label
+                  className="bg-slate-200 block w-32 p-1"
+                  htmlFor=""
+                >
+                  資格
+                </label>
+                <input
+                  className={`${styles.focus} block w-96 p-2`}
+                  type="text"
+                  value={states.credential}
+                  onChange={(e) =>
+                    handleChangeQualifications(e, setIndex, 3)
+                  }
+                />
+              </div>
+            </div>
+          ))}
+
+          <div className="mt-5">
+            <button
+              onClick={handleAddQualificationsForm}
+              type="button"
+              className={`${styles.focus} shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 h-10 rounded-xl border-2 border-white border-solid`}
+            >
+              <span className="text-white font-bold m-4">
+                + 資格の追加
+              </span>
+            </button>
+          </div>
         </div>
         {/* qualification資格 */}
 
         <div>
           <h3 className="mt-10 text-xl font-bold">前職</h3>
-          <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label
-              className="bg-slate-200 block w-1/4 p-1"
-              htmlFor=""
-            >
+          <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+            <label className="bg-slate-200 block w-32 p-1" htmlFor="">
               業界
             </label>
             <input
-              className={`${styles.focus} block w-3/4 p-2`}
+              className={`${styles.focus} block w-96 p-2`}
               type="text"
             />
           </div>
-          <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
-            <label
-              className="bg-slate-200 block w-1/4 p-1"
-              htmlFor=""
-            >
+          <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+            <label className="bg-slate-200 block w-32 p-1" htmlFor="">
               業種
             </label>
             <input
-              className={`${styles.focus} block w-3/4 p-2`}
+              className={`${styles.focus} block w-96 p-2`}
               type="text"
             />
           </div>
-          <div className="w-full flex border-2 border-slate-300 mt-2 shadow-md">
-            <label
-              className="bg-slate-200 block w-1/4 p-1"
-              htmlFor=""
-            >
+          <div className="flex-row w-full flex border-2 border-slate-300 shadow-md">
+            <label className="bg-slate-200 block w-32 p-1" htmlFor="">
               業務内容
             </label>
             <textarea
               name=""
               id=""
-              className={`${styles.focus} p-2`}
-              cols={42}
-              rows={10}
+              className={`${styles.focus} p-2 w-full`}
+              rows={8}
               defaultValue={'mock'}
             ></textarea>
           </div>
-          <Button name="前職" />
+
+          {previousWorks.map(
+            (previousWorkss: any, setIndex: number) => (
+              <div key={setIndex} className="mt-6">
+                <button
+                  onClick={() =>
+                    handleRemovePreviousWorksFormSet(setIndex)
+                  }
+                >
+                  x
+                </button>
+                <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+                  <label
+                    className="bg-slate-200 block w-32 p-1"
+                    htmlFor=""
+                  >
+                    業界
+                  </label>
+                  <input
+                    className={`${styles.focus} block w-96 p-2`}
+                    type="text"
+                    value={previousWorkss.form1}
+                    onChange={(e) =>
+                      handleChangePreviousWorks(e, setIndex, 1)
+                    }
+                  />
+                </div>
+                <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+                  <label
+                    className="bg-slate-200 block w-32 p-1"
+                    htmlFor=""
+                  >
+                    業種
+                  </label>
+                  <input
+                    className={`${styles.focus} block w-96 p-2`}
+                    type="text"
+                    value={previousWorkss.form1}
+                    onChange={(e) =>
+                      handleChangePreviousWorks(e, setIndex, 2)
+                    }
+                  />
+                </div>
+                <div className="flex-row w-full flex border-2 border-slate-300 shadow-md">
+                  <label
+                    className="bg-slate-200 block w-32 p-1"
+                    htmlFor=""
+                  >
+                    業務内容
+                  </label>
+                  <textarea
+                    name=""
+                    id=""
+                    className={`${styles.focus} p-2 w-full`}
+                    rows={8}
+                    value={previousWorkss.form1}
+                    onChange={(e) =>
+                      handleChangePreviousWorks(e, setIndex, 3)
+                    }
+                  ></textarea>
+                </div>
+              </div>
+            )
+          )}
+
+          <div className="mt-5">
+            <button
+              onClick={handleAddPreviousWorksForm}
+              type="button"
+              className={`${styles.focus} shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 h-10 rounded-xl border-2 border-white border-solid`}
+            >
+              <span className="text-white font-bold m-4">
+                + 前職の追加
+              </span>
+            </button>
+          </div>
         </div>
         {/* previousWork */}
 
         <div>
           <h3 className="mt-10 text-xl font-bold">開発経験</h3>
           <div className="">
-            <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
+            <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
               <label
                 className="bg-slate-200 block w-1/4 p-1"
                 htmlFor=""
@@ -333,126 +994,126 @@ function Home() {
                 <option defaultValue="2">2</option>
               </select>
             </div>
-            <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
+            <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
               <label
-                className="bg-slate-200 block w-1/4 p-1"
+                className="bg-slate-200 block w-32 p-1"
                 htmlFor=""
               >
                 期間
               </label>
               <input
-                className={`${styles.focus} block w-3/4 p-2`}
+                className={`${styles.focus} block w-96 p-2`}
                 type="text"
               />
             </div>
-            <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
+            <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
               <label
-                className="bg-slate-200 block w-1/4 p-1"
+                className="bg-slate-200 block w-32 p-1"
                 htmlFor=""
               >
                 担当役割
               </label>
               <input
-                className={`${styles.focus} block w-3/4 p-2`}
+                className={`${styles.focus} block w-96 p-2`}
                 type="text"
               />
             </div>
-            <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
+            <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
               <label
-                className="bg-slate-200 block w-1/4 p-1"
+                className="bg-slate-200 block w-32 p-1"
                 htmlFor=""
               >
                 チーム人数
               </label>
               <input
-                className={`${styles.focus} block w-3/4 p-2`}
+                className={`${styles.focus} block w-96 p-2`}
                 type="text"
               />
             </div>
-            <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
+            <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
               <label
-                className="bg-slate-200 block w-1/4 p-1"
+                className="bg-slate-200 block w-32 p-1"
                 htmlFor=""
               >
                 PJ全体人数
               </label>
               <input
-                className={`${styles.focus} block w-3/4 p-2`}
+                className={`${styles.focus} block w-96 p-2`}
                 type="text"
               />
             </div>
-            <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
+            <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
               <label
-                className="bg-slate-200 block w-1/4 p-1"
+                className="bg-slate-200 block w-32 p-1"
                 htmlFor=""
               >
                 プロジェクト名
               </label>
               <input
-                className={`${styles.focus} block w-3/4 p-2`}
+                className={`${styles.focus} block w-96 p-2`}
                 type="text"
               />
             </div>
-            <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
+            <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
               <label
-                className="bg-slate-200 block w-1/4 p-1"
+                className="bg-slate-200 block w-32 p-1"
                 htmlFor=""
               >
                 動作環境
               </label>
               <input
-                className={`${styles.focus} block w-3/4 p-2`}
+                className={`${styles.focus} block w-96 p-2`}
                 type="text"
               />
             </div>
-            <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
+            <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
               <label
-                className="bg-slate-200 block w-1/4 p-1"
+                className="bg-slate-200 block w-32 p-1"
                 htmlFor=""
               >
                 言語
               </label>
               <input
-                className={`${styles.focus} block w-3/4 p-2`}
+                className={`${styles.focus} block w-96 p-2`}
                 type="text"
               />
             </div>
-            <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
+            <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
               <label
-                className="bg-slate-200 block w-1/4 p-1"
+                className="bg-slate-200 block w-32 p-1"
                 htmlFor=""
               >
                 フレームワーク
               </label>
               <input
-                className={`${styles.focus} block w-3/4 p-2`}
+                className={`${styles.focus} block w-96 p-2`}
                 type="text"
               />
             </div>
-            <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
+            <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
               <label
-                className="bg-slate-200 block w-1/4 p-1"
+                className="bg-slate-200 block w-32 p-1"
                 htmlFor=""
               >
                 ツール･その他
               </label>
               <input
-                className={`${styles.focus} block w-3/4 p-2`}
+                className={`${styles.focus} block w-96 p-2`}
                 type="text"
               />
             </div>
-            <div className="w-full flex mt-2 h-10 ">
+            <div className="w-full flex h-10 ">
               <label
-                className="bg-slate-200 block w-1/4 pt-2 px-1 text-sm border-2 border-slate-300 shadow-md"
+                className="bg-slate-200 block w-32 pt-2 px-1 text-sm border-2 border-slate-300 shadow-md"
                 htmlFor=""
               >
                 アーキテクチャ
               </label>
-              <input className=" block w-3/4 mt-1 ml-2" type="file" />
+              <input className=" block w-96 mt-1 ml-2" type="file" />
             </div>
-            <div className="w-full flex border-2 border-slate-300 mt-2 shadow-md">
+            <div className="flex-row w-full flex border-2 border-slate-300 shadow-md">
               <label
-                className="bg-slate-200 block w-1/4 p-1"
+                className="bg-slate-200 block w-32 p-1"
                 htmlFor=""
               >
                 業務内容
@@ -460,21 +1121,313 @@ function Home() {
               <textarea
                 name=""
                 id=""
-                className={`${styles.focus} p-2`}
-                cols={42}
-                rows={10}
+                className={`${styles.focus} p-2 w-full`}
+                rows={8}
                 defaultValue={'mock'}
               ></textarea>
             </div>
           </div>
 
-          <Button name="開発経験" />
+          {developmentExperiences.map(
+            (des: any, setIndex: number) => (
+              <div key={setIndex} className="mt-6">
+                <button
+                  onClick={() =>
+                    handleRemoveDevelopmentExperiencesFormSet(
+                      setIndex
+                    )
+                  }
+                >
+                  x
+                </button>
+                <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+                  <label
+                    className="bg-slate-200 block w-1/4 p-1"
+                    htmlFor=""
+                  >
+                    開始年
+                  </label>
+                  <select
+                    name=""
+                    id=""
+                    className={`${styles.focus} w-1/4 text-center`}
+                    value={des.form1}
+                    onChange={(e) =>
+                      handleChangeDevelopmentExperiences(
+                        e,
+                        setIndex,
+                        1
+                      )
+                    }
+                  >
+                    <option defaultValue="2000">2000</option>
+                    <option defaultValue="2001">2001</option>
+                  </select>
+                  <label
+                    className="bg-slate-200 block w-1/4 p-1"
+                    htmlFor=""
+                  >
+                    開始月
+                  </label>
+                  <select
+                    name=""
+                    id=""
+                    className={`${styles.focus} w-1/4 text-center`}
+                    value={des.form1}
+                    onChange={(e) =>
+                      handleChangeDevelopmentExperiences(
+                        e,
+                        setIndex,
+                        2
+                      )
+                    }
+                  >
+                    <option defaultValue="1">1</option>
+                    <option defaultValue="2">2</option>
+                  </select>
+                </div>
+                <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+                  <label
+                    className="bg-slate-200 block w-32 p-1"
+                    htmlFor=""
+                  >
+                    期間
+                  </label>
+                  <input
+                    className={`${styles.focus} block w-96 p-2`}
+                    type="text"
+                    value={des.form1}
+                    onChange={(e) =>
+                      handleChangeDevelopmentExperiences(
+                        e,
+                        setIndex,
+                        3
+                      )
+                    }
+                  />
+                </div>
+                <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+                  <label
+                    className="bg-slate-200 block w-32 p-1"
+                    htmlFor=""
+                  >
+                    担当役割
+                  </label>
+                  <input
+                    className={`${styles.focus} block w-96 p-2`}
+                    type="text"
+                    value={des.form1}
+                    onChange={(e) =>
+                      handleChangeDevelopmentExperiences(
+                        e,
+                        setIndex,
+                        4
+                      )
+                    }
+                  />
+                </div>
+                <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+                  <label
+                    className="bg-slate-200 block w-32 p-1"
+                    htmlFor=""
+                  >
+                    チーム人数
+                  </label>
+                  <input
+                    className={`${styles.focus} block w-96 p-2`}
+                    type="text"
+                    value={des.form1}
+                    onChange={(e) =>
+                      handleChangeDevelopmentExperiences(
+                        e,
+                        setIndex,
+                        5
+                      )
+                    }
+                  />
+                </div>
+                <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+                  <label
+                    className="bg-slate-200 block w-32 p-1"
+                    htmlFor=""
+                  >
+                    PJ全体人数
+                  </label>
+                  <input
+                    className={`${styles.focus} block w-96 p-2`}
+                    type="text"
+                    value={des.form1}
+                    onChange={(e) =>
+                      handleChangeDevelopmentExperiences(
+                        e,
+                        setIndex,
+                        6
+                      )
+                    }
+                  />
+                </div>
+                <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+                  <label
+                    className="bg-slate-200 block w-32 p-1"
+                    htmlFor=""
+                  >
+                    プロジェクト名
+                  </label>
+                  <input
+                    className={`${styles.focus} block w-96 p-2`}
+                    type="text"
+                    value={des.form1}
+                    onChange={(e) =>
+                      handleChangeDevelopmentExperiences(
+                        e,
+                        setIndex,
+                        7
+                      )
+                    }
+                  />
+                </div>
+                <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+                  <label
+                    className="bg-slate-200 block w-32 p-1"
+                    htmlFor=""
+                  >
+                    動作環境
+                  </label>
+                  <input
+                    className={`${styles.focus} block w-96 p-2`}
+                    type="text"
+                    value={des.form1}
+                    onChange={(e) =>
+                      handleChangeDevelopmentExperiences(
+                        e,
+                        setIndex,
+                        8
+                      )
+                    }
+                  />
+                </div>
+                <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+                  <label
+                    className="bg-slate-200 block w-32 p-1"
+                    htmlFor=""
+                  >
+                    言語
+                  </label>
+                  <input
+                    className={`${styles.focus} block w-96 p-2`}
+                    type="text"
+                    value={des.form1}
+                    onChange={(e) =>
+                      handleChangeDevelopmentExperiences(
+                        e,
+                        setIndex,
+                        9
+                      )
+                    }
+                  />
+                </div>
+                <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+                  <label
+                    className="bg-slate-200 block w-32 p-1"
+                    htmlFor=""
+                  >
+                    フレームワーク
+                  </label>
+                  <input
+                    className={`${styles.focus} block w-96 p-2`}
+                    type="text"
+                    value={des.form1}
+                    onChange={(e) =>
+                      handleChangeDevelopmentExperiences(
+                        e,
+                        setIndex,
+                        10
+                      )
+                    }
+                  />
+                </div>
+                <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
+                  <label
+                    className="bg-slate-200 block w-32 p-1"
+                    htmlFor=""
+                  >
+                    ツール･その他
+                  </label>
+                  <input
+                    className={`${styles.focus} block w-96 p-2`}
+                    type="text"
+                    value={des.form1}
+                    onChange={(e) =>
+                      handleChangeDevelopmentExperiences(
+                        e,
+                        setIndex,
+                        11
+                      )
+                    }
+                  />
+                </div>
+                <div className="w-full flex h-10 ">
+                  <label
+                    className="bg-slate-200 block w-32 pt-2 px-1 text-sm border-2 border-slate-300 shadow-md"
+                    htmlFor=""
+                  >
+                    アーキテクチャ
+                  </label>
+                  <input
+                    className=" block w-96 mt-1 ml-2"
+                    type="file"
+                    value={des.form1}
+                    onChange={(e) =>
+                      handleChangeDevelopmentExperiences(
+                        e,
+                        setIndex,
+                        12
+                      )
+                    }
+                  />
+                </div>
+                <div className="flex-row w-full flex border-2 border-slate-300 shadow-md">
+                  <label
+                    className="bg-slate-200 block w-32 p-1"
+                    htmlFor=""
+                  >
+                    業務内容
+                  </label>
+                  <textarea
+                    name=""
+                    id=""
+                    className={`${styles.focus} p-2 w-full`}
+                    rows={8}
+                    value={des.form1}
+                    onChange={(e) =>
+                      handleChangeDevelopmentExperiences(
+                        e,
+                        setIndex,
+                        13
+                      )
+                    }
+                  ></textarea>
+                </div>
+              </div>
+            )
+          )}
+
+          <div className="mt-5">
+            <button
+              onClick={handleAddDevelopmentExperiencesForm}
+              type="button"
+              className={`${styles.focus} shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 h-10 rounded-xl border-2 border-white border-solid`}
+            >
+              <span className="text-white font-bold m-4">
+                + 開発経験の追加
+              </span>
+            </button>
+          </div>
         </div>
         {/* developmentExperience */}
         <div className="text-center">
           <button
-            onClick={mock}
-            type="button"
+            type="submit"
             className="shadow-md mt-10 h-12  cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid"
           >
             <span className="text-white font-bold m-5">

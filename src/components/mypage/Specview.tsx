@@ -11,7 +11,6 @@ const specview = ({ userData }: { userData: any }) => {
   const [data, setData] = useState<number>();
 
   console.log(userData);
-  console.log(userData.techResult);
 
   const os = userData.techResult.filter((p: any) => p.category === 1);
   const lang = userData.techResult.filter(
@@ -407,24 +406,3 @@ const specview = ({ userData }: { userData: any }) => {
 };
 
 export default specview;
-
-const skillSummary = {
-  os: ['Linux(CentOS)', 'macOS'],
-  lang: [
-    'JavaScript',
-    'TypeScript',
-    'SQL',
-    'HTML',
-    'CSS',
-    'シェルスクリプト',
-  ],
-  flame: ['Next.js(13)', 'Jest'],
-  lib: ['React(18)', 'jQuery'],
-  tool: ['Git', 'Vim', 'PostgreSQL14', 'VisualStudioCode'],
-  detail: [
-    '詳細設計',
-    '実装',
-    'デバッグ',
-    'テスト(ブラックボックステスト仕様書作成)',
-  ],
-};

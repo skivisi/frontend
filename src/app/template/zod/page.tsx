@@ -14,7 +14,7 @@
 
 // zodのインポート
 import { z } from 'zod';
-import { useState } from 'react';
+import { useState, usejotai } from 'react';
 
 // オブジェクトスキーマ作成
 const User = z.object({
@@ -31,9 +31,9 @@ type User = z.infer<typeof User>;
 
 export default function ZodTemplate() {
   // テキストフィールドに入力された値を格納
-  const [user, setUser] = useState<User>({ email: '', password: '' });
+  const [user, setUser] = usejotai<User>({ email: '', password: '' });
   // エラー文を格納
-  const [error, setError] = useState<any>(null);
+  const [error, setError] = usejotai<any>(null);
 
   // ボタン発火イベント
   const handleSubmit = async (e: any) => {
@@ -70,7 +70,7 @@ export default function ZodTemplate() {
           <input
             type="text"
             id="email"
-            name="emali" 
+            name="emali"
             value={user.email}
             onChange={(e) =>
               setUser({ ...user, email: e.target.value })
@@ -111,6 +111,71 @@ export default function ZodTemplate() {
           </button>
         </div>
       </form>
+    </>
+  );
+}
+
+function uni() {
+  
+  // 
+  const [jotai, setJotai] = useState<any>([]);
+  console.log(jotai);
+  // 増やすボタンの関数
+  const handleAddSectorForm = () => {
+    setJotai([...jotai, { title: '', name: '' }]);
+  };
+  // 削除
+  const handleRemoveSectorFormSet = (setIndex: number) => {
+    const newJotai = [...jotai];
+    newJotai.splice(setIndex, 1);
+    setJotai(newJotai);
+  };
+
+  // 入力された値を格納
+  const handleChangeSector = (
+    e: any,
+    setIndex: number,
+    formIndex: number
+  ) => {
+    const newJotai = [...jotai];
+    if (formIndex === 1) {
+      newJotai[setIndex]['title'] = e.target.value;
+    } else {
+      newJotai[setIndex]['name'] = e.target.value;
+    }
+    setJotai(newJotai);
+  };
+
+  return (
+    <>
+      {jotai.map((jotais: any, setIndex: number) => (
+        <div key={setIndex}>
+          <button onClick={() => handleRemoveSectorFormSet(setIndex)}>
+            x
+          </button>
+          <input
+            value={jotais.form1}
+            onChange={(e) => handleChangeSector(e, setIndex, 1)}
+          />
+
+          <input
+            value={jotais.form2}
+            onChange={(e) => handleChangeSector(e, setIndex, 2)}
+          />
+        </div>
+      ))}
+
+      <div className="mt-5">
+        <button
+          onClick={handleAddSectorForm}
+          type="button"
+          className={`${styles.focus} shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 h-10 rounded-xl border-2 border-white border-solid`}
+        >
+          <span className="text-white font-bold m-4">
+            + の追加
+          </span>
+        </button>
+      </div>
     </>
   );
 }
