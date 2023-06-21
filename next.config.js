@@ -4,10 +4,7 @@ const nextConfig = {
   swcMinify: true,
   rewrites: async () => {
     return [
-      {
-        source: '/api/user',
-        destination: `http://localhost:8000/user`,
-      },
+      
     ];
   },
 };

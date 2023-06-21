@@ -3,9 +3,14 @@ import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 
 const Header = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(['id']);
+  const [cookies, setCookie, removeCookie] = useCookies();
   const handleLogout = () => {
-    removeCookie('id');
+    if (cookies.userId) {
+      removeCookie('userId');
+    }
+    if (cookies.affiliation) {
+      removeCookie('affiliation');
+    }
   };
   return (
     <div>
@@ -20,14 +25,13 @@ const Header = () => {
           <button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0 text-sky-900">
             ダッシュボードへ
           </button>
-          <Link href="/login">
-            <button
-              className="ml-10 inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0 text-sky-900"
-              onClick={handleLogout}
-            >
-              ログアウト→
-            </button>
-          </Link>
+
+          <button
+            className="ml-10 inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0 text-sky-900"
+            onClick={handleLogout}
+          >
+            <Link href="/login">ログアウト→</Link>
+          </button>
         </div>
       </header>
     </div>

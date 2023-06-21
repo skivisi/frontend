@@ -1,17 +1,73 @@
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import { useRouter } from 'next/router';
+import { GetServerSideProps, NextApiRequest } from 'next';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 // 検索結果(営業)
+export const getServerSideProps: GetServerSideProps = async (
+  context
+) => {
+  const { query, req } = context;
+  const cookie = req.cookies;
+  const affiliation = cookie.affiliation || null;
+  return {
+    props: {
+      query,
+      affiliation,
+    },
+  };
+};
 
-const SearchSales = () => {
-  const items = [1, 2, 3];
+const SearchSales = ({
+  query,
+  affiliation,
+}: {
+  query: any;
+  affiliation: any;
+}) => {
+  const [users, setUsers] = useState(JSON.parse(query.foundUser));
+  const [businessSituation, setBusinessSituation] = useState('');
+
+  const handleChange = async (user: any) => {
+    try {
+      const changedBusinessSituation =
+        user.businessSituation === 'アサイン中'
+          ? '待機中'
+          : 'アサイン中';
+      const requestBody = {
+        businessSituation: changedBusinessSituation,
+      };
+      await axios.patch(`http://localhost:8080/user/${user.id}`, requestBody);
+      
+      setBusinessSituation(changedBusinessSituation);
+
+      // users配列内のユーザーのbusinessSituationを更新する
+      const updatedUsers = users.map((u: any) => {
+        if (u.id === user.id) {
+          return {
+            ...u,
+            businessSituation: changedBusinessSituation,
+          };
+        }
+        return u;
+      });
+
+      // 更新されたusers配列をセットする
+      setUsers(updatedUsers);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Header />
       <div className="text-sky-900">
         <div className="ml-24 my-14 text-2xl flex">
           <div>検索結果&nbsp;&nbsp;&nbsp;</div>
-          <div>{3}</div>
+          <div>{users.length}</div>
           <div>件</div>
         </div>
         <div
@@ -29,21 +85,78 @@ const SearchSales = () => {
               </div>
             </div>
 
-            <div>
-              {items.map((item) => (
-                <a
-                  key={item}
-                  href="#"
-                  className="flex justify-center mt-14 text-lg space-x-32 border-b-2 border-light-blue-500 pb-2"
-                >
-                  <div className="w-24">2276</div>
-                  <div className="w-24 pl-4">2020/1</div>
-                  <div className="w-32 pl-3">青山 真太郎</div>
-                  <div className="w-24">FR</div>
-                  <div className="w-28">アサイン中</div>
-                </a>
-              ))}
-            </div>
+            {affiliation ? (
+              <div>
+                {users.map((user: any) => (
+                  <a
+                    key={user.id}
+                    href="#"
+                    className="flex justify-center mt-14 text-lg space-x-32 border-b-2 border-light-blue-500 pb-2"
+                  >
+                    <div className="w-24">{user.employeeNumber}</div>
+                    <div className="w-24 pl-4">{user.joinDate}</div>
+                    <div className="w-32 pl-3">{user.userName}</div>
+                    <div className="w-24">{user.affiliation}</div>
+                    <div className="w-28">
+                      {user.businessSituation}
+                    </div>
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <div>
+                {users.map((user: any) => (
+                  <div
+                    key={user.id}
+                    className="mt-14 text-lg border-b-2 border-light-blue-500 pb-2"
+                  >
+                    <a
+                      href="#"
+                      className="relative flex justify-center space-x-32 mr-10 mb-2"
+                    >
+                      <div
+                        className="absolute"
+                        style={{ left: '2%' }}
+                      >
+                        {user.employeeNumber}
+                      </div>
+                      <div
+                        className="absolute"
+                        style={{ left: '9%' }}
+                      >
+                        {user.joinDate}
+                      </div>
+                      <div
+                        className="absolute"
+                        style={{ left: '35%' }}
+                      >
+                        {user.userName}
+                      </div>
+                      <div
+                        className="relative"
+                        style={{ left: '26%' }}
+                      >
+                        {user.affiliation}
+                      </div>
+                      <div></div>
+                    </a>
+                    <div className="relative">
+                      <button
+                        className="absolute mb-2 w-28 text-center shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid text-white"
+                        style={{ bottom: '70%', left: '90%' }}
+                        onClick={() => handleChange(user)}
+                      >
+                        <div>
+                          {user.businessSituation === 'アサイン中'
+                            ? 'アサイン中'
+                            : '待機中'}
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
