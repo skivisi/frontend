@@ -8,11 +8,6 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { userFetch } from './_lib/userFetch';
 
-// export async function getAllPostIds() {
-//   const res = await axios.get('http://127.0.0.1:8000/user?id=1');
-//   return res.data;
-// }
-
 const Page = () => {
   const userData = userFetch();
   // console.log(userData)
@@ -47,7 +42,7 @@ const Page = () => {
             onClick={() => changePageState(true)}
             className={pageState ? selected : unselected}
           >
-            スペック
+            スキル
           </button>
         </div>
         <div className="ml-5">
@@ -55,7 +50,7 @@ const Page = () => {
             onClick={() => changePageState(false)}
             className={pageState ? unselected : selected}
           >
-            スキル
+            スペック
           </button>
         </div>
         <button

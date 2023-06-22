@@ -132,54 +132,24 @@
     {
       "skillPointId": 1,
       "userId": 1,
-      "FR": 80,
-      "BK": 75,
-      "DB": 90,
-      "SBR": 85,
-      "AR": 70,
-      "TS": 95,
-      "COM": 88,
+      "FR": 8,
+      "BK": 7,
+      "DB": 9,
+      "SBR": 8,
+      "AR": 3,
+      "TS": 5,
+      "COM": 8,
       "abilities": [
-        {
-          "property": "予知能力",
-          "value": 1
-        },
-        {
-          "property": "テックリード",
-          "value": 0
-        },
-        {
-          "property": "vim職人",
-          "value": 0
-        },
-        {
-          "property": "shell芸人",
-          "value": 1
-        },
-        {
-          "property": "超ポジティブ",
-          "value": 0
-        },
-        {
-          "property": "遅刻魔",
-          "value": 2
-        },
-        {
-          "property": "気分屋",
-          "value": 0
-        },
-        {
-          "property": "新人",
-          "value": 1
-        },
-        {
-          "property": "お喋り野郎",
-          "value": 3
-        },
-        {
-          "property": "ガヤ",
-          "value": 2
-        }
+        { "property": "予知能力", "value": true, "tagColor": 1 },
+        { "property": "テックリード", "value": false, "tagColor": 2  },
+        { "property": "vim職人", "value": true, "tagColor": 2  },
+        { "property": "shell芸人", "value": true, "tagColor": 3  },
+        { "property": "超ポジティブ", "value": false, "tagColor": 3  },
+        { "property": "遅刻魔", "value": true, "tagColor": 1  },
+        { "property": "気分屋", "value": false, "tagColor": 1  },
+        { "property": "新人", "value": true, "tagColor": 2  },
+        { "property": "お喋り野郎", "value": false, "tagColor": 1  },
+        { "property": "ガヤ", "value": true, "tagColor": 3  }
       ]
     },
     {

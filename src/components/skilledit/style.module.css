@@ -1,0 +1,16 @@
+.skill_name {
+  text-align-last: justify; 
+  text-justify: inter-ideograph;
+}
+
+.FR_scores input[type='radio']:checked + label,
+.BK_scores input[type='radio']:checked + label,
+.DB_scores input[type='radio']:checked + label,
+.SBR_scores input[type='radio']:checked + label,
+.AR_scores input[type='radio']:checked + label,
+.TS_scores input[type='radio']:checked + label,
+.COM_scores input[type='radio']:checked + label {
+  border: 2px solid #f0fdfa;
+  background-color: #f0fdfa;
+  color: rgb(17 94 89);
+}
