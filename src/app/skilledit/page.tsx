@@ -24,20 +24,21 @@ const selected_3 =
   'w-32 text-center m-1 bg-green-300 border-4 border-green-400 rounded-xl p-1 font-bold text-green-800';
 
 const skillEdit = () => {
-  const userData = userFetch(false, 0);
 
-  const skill = userData.users.data?.skills[0];
-  const skillPoint = userData.users.data?.skillPoints[0];
-  const specialAbilities = userData.users.data?.specialAbilities;
-  const userId = userData.users.data?.userId;
+  const userData = userFetch(false,0);
+
+  const skill = userData.skill;
+  const skillPoint = userData.skillPoint;
+  const specialAbilities = userData.specialAbility;
+  const userId = userData.userId;
+
 
   const [skills, setSkills] = useState<any>({
     skill: '',
     skillPoint: '',
     abilities: '',
   });
-  console.log(skills.skillPoint?.FR);
-  console.log(skills.abilities);
+  console.log(skill);
   // 初回のデータがない場合挿入
   let defaultSkillPoint = {
     userId: userId,
