@@ -18,7 +18,7 @@ function handleBlur() {
 }
 
 function Home() {
-  const userData = userFetch();
+  const userData = userFetch(false, 0);
   const autocomplete = autoComplete();
   // スキル要約
   const [skillSummary, setSkillSummary] = useState<any>([]);

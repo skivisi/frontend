@@ -25,18 +25,21 @@ const selected_3 =
   'w-32 text-center m-1 bg-green-300 border-4 border-green-400 rounded-xl p-1 font-bold text-green-800';
 
 const skillEdit = () => {
-  const userData = userFetch();
+  const userData = userFetch(false, 0);
   console.log(userData.skillPoint);
   const [skills, setSkills] = useState<any>({
     skill: '',
     skillPoint: '',
+    specialAbility: ''
   });
+
 
   useEffect(() => {
     setSkills((p: any) => ({
       ...p,
       skill: userData.skill,
       skillPoint: userData.skillPoint,
+      specialAbility: userData.specialAbility
     }));
     if (userData.skillPoint == undefined) {
       setSkills((p: any) => ({
@@ -44,7 +47,7 @@ const skillEdit = () => {
         skillPoint: defaultSkillPoint,
       }));
     }
-  }, [userData.skill, userData.skillPoint]);
+  }, [userData.skill, userData.skillPoint, userData.specialAbility]);
 
   // 特有スキル編集
   const handleChangeInherent = (e: any, formIndex: number) => {
@@ -70,21 +73,18 @@ const skillEdit = () => {
 
   // スペシャルスキル編集
   const handleChangeAbilities = (index: number) => {
-    const newAbilityValue = [...skills.skillPoint.abilities];
+    const newAbilityValue = [...skills.specialAbility];
     console.log(newAbilityValue);
-    if (newAbilityValue[index]['value'] === true) {
-      newAbilityValue[index]['value'] = false;
+    if (newAbilityValue[index]['skillSelection'] === true) {
+      newAbilityValue[index]['skillSelection'] = false;
     } else {
-      newAbilityValue[index]['value'] = true;
+      newAbilityValue[index]['skillSelection'] = true;
     }
 
     setSkills((prev: any) => {
       return {
         ...prev,
-        skillPoint: {
-          ...prev.skillPoint,
-          abilities: newAbilityValue,
-        },
+          specialAbility: newAbilityValue,
       };
     });
   };
@@ -213,13 +213,13 @@ const skillEdit = () => {
         <div className="flex flex-wrap justify-center mt-3">
           {/* 配列の要素を繰り返し処理して描画 */}
 
-          {skills.skillPoint.abilities &&
-            skills.skillPoint.abilities.map(
+          {skills.specialAbility &&
+            skills.specialAbility.map(
               (
                 ability: {
-                  property: string;
-                  value: boolean;
-                  tagColor: number;
+                  skillList: string;
+                  skillSelection: boolean;
+                  tagColor: number
                 },
                 index: number
               ) => (
@@ -228,7 +228,7 @@ const skillEdit = () => {
                   type="button"
                   onClick={() => handleChangeAbilities(index)}
                   className={
-                    ability.value === false
+                    ability.skillSelection === false
                       ? unselected
                       : ability.tagColor === 1
                       ? selected_1
@@ -237,7 +237,7 @@ const skillEdit = () => {
                       : selected_3
                   }
                 >
-                  {ability.property}
+                  {ability.skillList}
                 </button>
               )
             )}

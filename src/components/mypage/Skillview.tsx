@@ -48,7 +48,6 @@ const skillview = ({ userData }: { userData: any }) => {
     'w-32 text-center m-1 bg-sky-300 border-4 border-sky-400 rounded-xl p-1 font-bold text-sky-800';
   const selected_3 =
     'w-32 text-center m-1 bg-green-300 border-4 border-green-400 rounded-xl p-1 font-bold text-green-800';
-
   return (
     <>
       {userData ? (
@@ -58,7 +57,7 @@ const skillview = ({ userData }: { userData: any }) => {
               <div className="bg-sky-50 p-5 shadow-md text-lg">
                 <div className="mb-3">
                   {/* 出しわけ */}
-                  {userData.user.businessSituation ? (
+                  {userData.user.businessSituation === "アサイン中" ? (
                     <span className="bg-sky-300 border-2 border-sky-400 rounded-xl p-1 font-bold text-sky-800">
                       エントリー
                     </span>
@@ -125,12 +124,12 @@ const skillview = ({ userData }: { userData: any }) => {
 
             <div className="flex flex-wrap justify-center mt-5">
               {/* 配列の要素を繰り返し処理して描画 */}
-              {userData.skillPoint.abilities &&
-                userData.skillPoint.abilities.map(
+              {userData.specialAbility &&
+                userData.specialAbility.map(
                   (
                     ability: {
-                      property: string;
-                      value: boolean;
+                      skillList: string;
+                      skillSelection: boolean;
                       tagColor: number
                     },
                     index: number
@@ -138,7 +137,7 @@ const skillview = ({ userData }: { userData: any }) => {
                     <div
                       key={index}
                       className={
-                        ability.value === false
+                        ability.skillSelection === false
                           ? unselected
                           : ability.tagColor === 1
                           ? selected_1
@@ -147,7 +146,7 @@ const skillview = ({ userData }: { userData: any }) => {
                           : selected_3
                       }
                     >
-                      {ability.property}
+                      {ability.skillList}
                     </div>
                   )
                 )}
