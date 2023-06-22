@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 
 // 通知一覧(エンジニア)
 const fetcher = (
-  resource: Request | URL,
+  resource: RequestInfo,
   init: RequestInit | undefined
 ) => fetch(resource, init).then((res) => res.json());
 
@@ -36,7 +36,7 @@ const NotificationEngineer =  (cookie: any | null) => {
     `http://localhost:8000/api/request/receive/${userId}`,
     fetcher
   );
-  
+
   if (!data) {
     return <div>Loading...</div>; // データの取得中に表示
   }
@@ -126,8 +126,8 @@ const NotificationEngineer =  (cookie: any | null) => {
       <Footer />
     </>
   );
-  
-  
+
+
 };
 
 export default NotificationEngineer;

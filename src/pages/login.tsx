@@ -7,7 +7,7 @@ import axios from 'axios';
 
 // ログイン(エンジニア・営業)
 const fetcher = (
-  resource: Request | URL,
+  resource: RequestInfo,
   init: RequestInit | undefined
 ) => fetch(resource, init).then((res) => res.json());
 

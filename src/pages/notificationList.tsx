@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 // 申請通知リスト(管理者)
 const fetcher = (
-  resource: Request | URL,
+  resource: RequestInfo,
   init: RequestInit | undefined
 ) => fetch(resource, init).then((res) => res.json());
 
@@ -104,38 +104,38 @@ const NotificationList = (
                     className="border-b-2 border-light-blue-500 pb-2"
                   >
                     <div className="flex justify-center mt-14 md:pl-36 text-lg space-x-2 md:space-x-32 pr-24">
-                      <Link legacyBehavior href={`/approval/${request.user.userId}`}>
+                      <Link legacyBehavior href={`/approval/${request.user?.userId}`}>
                       <a
-                       
+
                         className="relative flex justify-center space-x-32"
                       >
                         <div className="w-24">
-                          {request.user.employeeNumber}
+                          {request.user?.employeeNumber}
                         </div>
                         <div
                           className="w-24 relative"
                           style={{ left: '1%' }}
                         >
-                          {request.user.joinDate}
+                          {request.user?.joinDate}
                         </div>
                         <div className="w-28">
-                          {request.user.userName}
+                          {request.user?.userName}
                         </div>
                         <div
                           className="w-24 relative"
                           style={{ right: '1%' }}
                         >
-                          {request.user.affiliation}
+                          {request.user?.affiliation}
                         </div>
                       </a>
                       </Link>
                       <button
-                        onClick={() => handleToggle(request.user.userId)}
+                        onClick={() => handleToggle(request.user?.userId)}
                       >
-                        {expanded[request.user.userId] ? '▲' : '▼'}
+                        {expanded[request.user?.userId] ? '▲' : '▼'}
                       </button>
                     </div>
-                    {expanded[request.user.userId] && (
+                    {expanded[request.user?.userId] && (
                       <div className="pt-7 text-left pl-40">
                         <p>{request.engineerComment}</p>
                       </div>

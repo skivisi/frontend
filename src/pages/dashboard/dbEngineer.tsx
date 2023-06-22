@@ -12,7 +12,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   // ログイン中のエンジニアのidを取得
   const cookies = req.cookies;
-  const cookie = cookies.id;
+  const cookie = cookies.userId;
   console.log(cookie);
 
   // エンジニアのuserIdとcookieのidを結びつける
