@@ -4,13 +4,13 @@ import { Suspense } from 'react';
 
 const skillview = ({ userData }: { userData: any }) => {
   const skillScore = {
-    フロントエンド: userData.skillPoint.FR,
-    バック: userData.skillPoint.BK,
-    'データ\nベース': userData.skillPoint.DB,
-    サーバーレス: userData.skillPoint.SBR,
-    設計: userData.skillPoint.AR,
-    テスト: userData.skillPoint.TS,
-    コミュ力: userData.skillPoint.COM,
+    フロントエンド: userData.skillPoint?.FR,
+    バック: userData.skillPoint?.BK,
+    'データ\nベース': userData.skillPoint?.DB,
+    サーバーレス: userData.skillPoint?.SBR,
+    設計: userData.skillPoint?.AR,
+    テスト: userData.skillPoint?.TS,
+    コミュ力: userData.skillPoint?.COM,
   };
 
   // 数字をA~Gランクに変換
@@ -58,7 +58,7 @@ const skillview = ({ userData }: { userData: any }) => {
               <div className="bg-sky-50 p-5 shadow-md text-lg">
                 <div className="mb-3">
                   {/* 出しわけ */}
-                  {userData.user.businessSituation ? (
+                  {userData.user?.businessSituation ? (
                     <span className="bg-sky-300 border-2 border-sky-400 rounded-xl p-1 font-bold text-sky-800">
                       エントリー
                     </span>
@@ -76,9 +76,9 @@ const skillview = ({ userData }: { userData: any }) => {
                     <div className="">所属:</div>
                   </div>
                   <div className="ml-2 font-bold">
-                    <div>{userData.user.employeeNumber}</div>
-                    <div>{userData.user.userName}</div>
-                    <div>{userData.user.affiliation}</div>
+                    <div>{userData.user?.employeeNumber}</div>
+                    <div>{userData.user?.userName}</div>
+                    <div>{userData.user?.affiliation}</div>
                   </div>
                 </div>
               </div>
@@ -115,18 +115,18 @@ const skillview = ({ userData }: { userData: any }) => {
                   特有スキル
                 </p>
                 <div className="mt-2 text-center text-yellow-800 bg-yellow-200 border-yellow-400 border-4 rounded-xl p-2 font-bold">
-                  {userData.skill.InherentName}
+                  {userData.skill?.InherentName}
                 </div>
               </div>
               <div className="ml-3">
-                {userData.skill.InherentDescription}
+                {userData.skill?.InherentDescription}
               </div>
             </div>
 
             <div className="flex flex-wrap justify-center mt-5">
               {/* 配列の要素を繰り返し処理して描画 */}
-              {userData.skillPoint.abilities &&
-                userData.skillPoint.abilities.map(
+              {userData.skillPoint?.abilities &&
+                userData.skillPoint?.abilities.map(
                   (
                     ability: {
                       property: string;

@@ -5,8 +5,12 @@ import { useCookies } from 'react-cookie';
 import axios from 'axios';
 
 export const userFetch = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(['id']);
+
+
+  const [cookies, setCookie, removeCookie] = useCookies(['userId','id']);
+
   const [userData, setUserData] = useState<any>({
+    users:"",
     user: "",
     skill: "",
     skillPoint: "",
@@ -22,6 +26,9 @@ export const userFetch = () => {
 
   useEffect(() => {
     const fetchId = async () => {
+      const users = await axios.get(
+        `http://localhost:8000/api/users?userId=${cookies.userId}`
+      );
       const prof = await axios.get(
         `http://127.0.0.1:8080/user?id=${cookies.id}`
       );
@@ -51,7 +58,7 @@ export const userFetch = () => {
                 new Date(current.createdAt)
                 ? latest
                 : current;
-            }
+            }, {}
           );
 
           const portfolio = await axios.get(
@@ -95,6 +102,7 @@ export const userFetch = () => {
 
           setUserData((p: any) => ({
             ...p,
+            users: users,
             user: profResult[0],
             skill: skillResult[0],
             skillPoint: skillPointResult[0],

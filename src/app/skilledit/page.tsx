@@ -4,7 +4,6 @@
  *  - 特有スキル
  */
 
-
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 
@@ -26,25 +25,62 @@ const selected_3 =
 
 const skillEdit = () => {
   const userData = userFetch();
-  console.log(userData.skillPoint);
+
+  const skill = userData.users.data?.skills[0];
+  const skillPoint = userData.users.data?.skillPoints[0];
+  const specialAbilities = userData.users.data?.specialAbilities;
+  const userId = userData.users.data?.userId;
+
   const [skills, setSkills] = useState<any>({
     skill: '',
     skillPoint: '',
+    abilities: '',
   });
+  console.log(skills.skillPoint?.FR);
+  console.log(skills.abilities);
+  // 初回のデータがない場合挿入
+  let defaultSkillPoint = {
+    userId: userId,
+    FR: null,
+    BK: null,
+    DB: null,
+    SBR: null,
+    AR: null,
+    TS: null,
+    COM: null,
+  };
+
+  let defaultAbilities = [
+    { skillList: '予知能力', skillSelection: false, tagColor: 1 },
+    { skillList: 'テックリード', skillSelection: false, tagColor: 2 },
+    { skillList: 'vim職人', skillSelection: false, tagColor: 2 },
+    { skillList: 'shell芸人', skillSelection: false, tagColor: 3 },
+    { skillList: '超ポジティブ', skillSelection: false, tagColor: 3 },
+    { skillList: '遅刻魔', skillSelection: false, tagColor: 1 },
+    { skillList: '気分屋', skillSelection: false, tagColor: 1 },
+    { skillList: '新人', skillSelection: false, tagColor: 2 },
+    { skillList: 'お喋り野郎', skillSelection: false, tagColor: 1 },
+    { skillList: 'ガヤ', skillSelection: false, tagColor: 3 },
+  ];
 
   useEffect(() => {
     setSkills((p: any) => ({
       ...p,
-      skill: userData.skill,
-      skillPoint: userData.skillPoint,
+      skill: skill,
+      skillPoint: skillPoint,
+      abilities: specialAbilities,
     }));
-    if (userData.skillPoint == undefined) {
+    if (
+      typeof skillPoint == 'undefined' ||
+      typeof specialAbilities == 'undefined'
+    ) {
       setSkills((p: any) => ({
         ...p,
         skillPoint: defaultSkillPoint,
+        abilities: defaultAbilities,
       }));
     }
-  }, [userData.skill, userData.skillPoint]);
+  }, [skill, skillPoint, specialAbilities]);
 
   // 特有スキル編集
   const handleChangeInherent = (e: any, formIndex: number) => {
@@ -70,21 +106,17 @@ const skillEdit = () => {
 
   // スペシャルスキル編集
   const handleChangeAbilities = (index: number) => {
-    const newAbilityValue = [...skills.skillPoint.abilities];
-    console.log(newAbilityValue);
-    if (newAbilityValue[index]['value'] === true) {
-      newAbilityValue[index]['value'] = false;
+    const newAbilityValue = [...skills.abilities];
+    if (newAbilityValue[index]['skillSelection'] === true) {
+      newAbilityValue[index]['skillSelection'] = false;
     } else {
-      newAbilityValue[index]['value'] = true;
+      newAbilityValue[index]['skillSelection'] = true;
     }
 
     setSkills((prev: any) => {
       return {
         ...prev,
-        skillPoint: {
-          ...prev.skillPoint,
-          abilities: newAbilityValue,
-        },
+        abilities: newAbilityValue,
       };
     });
   };
@@ -94,12 +126,31 @@ const skillEdit = () => {
     e.preventDefault();
 
     const formData = {
-      skillPoint: skills.skillPoint,
-      skill: skills.skill,
+      InherentName: skills.skill?.InherentName,
+      InherentDescription: skills.skill?.InherentDescription,
+      FR: skills.skillPoint?.FR,
+      BK: skills.skillPoint?.BK,
+      DB: skills.skillPoint?.DB,
+      SBR: skills.skillPoint?.SBR,
+      AR: skills.skillPoint?.AR,
+      TS: skills.skillPoint?.TS,
+      COM: skills.skillPoint?.COM,
+      abilities: skills.abilities,
     };
+    console.log(formData);
     try {
-      const response = await axios.post('/skilledit/api', formData);
-      console.log(response.data);
+      if (typeof skill === 'undefined') {
+        await axios.post(
+          `http://localhost:8000/api/skill/postSkillData/${userId}`,
+          formData
+        );
+      } else {
+        await axios.put(
+          `http://localhost:8000/api/skill/update/${userId}`,
+          formData
+        );
+      }
+      window.location.href = '/mypage';
     } catch (error) {
       console.error(error);
     }
@@ -177,8 +228,8 @@ const skillEdit = () => {
             name=""
             id=""
             defaultValue={
-              skills.skill.InherentName
-                ? skills.skill.InherentName
+              skills.skill?.InherentName
+                ? skills.skill?.InherentName
                 : ''
             }
             onChange={(e) => handleChangeInherent(e, 1)}
@@ -198,8 +249,8 @@ const skillEdit = () => {
             cols={65}
             rows={5}
             defaultValue={
-              skills.skill.InherentDescription
-                ? skills.skill.InherentDescription
+              skills.skill?.InherentDescription
+                ? skills.skill?.InherentDescription
                 : ''
             }
             onChange={(e) => handleChangeInherent(e, 2)}
@@ -213,12 +264,12 @@ const skillEdit = () => {
         <div className="flex flex-wrap justify-center mt-3">
           {/* 配列の要素を繰り返し処理して描画 */}
 
-          {skills.skillPoint.abilities &&
-            skills.skillPoint.abilities.map(
+          {skills.abilities &&
+            skills.abilities.map(
               (
                 ability: {
-                  property: string;
-                  value: boolean;
+                  skillList: string;
+                  skillSelection: boolean;
                   tagColor: number;
                 },
                 index: number
@@ -228,7 +279,7 @@ const skillEdit = () => {
                   type="button"
                   onClick={() => handleChangeAbilities(index)}
                   className={
-                    ability.value === false
+                    ability.skillSelection === false
                       ? unselected
                       : ability.tagColor === 1
                       ? selected_1
@@ -237,7 +288,7 @@ const skillEdit = () => {
                       : selected_3
                   }
                 >
-                  {ability.property}
+                  {ability.skillList}
                 </button>
               )
             )}
@@ -268,16 +319,17 @@ let defaultSkillPoint = {
   AR: null,
   TS: null,
   COM: null,
-  abilities: [
-    { property: '予知能力', value: false, tagColor: 1 },
-    { property: 'テックリード', value: false, tagColor: 2 },
-    { property: 'vim職人', value: false, tagColor: 2 },
-    { property: 'shell芸人', value: false, tagColor: 3 },
-    { property: '超ポジティブ', value: false, tagColor: 3 },
-    { property: '遅刻魔', value: false, tagColor: 1 },
-    { property: '気分屋', value: false, tagColor: 1 },
-    { property: '新人', value: false, tagColor: 2 },
-    { property: 'お喋り野郎', value: false, tagColor: 1 },
-    { property: 'ガヤ', value: false, tagColor: 3 },
-  ],
 };
+
+let defaultAbilities = [
+  { property: '予知能力', value: false, tagColor: 1 },
+  { property: 'テックリード', value: false, tagColor: 2 },
+  { property: 'vim職人', value: false, tagColor: 2 },
+  { property: 'shell芸人', value: false, tagColor: 3 },
+  { property: '超ポジティブ', value: false, tagColor: 3 },
+  { property: '遅刻魔', value: false, tagColor: 1 },
+  { property: '気分屋', value: false, tagColor: 1 },
+  { property: '新人', value: false, tagColor: 2 },
+  { property: 'お喋り野郎', value: false, tagColor: 1 },
+  { property: 'ガヤ', value: false, tagColor: 3 },
+];

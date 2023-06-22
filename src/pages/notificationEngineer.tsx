@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 
 // 通知一覧(エンジニア)
 const fetcher = (
-  resource: Request | URL,
+  resource: RequestInfo,
   init: RequestInit | undefined
 ) => fetch(resource, init).then((res) => res.json());
 
@@ -62,7 +62,7 @@ const NotificationEngineer = async (cookie: any) => {
 
   console.log(filteredrequest);
 
-  
+
 
   // statusによって表示を変える
   // const status = data.map((item: any) =>
@@ -127,7 +127,7 @@ const NotificationEngineer = async (cookie: any) => {
   //     <Footer />
   //   </>
   // );
-  
+
 };
 
 export default NotificationEngineer;
