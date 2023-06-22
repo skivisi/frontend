@@ -27,6 +27,7 @@ const SearchSales = ({
   query: any;
   affiliation: any;
 }) => {
+  console.log(query)
   const [users, setUsers] = useState(JSON.parse(query.foundUser));
   const [businessSituation, setBusinessSituation] = useState('');
 
@@ -39,7 +40,8 @@ const SearchSales = ({
       const requestBody = {
         businessSituation: changedBusinessSituation,
       };
-      await axios.patch(`http://localhost:8080/user/${user.id}`, requestBody);
+      const userId = user.id
+      await axios.patch(`http://localhost:8080/user/${userId}`, requestBody);
       
       setBusinessSituation(changedBusinessSituation);
 
@@ -87,9 +89,9 @@ const SearchSales = ({
 
             {affiliation ? (
               <div>
-                {users.map((user: any) => (
+                {users.map((user: any,index:number) => (
                   <a
-                    key={user.id}
+                    key={index}
                     href="#"
                     className="flex justify-center mt-14 text-lg space-x-32 border-b-2 border-light-blue-500 pb-2"
                   >
@@ -105,9 +107,9 @@ const SearchSales = ({
               </div>
             ) : (
               <div>
-                {users.map((user: any) => (
+                {users.map((user: any,index:number) => (
                   <div
-                    key={user.id}
+                    key={index}
                     className="mt-14 text-lg border-b-2 border-light-blue-500 pb-2"
                   >
                     <a

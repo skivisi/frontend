@@ -141,15 +141,15 @@
       "COM": 8,
       "abilities": [
         { "property": "予知能力", "value": true, "tagColor": 1 },
-        { "property": "テックリード", "value": false, "tagColor": 2  },
-        { "property": "vim職人", "value": true, "tagColor": 2  },
-        { "property": "shell芸人", "value": true, "tagColor": 3  },
-        { "property": "超ポジティブ", "value": false, "tagColor": 3  },
-        { "property": "遅刻魔", "value": true, "tagColor": 1  },
-        { "property": "気分屋", "value": false, "tagColor": 1  },
-        { "property": "新人", "value": true, "tagColor": 2  },
-        { "property": "お喋り野郎", "value": false, "tagColor": 1  },
-        { "property": "ガヤ", "value": true, "tagColor": 3  }
+        { "property": "テックリード", "value": false, "tagColor": 2 },
+        { "property": "vim職人", "value": true, "tagColor": 2 },
+        { "property": "shell芸人", "value": true, "tagColor": 3 },
+        { "property": "超ポジティブ", "value": false, "tagColor": 3 },
+        { "property": "遅刻魔", "value": true, "tagColor": 1 },
+        { "property": "気分屋", "value": false, "tagColor": 1 },
+        { "property": "新人", "value": true, "tagColor": 2 },
+        { "property": "お喋り野郎", "value": false, "tagColor": 1 },
+        { "property": "ガヤ", "value": true, "tagColor": 3 }
       ]
     },
     {

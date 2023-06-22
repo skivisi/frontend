@@ -24,7 +24,7 @@ const selected_3 =
   'w-32 text-center m-1 bg-green-300 border-4 border-green-400 rounded-xl p-1 font-bold text-green-800';
 
 const skillEdit = () => {
-  const userData = userFetch();
+  const userData = userFetch(false, 0);
 
   const skill = userData.users.data?.skills[0];
   const skillPoint = userData.users.data?.skillPoints[0];
@@ -62,6 +62,7 @@ const skillEdit = () => {
     { skillList: 'お喋り野郎', skillSelection: false, tagColor: 1 },
     { skillList: 'ガヤ', skillSelection: false, tagColor: 3 },
   ];
+
 
   useEffect(() => {
     setSkills((p: any) => ({

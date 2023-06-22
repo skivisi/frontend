@@ -5,34 +5,9 @@
 
 import Image from 'next/image';
 import website from '../../public/Website.png';
-import { useState } from 'react';
 
 const specview = ({ userData }: { userData: any }) => {
-  const [data, setData] = useState<number>();
-
-  console.log(userData);
-
-  const os = userData.techResult.filter((p: any) => p.category === 1);
-  const lang = userData.techResult.filter(
-    (p: any) => p.category === 2
-  );
-  const framework = userData.techResult.filter(
-    (p: any) => p.category === 3
-  );
-  const library = userData.techResult.filter(
-    (p: any) => p.category === 4
-  );
-  const cloud = userData.techResult.filter(
-    (p: any) => p.category === 5
-  );
-  const tool = userData.techResult.filter(
-    (p: any) => p.category === 6
-  );
-  const assignedDevelopment = userData.techResult.filter(
-    (p: any) => p.category === 7
-  );
-
-  console.log(os);
+  console.log(userData.skillSummaries);
 
   return (
     <>
@@ -55,7 +30,7 @@ const specview = ({ userData }: { userData: any }) => {
 
               <div className="mt-4">
                 {userData &&
-                  userData.portfolio.map((i: any, index: any) => (
+                  userData.portfolio.map((i: any, index: number) => (
                     <div key={index} className="w-full flex">
                       <div className="w-full flex border-2 border-slate-300 shadow-md">
                         <div className="bg-slate-200 block w-1/4 p-1">
@@ -80,91 +55,98 @@ const specview = ({ userData }: { userData: any }) => {
                 <div className="bg-slate-200 block w-1/4 p-1">
                   動作環境（OS）
                 </div>
-                {/* {value.join(',')} */}
                 <div className="flex w-3/4 p-2 bg-white">
-                  {os.map((i: any, index: any) => (
-                    <div key={i} className=" mr-2">
-                      {`${i.skill},`}
-                    </div>
-                  ))}
+                  {userData.skillSummaries.environment.map(
+                    (i: any, index: number) => (
+                      <div key={index} className=" mr-2">
+                        {`${i},`}
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
               <div className="w-full flex border-2 border-slate-300 h-10 shadow-md">
                 <div className="bg-slate-200 block w-1/4 p-1">
                   言語
                 </div>
-                {/* {value.join(',')} */}
                 <div className="flex w-3/4 p-2 bg-white">
-                  {lang.map((i: any, index: any) => (
-                    <div key={i} className=" mr-2">
-                      {`${i.skill},`}
-                    </div>
-                  ))}
+                  {userData.skillSummaries.programmingLanguage.map(
+                    (i: any, index: number) => (
+                      <div key={index} className=" mr-2">
+                        {`${i},`}
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
               <div className="w-full flex border-2 border-slate-300 h-10 shadow-md">
                 <div className="bg-slate-200 block w-1/4 p-1">
                   フレームワーク
                 </div>
-                {/* {value.join(',')} */}
                 <div className="flex w-3/4 p-2 bg-white">
-                  {framework.map((i: any, index: any) => (
-                    <div key={i} className=" mr-2">
-                      {`${i.skill},`}
-                    </div>
-                  ))}
+                  {userData.skillSummaries.framework.map(
+                    (i: any, index: number) => (
+                      <div key={index} className=" mr-2">
+                        {`${i},`}
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
               <div className="w-full flex border-2 border-slate-300 h-10 shadow-md">
                 <div className="bg-slate-200 block w-1/4 p-1">
                   ライブラリ
                 </div>
-                {/* {value.join(',')} */}
                 <div className="flex w-3/4 p-2 bg-white">
-                  {library.map((i: any, index: any) => (
-                    <div key={i} className=" mr-2">
-                      {`${i.skill},`}
-                    </div>
-                  ))}
+                  {userData.skillSummaries.library.map(
+                    (i: any, index: number) => (
+                      <div key={index} className=" mr-2">
+                        {`${i},`}
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
               <div className="w-full flex border-2 border-slate-300 h-10 shadow-md">
                 <div className="bg-slate-200 block w-1/4 p-1">
                   クラウド
                 </div>
-                {/* {value.join(',')} */}
                 <div className="flex w-3/4 p-2 bg-white">
-                  {cloud.map((i: any, index: any) => (
-                    <div key={i} className=" mr-2">
-                      {`${i.skill},`}
-                    </div>
-                  ))}
+                  {userData.skillSummaries.cloud.map(
+                    (i: any, index: number) => (
+                      <div key={index} className=" mr-2">
+                        {`${i},`}
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
               <div className="w-full flex border-2 border-slate-300 h-10 shadow-md">
                 <div className="bg-slate-200 block w-1/4 p-1">
                   ツール・その他
                 </div>
-                {/* {value.join(',')} */}
                 <div className="flex w-3/4 p-2 bg-white">
-                  {tool.map((i: any, index: any) => (
-                    <div key={i} className=" mr-2">
-                      {`${i.skill},`}
-                    </div>
-                  ))}
+                  {userData.skillSummaries.tool.map(
+                    (i: any, index: number) => (
+                      <div key={index} className=" mr-2">
+                        {`${i},`}
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
               <div className="w-full flex border-2 border-slate-300 h-10 shadow-md">
                 <div className="bg-slate-200 block w-1/4 p-1">
                   担当開発工程
                 </div>
-                {/* {value.join(',')} */}
                 <div className="flex w-3/4 p-2 bg-white">
-                  {assignedDevelopment.map((i: any, index: any) => (
-                    <div key={i} className=" mr-2">
-                      {`${i.skill},`}
-                    </div>
-                  ))}
+                  {userData.skillSummaries.developmentDomain.map(
+                    (i: any, index: number) => (
+                      <div key={index} className=" mr-2">
+                        {`${i},`}
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
             </div>
@@ -179,7 +161,7 @@ const specview = ({ userData }: { userData: any }) => {
               <div>
                 {userData &&
                   userData.sellingPoint.map(
-                    (point: any, index: any) => (
+                    (point: any, index: number) => (
                       <div key={index} className="w-full flex">
                         <div className="w-full flex border-2 border-slate-300 shadow-md">
                           <div className="bg-slate-200 block w-1/4 p-1">
@@ -188,7 +170,7 @@ const specview = ({ userData }: { userData: any }) => {
                           <div className="block w-3/4 p-2 bg-white">
                             {point.content
                               .split('\n')
-                              .map((line: any, index: any) => (
+                              .map((line: any, index: number) => (
                                 <p key={index}>{line}</p>
                               ))}
                           </div>
@@ -248,7 +230,7 @@ const specview = ({ userData }: { userData: any }) => {
           <div>
             <h3 className="mt-10 text-xl font-bold">前職</h3>
 
-            {userData.previousWork.map((i: any, index: any) => (
+            {userData.previousWork.map((i: any, index: number) => (
               <div className=" flex mt-2" key={i.specId}>
                 <div>
                   <div className="w-full flex border-2 border-slate-300 h-10 shadow-md">
@@ -289,7 +271,7 @@ const specview = ({ userData }: { userData: any }) => {
 
             {/* 繰り返し処理入れる */}
             {userData.developmentExperience.map(
-              (i: any, index: any) => (
+              (i: any, index: number) => (
                 <div className="" key={i.specId}>
                   <div className="flex">
                     <div className=" w-full">
