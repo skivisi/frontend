@@ -26,7 +26,7 @@ const Page = () => {
   return (
     <div className="w-full">
       <p className="ml-20 mt-20">
-        {userData && userData.user.userName}のプロフィール! ▼
+        {userData && userData.user?.userName}のプロフィール! ▼
       </p>
 
       {/* スイッチのボタン スペックシート切り替え */}

@@ -18,7 +18,7 @@ import Specview from '@/components/mypage/Specview';
 
 // 申請承認(管理者)
 const fetcher = (
-  resource: Request | URL,
+  resource: RequestInfo,
   init: RequestInit | undefined
 ) => fetch(resource, init).then((res) => res.json());
 
@@ -111,7 +111,7 @@ const Approval = ({
       </div>
       <div className="text-sky-900 flex justify-center">
         <form className="bg-blue-200 text-sky-900 max-w-4xl p-10 my-10 shadow-xl">
-         
+
           <Specview userData={userData} />
 
           <div className="text-center">
