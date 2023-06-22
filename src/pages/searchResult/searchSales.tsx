@@ -40,14 +40,19 @@ const SearchSales = ({
       const requestBody = {
         businessSituation: changedBusinessSituation,
       };
-      const userId = user.id
-      await axios.patch(`http://localhost:8080/user/${userId}`, requestBody);
+      const userId = users[0].userId
+      console.log(userId)
+  
+      // await axios.patch(`http://localhost:8080/user/${userId}`, requestBody);
+      await axios.put(`http://localhost:8000/api/businessSituation/${userId}`
+      // , requestBody
+      );
       
       setBusinessSituation(changedBusinessSituation);
 
       // users配列内のユーザーのbusinessSituationを更新する
       const updatedUsers = users.map((u: any) => {
-        if (u.id === user.id) {
+        if (u.id === userId) {
           return {
             ...u,
             businessSituation: changedBusinessSituation,
