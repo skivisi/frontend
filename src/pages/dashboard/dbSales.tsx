@@ -2,13 +2,16 @@ import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { GetServerSideProps } from 'next';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { string } from 'zod';
 
 // 営業DB(検索機能)
 export const getServerSideProps: GetServerSideProps = async () => {
-  const userData = await axios.get(`http://localhost:8080/user`);
+  const userData = await axios.get(
+    `http://localhost:8000/api/search/users`
+  );
   const userList = userData.data;
   console.log(userList);
 
@@ -24,42 +27,6 @@ const DbSales = (userList: any) => {
   console.log(users);
   const router = useRouter();
 
-  // 絞り込み検索
-  const [affiliation, setAffiliation] = useState(null);
-  const [businessSituation, setBusinessSituation] = useState('');
-  const handleAffiliationChange = (event: any) => {
-    setAffiliation(event.target.value);
-  };
-
-  const handleChange = (event: any) => {
-    const foundUser = users.filter((user: any) => {
-      if (
-        user.businessSituation === businessSituation &&
-        user.affiliation === affiliation
-      ) {
-        return user;
-      } else if (
-        user.businessSituation === businessSituation &&
-        !affiliation
-      ) {
-        return user;
-      } else if (
-        user.affiliation === affiliation &&
-        !businessSituation
-      ) {
-        return user;
-      } else {
-        return null;
-      }
-    });
-    console.log(foundUser);
-    router.push(
-      `/searchResult/searchSales?foundUser=${encodeURIComponent(
-        JSON.stringify(foundUser)
-      )}`
-    );
-  };
-
   // エンジニア名で検索
   const [searchUser, setSearchUser] = useState('');
   const handleSearch = () => {
@@ -73,6 +40,61 @@ const DbSales = (userList: any) => {
       )}`
     );
   };
+
+  // 絞り込み検索
+  const [affiliation, setAffiliation] = useState(null);
+  const [businessSituation, setBusinessSituation] = useState('');
+  const [skillSummary, setSkillSummary] = useState([]);
+  const handleAffiliationChange = (event: any) => {
+    setAffiliation(event.target.value);
+  };
+
+  const handleChange = async (event: any) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/search/integration`,
+        {
+          params: {
+            affiliation: affiliation,
+            businessSituation: businessSituation,
+            skillSummary: skillSummary.join(','),
+          },
+        }
+      );
+      const foundUser = response.data;
+      console.log(foundUser);
+
+      router.push(
+        `/searchResult/searchSales?foundUser=${encodeURIComponent(
+          JSON.stringify(foundUser)
+        )}`
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // const foundUser = users.filter((user: any) => {
+  //   if (
+  //     user.businessSituation === businessSituation &&
+  //     user.affiliation === affiliation
+  //   ) {
+  //     return user;
+  //   } else if (
+  //     user.businessSituation === businessSituation &&
+  //     !affiliation
+  //   ) {
+  //     return user;
+  //   } else if (
+  //     user.affiliation === affiliation &&
+  //     !businessSituation
+  //   ) {
+  //     return user;
+  //   } else {
+  //     return null;
+  //   }
+  // });
+  // console.log(foundUser);
 
   return (
     <>
