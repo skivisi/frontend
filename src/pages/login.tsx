@@ -6,10 +6,14 @@ import { useCookies } from 'react-cookie';
 import axios from 'axios';
 
 // ログイン(エンジニア・営業)
+const fetcher = (
+  resource: Request | URL,
+  init: RequestInit | undefined
+) => fetch(resource, init).then((res) => res.json());
 
 const Login = () => {
-  const [email, setEmail] = useState<string | null>(null);
-  const [password, setPassword] = useState<string | null>(null);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<any>(null);
   const [cookie, setCookie] = useCookies();
 
   const [emailError, setEmailError] = useState<string | null>(null);
@@ -17,15 +21,12 @@ const Login = () => {
     null
   );
 
+
+
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
-
-    // ↓いらない？
-    // const formData = new FormData(event.currentTarget); // フォーム要素から入力フィールドの値を取得
-    // const emailValidation = formData.get('email') as string;
-    // const passwordValidation = formData.get('password') as string;
 
     const loginSchema = z.object({
       email: z
@@ -46,14 +47,20 @@ const Login = () => {
       setEmailError(null); // メールアドレスのエラーをリセット
       setPasswordError(null); // パスワードのエラーをリセット
 
+      const login:any = {
+        email:email,
+        password:password
+      }
+
       axios
-        .get(`api/user?email=${email}&password=${password}`)
+      //  .get(`http://localhost:8000/user?email=${email}&password=${password}`)
+        .post(`http://localhost:8000/api/auth/login`,login)
         .then((response) => {
           let userData = response.data;
           console.log(userData);
-          let id = userData[0].id;
-          let affiliation = userData[0].affiliation;
-          setCookie('id', id);
+          let id = userData.userId;
+          let affiliation = userData.affiliation;
+          setCookie('userId', id);
           setCookie('affiliation', affiliation);
           if (
             affiliation === 'FR' ||

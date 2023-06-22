@@ -9,8 +9,8 @@ import { useState } from 'react';
 import { userFetch } from './_lib/userFetch';
 
 const Page = () => {
-  const userData = userFetch();
-  // console.log(userData)
+  const userData = userFetch(false, 0);
+
 
   // タブの切り替え
   const selected =
@@ -68,7 +68,7 @@ const Page = () => {
           </h2>
           <div className="text-center">
             <Link
-              href={pageState ? '/mypage/skilledit' : '/specseat'}
+              href={pageState ? '/skilledit' : '/specseat'}
             >
               <button
                 type="button"
