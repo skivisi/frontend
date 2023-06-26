@@ -20,6 +20,7 @@ function handleBlur() {
 function Home() {
   const userData = userFetch(false, 0);
   const autocomplete = autoComplete();
+  
   // スキル要約
   const [skillSummary, setSkillSummary] = useState<any>([]);
 
@@ -240,7 +241,7 @@ function Home() {
 
   const submitHandler = async (e: any) => {
     e.preventDefault();
-    
+
     const formData = {
       skillSummary: skillSummary,
       portfolios: portfolios,
