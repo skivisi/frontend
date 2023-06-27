@@ -4,7 +4,10 @@ import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 
+
 export const userFetch = (isTrue: boolean, argId: number) => {
+  // console.log(process.env.API_SECRET_URL);
+  // console.log(process.env.NEXT_PUBLIC_API_URL);
   const [cookies, setCookie, removeCookie] = useCookies(['userId']);
   const [userData, setUserData] = useState<any>({
     user: '',
@@ -59,6 +62,7 @@ export const userFetch = (isTrue: boolean, argId: number) => {
       setUserData((p: any) => ({
         ...p,
         user: {
+          userId: userId,
           affiliation: affiliation,
           businessSituation: businessSituation,
           userName: userName,

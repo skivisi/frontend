@@ -33,7 +33,6 @@ const skillEdit = () => {
     specialAbility: ''
   });
 
-
   useEffect(() => {
     setSkills((p: any) => ({
       ...p,
@@ -48,6 +47,7 @@ const skillEdit = () => {
       }));
     }
   }, [userData.skill, userData.skillPoint, userData.specialAbility]);
+
 
   // 特有スキル編集
   const handleChangeInherent = (e: any, formIndex: number) => {

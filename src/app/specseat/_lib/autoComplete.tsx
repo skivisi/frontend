@@ -9,7 +9,7 @@ export const autoComplete = () => {
   useEffect(() => {
     const fetchId = async () => {
       const autoCalibration = await axios.get(
-        `http://127.0.0.1:8080/autoCalibration`
+        `http://localhost:8000/api/autoCalibration/get`
       );
       const os = autoCalibration.data.filter((p:any) => p.category === 1);
       const lang = autoCalibration.data.filter((p:any) => p.category === 2);
@@ -29,7 +29,6 @@ export const autoComplete = () => {
         tool: tool,
         assignedDevelopment:assignedDevelopment
       }))
-    // setAutocomplete(os)
     };
     fetchId()
   }, []);
