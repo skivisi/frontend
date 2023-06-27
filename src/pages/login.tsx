@@ -5,11 +5,8 @@ import '../styles/globals.css';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 
-// ログイン(エンジニア・営業)
-const fetcher = (
-  resource: RequestInfo,
-  init: RequestInit | undefined
-) => fetch(resource, init).then((res) => res.json());
+const fetcher = (resource: RequestInfo, init: RequestInit | undefined) =>
+  fetch(resource, init).then((res) => res.json());
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -17,24 +14,15 @@ const Login = () => {
   const [cookie, setCookie] = useCookies();
 
   const [emailError, setEmailError] = useState<string | null>(null);
-  const [passwordError, setPasswordError] = useState<string | null>(
-    null
-  );
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-
-
-  const handleSubmit = async (
-    event: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const loginSchema = z.object({
-      email: z
-        .string()
-        .email('有効なメールアドレスを入力してください'),
-      password: z
-        .string()
-        .min(4, 'パスワードは4文字以上で入力してください'),
+      email: z.string().email('有効なメールアドレスを入力してください'),
+      password: z.string().min(8, 'パスワードは8文字以上で入力してください'),
     });
 
     try {
@@ -42,19 +30,19 @@ const Login = () => {
         email,
         password,
       });
-      // バリデーションが成功した場合の処理
-      console.log('成功', values);
-      setEmailError(null); // メールアドレスのエラーをリセット
-      setPasswordError(null); // パスワードのエラーをリセット
 
-      const login:any = {
-        email:email,
-        password:password
-      }
+      // エラーリセット
+      setEmailError(null);
+      setPasswordError(null);
+      setSubmitError(null);
+
+      const login: any = {
+        email: email,
+        password: password,
+      };
 
       axios
-      //  .get(`http://localhost:8000/user?email=${email}&password=${password}`)
-        .post(`http://localhost:8000/api/auth/login`,login)
+        .post(`http://localhost:8000/api/auth/login`, login)
         .then((response) => {
           let userData = response.data;
           console.log(userData);
@@ -68,15 +56,22 @@ const Login = () => {
             affiliation === 'QA' ||
             affiliation === 'ML' ||
             affiliation === 'CL' ||
-            affiliation=== 'PHP'
+            affiliation === 'PHP'
           ) {
             window.location.href = '/dashboard/dbEngineer';
           } else if (affiliation === '営業') {
             window.location.href = '/dashboard/dbSales';
           }
+        })
+        .catch((error) => {
+          if (error.response && error.response.status === 401) {
+            setSubmitError('ログインに失敗しました。メールアドレスかパスワードが一致しません。');
+            setEmail('');
+            setPassword(null);
+          }
+          console.log(error);
         });
     } catch (error) {
-      // バリデーションエラーが発生した場合の処理
       if (error instanceof ZodError) {
         // ZodErrorのインスタンスであることを確認
         if (error.errors[0]?.path[0] === 'email') {
@@ -121,9 +116,7 @@ const Login = () => {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <div className="text-red-500 text-sm">
-                  {emailError}
-                </div>
+                <div className="text-red-500 text-sm">{emailError}</div>
               </div>
             </div>
 
@@ -146,9 +139,7 @@ const Login = () => {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <div className="text-red-500 text-sm">
-                  {passwordError}
-                </div>
+                <div className="text-red-500 text-sm">{passwordError}</div>
               </div>
             </div>
 
@@ -158,6 +149,9 @@ const Login = () => {
             >
               ログイン
             </button>
+            {submitError && (
+              <div className="text-red-500 text-sm">{submitError}</div>
+            )}
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
@@ -171,6 +165,16 @@ const Login = () => {
             へ
           </p>
         </div>
+        <p className="text-center text-sm text-gray-500">
+          管理者の方は
+          <Link
+            href="/loginAdmin"
+            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+          >
+            こちら
+          </Link>
+          へ
+        </p>
       </div>
     </>
   );

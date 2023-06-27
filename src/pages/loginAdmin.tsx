@@ -25,7 +25,6 @@ const LoginAdmin = () => {
     try {
       axios
         .post(
-          // `http://localhost:8080/admin?email=${email}&password=${password}`
           `http://localhost:8000/api/auth/admin/login`,loginAdmin
         )
         .then((response) => {

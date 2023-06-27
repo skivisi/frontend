@@ -6,12 +6,26 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 // 検索結果(営業)
-export const getServerSideProps: GetServerSideProps = async (
-  context
-) => {
+// export const getServerSideProps: GetServerSideProps = async ({
+//   query,
+//   req,
+// }) => {
+//   const cookies = req.cookies;
+// console.log(cookies)
+//   const affiliation = cookies.affiliation || null;
+//   return {
+//     props: {
+//       query,
+//       affiliation,
+//     },
+//   };
+// };
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query, req } = context;
-  const cookie = req.cookies;
-  const affiliation = cookie.affiliation || null;
+  const cookies = req.cookies;
+  console.log(cookies);
+  const affiliation = cookies.affiliation || null;
   return {
     props: {
       query,
@@ -30,6 +44,11 @@ const SearchSales = ({
   const [users, setUsers] = useState(JSON.parse(query.foundUser));
   const [businessSituation, setBusinessSituation] = useState('');
 
+  if(!affiliation) {
+    location.reload()
+    return <div>Loading...</div>
+  }
+
   const handleChange = async (user: any) => {
     try {
       const changedBusinessSituation =
@@ -40,7 +59,10 @@ const SearchSales = ({
         businessSituation: changedBusinessSituation,
       };
       const userId = user.userId;
-      await axios.put(`http://localhost:8000/api/businessSituation/${userId}`,requestBody);
+      await axios.put(
+        `http://localhost:8000/api/businessSituation/${userId}`,
+        requestBody
+      );
 
       setBusinessSituation(changedBusinessSituation);
 
@@ -88,7 +110,7 @@ const SearchSales = ({
 
             {affiliation ? (
               <div>
-                {users.map((user: any,index:number) => (
+                {users.map((user: any, index: number) => (
                   <a
                     key={index}
                     href="#"
@@ -106,7 +128,7 @@ const SearchSales = ({
               </div>
             ) : (
               <div>
-                {users.map((user: any,index:number) => (
+                {users.map((user: any, index: number) => (
                   <div
                     key={index}
                     className="mt-14 text-lg border-b-2 border-light-blue-500 pb-2"
