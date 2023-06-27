@@ -8,10 +8,13 @@ import useSWR from 'swr';
 import Link from 'next/link';
 
 // 申請通知リスト(管理者)
-const fetcher = (
-  resource: Request | URL,
-  init: RequestInit | undefined
-) => fetch(resource, init).then((res) => res.json());
+// const fetcher = (
+//   resource: RequestInfo,
+//   init: RequestInit | undefined
+// ) => fetch(resource, init).then((res) => res.json());
+
+const fetcher = (url: RequestInfo | URL) =>
+  fetch(url).then((res) => res.json());
 
 export const getServerSideProps: GetServerSideProps = async ({
   req,
@@ -19,11 +22,6 @@ export const getServerSideProps: GetServerSideProps = async ({
   // ログイン中のadminのidを取得
   const cookies = req.cookies;
   const cookie = cookies.id;
-
-  //userのデータ
-  // const { data: userData } = await axios.get(
-  //   'http://localhost:8000/api/users'
-  // );
 
   return {
     props: {
@@ -43,31 +41,14 @@ const NotificationList = (
 
   // requestのデータ取得
   const { data, error } = useSWR('/api/request', fetcher);
-  console.log(data);
-  // console.log(userData);
 
   if (!data) {
-    return <div>Loading...</div>; // データの取得中に表示
+    return <>
+    <Header />
+    <div>通知はありません</div>
+    <Footer />
+  </>; 
   }
-
-  // ステータスが申請中のみに絞る
-  // const requests = data.filter(
-  //   (request: any) => request.status === 1
-  // );
-  // console.log(requests);
-
-  // ステータスを絞った後、userのidとrequestのuserIdを結びつける
-  // const filteredRequests = requests.map((request: any) => {
-  //   const user = userData.find(
-  //     (user: any) => user.id === request.userId
-  //   );
-
-  //   return {
-  //     ...request,
-  //     user: user,
-  //   };
-  // });
-  // console.log(filteredRequests);
 
   // エンジニアコメントのトグル
   const handleToggle = (id: number) => {
@@ -77,13 +58,18 @@ const NotificationList = (
     }));
   };
 
+  // 申請結果通知の件数を計算
+  const totalCount = data.filter(
+    (item: any) => item.status === 1
+  ).length;
+
   return (
     <>
       <Header />
       <div className="text-sky-900">
         <div className="ml-24 my-14 text-2xl flex">
           <div>申請通知&nbsp;&nbsp;&nbsp;</div>
-          <div>{3}</div>
+          <div>{totalCount}</div>
           <div>件</div>
         </div>
         <div className="mx-auto border-blue-200 rounded-md bg-blue-200 max-w-6xl py-3 mb-2">
@@ -100,42 +86,42 @@ const NotificationList = (
             <div>
               {data.map((request: any, index: number) => (
                   <div
-                    key={request.id}
+                    key={index}
                     className="border-b-2 border-light-blue-500 pb-2"
                   >
                     <div className="flex justify-center mt-14 md:pl-36 text-lg space-x-2 md:space-x-32 pr-24">
-                      <Link legacyBehavior href={`/approval/${request.user.userId}`}>
+                      <Link legacyBehavior href={`/approval/${request.user?.userId}`}>
                       <a
-                       
+
                         className="relative flex justify-center space-x-32"
                       >
                         <div className="w-24">
-                          {request.user.employeeNumber}
+                          {request.user?.employeeNumber}
                         </div>
                         <div
                           className="w-24 relative"
                           style={{ left: '1%' }}
                         >
-                          {request.user.joinDate}
+                          {request.user?.joinDate}
                         </div>
                         <div className="w-28">
-                          {request.user.userName}
+                          {request.user?.userName}
                         </div>
                         <div
                           className="w-24 relative"
                           style={{ right: '1%' }}
                         >
-                          {request.user.affiliation}
+                          {request.user?.affiliation}
                         </div>
                       </a>
                       </Link>
                       <button
-                        onClick={() => handleToggle(request.user.userId)}
+                        onClick={() => handleToggle(request.user?.userId)}
                       >
-                        {expanded[request.user.userId] ? '▲' : '▼'}
+                        {expanded[request.user?.userId] ? '▲' : '▼'}
                       </button>
                     </div>
-                    {expanded[request.user.userId] && (
+                    {expanded[request.user?.userId] && (
                       <div className="pt-7 text-left pl-40">
                         <p>{request.engineerComment}</p>
                       </div>

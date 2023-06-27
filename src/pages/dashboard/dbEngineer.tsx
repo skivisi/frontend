@@ -12,12 +12,13 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   // ログイン中のエンジニアのidを取得
   const cookies = req.cookies;
-  const cookie = cookies.id;
-  console.log(cookie);
+  const cookie = cookies.userId;
+  // console.log(cookie);
 
   // エンジニアのuserIdとcookieのidを結びつける
   const { data: requestData } = await axios.get(
-    `http://localhost:8080/request?userId=${cookie}`
+    // `http://localhost:8080/request?userId=${cookie}`
+    `http://localhost:8000/api/request/receive/${cookie}`
   );
 
   return {
@@ -38,10 +39,10 @@ const DbEngineer = (requestData: any) => {
 
   const request = requestData.requestData;
   // 申請結果通知の件数を計算
-  const approvedCount = request.filter(
+  const approvedCount = (request || []).filter(
     (item: any) => item.status === 3
   ).length;
-  const returnedCount = request.filter(
+  const returnedCount = (request || []).filter(
     (item: any) => item.status === 2
   ).length;
   const totalCount = approvedCount + returnedCount;

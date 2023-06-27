@@ -411,7 +411,6 @@ function Home() {
         ...portfolios,
       ];
     }
-
     const formData = {
       userId: userData.user.userId,
       specData: defaultData.spec,

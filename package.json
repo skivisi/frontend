@@ -25,6 +25,7 @@
     "chart.js": "^4.3.0",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.2",
+    "js-cookie": "^3.0.5",
     "lodash-id": "^0.14.1",
     "next": "13.4.2",
     "postcss": "8.4.23",
@@ -43,6 +44,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
+    "@types/js-cookie": "^3.0.3",
     "@types/react-datepicker": "^4.11.2",
     "eslint-config-prettier": "^8.8.0",
     "jest": "^29.5.0",

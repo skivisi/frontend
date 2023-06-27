@@ -4,45 +4,39 @@ import Footer from '@/components/footer';
 import axios from 'axios';
 import useSWR from 'swr';
 import { useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 // 通知一覧(エンジニア)
-const fetcher = (
-  resource: Request | URL,
-  init: RequestInit | undefined
-) => fetch(resource, init).then((res) => res.json());
+// const fetcher = (
+//   resource: RequestInfo,
+//   init: RequestInit | undefined
+// ) => fetch(resource, init).then((res) => res.json());
 
-export const getServerSideProps: GetServerSideProps = async ({
-  req,
-}) => {
-  // ログイン中のエンジニアのidを取得
-  const cookies = req.cookies;
-  const cookie = cookies.userId || null;
-  console.log(cookie)
+const fetcher = (url: RequestInfo | URL) =>
+  fetch(url).then((res) => res.json());
 
-  return {
-    props: {
-      // requestData,
-      cookie,
-    },
+const NotificationEngineer = () => {
+  const getCookie = (name: any) => {
+    return Cookies.get(name);
   };
-};
-
-const NotificationEngineer =  (cookie: any | null) => {
-  console.log(cookie);
-  let userId = Number(cookie.cookie)
-  console.log(userId)
+  const cookie = getCookie('userId');
+  let userId = Number(cookie);
+  console.log(userId);
 
   const { data, error } = useSWR(
     `http://localhost:8000/api/request/receive/${userId}`,
     fetcher
   );
-  
-  if (!data) {
-    return <div>Loading...</div>; // データの取得中に表示
-  }
 
-  // console.log(response.data);
-  console.log(data)
+  if (!data) {
+    return (
+      <>
+        <Header />
+        <div>通知はありません</div>
+        <Footer />
+      </>
+    );
+  }
 
   // 新しい日付順で並び替える
   const sortRequest = [...data].sort((a, b) => {
@@ -61,10 +55,10 @@ const NotificationEngineer =  (cookie: any | null) => {
     return <div>Loading...</div>; // データの取得中に表示
   }
 
-  console.log(filteredrequest);
+  // console.log(filteredrequest);
 
   // statusによって表示を変える
-  const status = filteredrequest.map((item: any,index:number) =>
+  const status = filteredrequest.map((item: any, index: number) =>
     item.status === 3 ? (
       <div key={index}>
         <div className="flex bg-blue-200 text-xl space-x-10 py-5 pl-8 border-b-2 border-r-2 border-l-2 border-black">
@@ -95,7 +89,9 @@ const NotificationEngineer =  (cookie: any | null) => {
           </div>
         </div>
       </div>
-    ) : null
+    ) : (
+      <div>通知はありません</div>
+    )
   );
 
   // 申請結果通知の件数を計算
@@ -126,8 +122,6 @@ const NotificationEngineer =  (cookie: any | null) => {
       <Footer />
     </>
   );
-  
-  
 };
 
 export default NotificationEngineer;

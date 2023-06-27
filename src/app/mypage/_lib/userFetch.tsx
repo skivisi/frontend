@@ -25,20 +25,6 @@ export const userFetch = (isTrue: boolean, argId: number) => {
 
   useEffect(() => {
     const fetchId = async () => {
-      // 最新スペックシートの取得
-      const getSpecIds = await axios.get(
-        `http://localhost:8000/api/spec/get/${isTrue? argId : cookies.userId}`
-      );
-      const {
-        specId,
-        developmentExperiences,
-        portfolios,
-        previousWorks,
-        qualifications,
-        sellingPoints,
-        skillSummaries,
-      } = getSpecIds.data;
-
       const getUserData = await axios.get(
         `http://localhost:8000/api/users?userId=${cookies.userId}`
       );
@@ -59,7 +45,7 @@ export const userFetch = (isTrue: boolean, argId: number) => {
         userName,
       } = getUserData.data;
 
-      setUserData((p: any) => ({
+       setUserData((p: any) => ({
         ...p,
         user: {
           userId: userId,
@@ -68,17 +54,41 @@ export const userFetch = (isTrue: boolean, argId: number) => {
           userName: userName,
           employeeNumber: employeeNumber,
         },
+        userId: userId,
         skill: skills[0],
         skillPoint: skillPoints[0],
         specialAbility: specialAbilities,
         spec: specs[0],
+    }));
+    console.log(userId)
+      // 最新スペックシートの取得
+     if(specs.length > 0){
+      const getSpecIds = await axios.get(
+        `http://localhost:8000/api/spec/get/${
+          isTrue ? argId : cookies.userId
+        }`
+      );
+      const {
+        specId,
+        developmentExperiences,
+        portfolios,
+        previousWorks,
+        qualifications,
+        sellingPoints,
+        skillSummaries,
+      } = getSpecIds.data;
+
+      setUserData((p: any) => ({
+        ...p,
+        specId:specId,
         portfolio: portfolios,
         sellingPoint: sellingPoints,
         qualification: qualifications,
         previousWork: previousWorks,
         developmentExperience: developmentExperiences,
         skillSummaries: skillSummaries[0],
-      }));
+    }));
+    }
     };
     fetchId();
   }, [argId, cookies, isTrue]);
