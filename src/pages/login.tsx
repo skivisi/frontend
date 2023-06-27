@@ -10,7 +10,7 @@ const fetcher = (resource: RequestInfo, init: RequestInit | undefined) =>
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<any>(null);
+  const [password, setPassword] = useState<string | null>(null);
   const [cookie, setCookie] = useCookies();
 
   const [emailError, setEmailError] = useState<string | null>(null);
@@ -19,6 +19,11 @@ const Login = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    type Login = {
+      email: string;
+      password: string | null;
+    }
 
     const loginSchema = z.object({
       email: z.string().email('有効なメールアドレスを入力してください'),
@@ -36,7 +41,7 @@ const Login = () => {
       setPasswordError(null);
       setSubmitError(null);
 
-      const login: any = {
+      const login: Login = {
         email: email,
         password: password,
       };

@@ -4,6 +4,7 @@ import Footer from '@/components/footer';
 import Link from 'next/link';
 import { GetServerSideProps } from 'next';
 import axios from 'axios';
+import { Request } from '../../../types/types';
 
 // エンジニアDB
 
@@ -13,11 +14,8 @@ export const getServerSideProps: GetServerSideProps = async ({
   // ログイン中のエンジニアのidを取得
   const cookies = req.cookies;
   const cookie = cookies.userId;
-  // console.log(cookie);
 
-  // エンジニアのuserIdとcookieのidを結びつける
   const { data: requestData } = await axios.get(
-    // `http://localhost:8080/request?userId=${cookie}`
     `http://localhost:8000/api/request/receive/${cookie}`
   );
 
@@ -28,8 +26,9 @@ export const getServerSideProps: GetServerSideProps = async ({
   };
 };
 
-const DbEngineer = (requestData: any) => {
-  const [showTemplateButtons, setShowTemplateButtons] = useState(false);
+const DbEngineer = ({ requestData }: { requestData: Request[] }) => {
+  const [showTemplateButtons, setShowTemplateButtons] =
+    useState(false);
 
   const handleTemplateButton = () => {
     setShowTemplateButtons(
@@ -37,13 +36,14 @@ const DbEngineer = (requestData: any) => {
     );
   };
 
-  const request = requestData.requestData;
+  const request = requestData;
+
   // 申請結果通知の件数を計算
   const approvedCount = (request || []).filter(
-    (item: any) => item.status === 3
+    (item: Request) => item.status === 3
   ).length;
   const returnedCount = (request || []).filter(
-    (item: any) => item.status === 2
+    (item: Request) => item.status === 2
   ).length;
   const totalCount = approvedCount + returnedCount;
 

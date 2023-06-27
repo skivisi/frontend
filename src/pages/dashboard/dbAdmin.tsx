@@ -2,8 +2,10 @@ import Header from '@/components/header';
 import Footer from '@/components/footer';
 import Link from 'next/link';
 import useSWR from 'swr';
+import { Request } from '../../../types/types';
 
 // 管理者DB
+
 const fetcher = (
   resource: RequestInfo,
   init: RequestInit | undefined
@@ -19,9 +21,8 @@ const DbAdmin = () => {
 
   // ステータスが申請中のみに絞る
   const requests = data.filter(
-    (request: any) => request.status === 1
+    (request: Request) => request.status === 1
   );
-  console.log(requests);
 
   return (
     <>
@@ -40,7 +41,7 @@ const DbAdmin = () => {
         </div>
 
         <button className="font-semibold text-white py-4 my-8 ml-16 w-80 rounded-xl shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 border-2 border-white border-solid">
-          <Link href='/dashboard/dbSales'>エンジニア検索</Link>
+          <Link href="/dashboard/dbSales">エンジニア検索</Link>
         </button>
       </div>
       <div className="absolute w-full" style={{ bottom: '0%' }}>
