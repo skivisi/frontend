@@ -7,7 +7,7 @@ import Image from 'next/image';
 import website from '../../public/Website.png';
 
 const specview = ({ userData }: { userData: any }) => {
-  console.log(userData.skillSummaries);
+  console.log(userData);
 
   return (
     <>
