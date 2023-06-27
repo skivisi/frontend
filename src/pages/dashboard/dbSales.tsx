@@ -2,10 +2,42 @@ import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { GetServerSideProps } from 'next';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { string } from 'zod';
+import { autoComplete } from '../../app/specseat/_lib/autoComplete';
+
+
+import { Autocomplete, TextField, Chip } from '@mui/material';
+
+type User = {
+  affiliation: string;
+  businessSituation: string;
+  createdAt: string;
+  email: string;
+  employeeNumber: number;
+  joinDate: string;
+  updatedAt: string;
+  userId: number;
+  userName: string;
+};
+
+type UserList = {
+  userList: User[];
+};
+
+type SkillData = {
+  CL: number;
+  FR: number;
+  JAVA: number;
+  ML: number;
+  PHP: number;
+  QA: number;
+  autoCalibrationId: number;
+  category: number;
+  skill: string;
+};
 
 // 営業DB(検索機能)
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -13,7 +45,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
     `http://localhost:8000/api/search/users`
   );
   const userList = userData.data;
-  // console.log(userList);
+
+
 
   return {
     props: {
@@ -22,18 +55,20 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 };
 
-const DbSales = (userList: any) => {
+const DbSales = (userList: UserList) => {
   const users = userList.userList;
-  console.log(users);
+
+  const autocomplete = autoComplete();
+  console.log(autocomplete.autoCalibration);
   const router = useRouter();
 
   // エンジニア名で検索
   const [searchUser, setSearchUser] = useState('');
   const handleSearch = () => {
-    const foundUser = users.filter((user: any) =>
+    const foundUser = users.filter((user: User) =>
       user.userName.includes(searchUser)
     );
-    console.log(foundUser);
+
     router.push(
       `/searchResult/searchSales?foundUser=${encodeURIComponent(
         JSON.stringify(foundUser)
@@ -42,27 +77,46 @@ const DbSales = (userList: any) => {
   };
 
   // 絞り込み検索
-  const [affiliation, setAffiliation] = useState(null);
-  const [businessSituation, setBusinessSituation] = useState('');
-  const [skillSummary, setSkillSummary] = useState([]);
-  const handleAffiliationChange = (event: any) => {
+  const [affiliation, setAffiliation] = useState<string>('');
+  const [businessSituation, setBusinessSituation] = useState<string>('');
+  const [skillSummary, setSkillSummary] = useState<string[]>([]);
+  const [skillUpdate, setSkillUpdate] = useState<string[]>([]);
+
+  const handleAffiliationChange = (event: ChangeEvent<HTMLInputElement>) => {
     setAffiliation(event.target.value);
   };
 
-  const handleChange = async (event: any) => {
+  const handleSkillSummaryChange = (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value, checked } = event.target;
+
+    if (checked) {
+      setSkillSummary((prevSummary:string[]) => [...prevSummary, value]);
+    }
+    else {
+      setSkillSummary((prevSummary) =>
+        prevSummary.filter((skill) => skill !== value)
+      );
+    }
+  };
+
+  const handleChange = async () => {
     try {
+      const mergedSkills = [...skillSummary, ...skillUpdate];
+
       const response = await axios.get(
         `http://localhost:8000/api/search/integration`,
         {
           params: {
             affiliation: affiliation,
             businessSituation: businessSituation,
-            skillSummary: skillSummary.join(','),
+            skillSummary: mergedSkills.join(','),
           },
         }
       );
       const foundUser = response.data;
-      // console.log(foundUser);
+      // console.log(`Request URL: http://localhost:8000/api/search/integration?affiliation=${affiliation}&businessSituation=${businessSituation}&skillSummary=${mergedSkills.join(',')}`);
 
       router.push(
         `/searchResult/searchSales?foundUser=${encodeURIComponent(
@@ -74,27 +128,6 @@ const DbSales = (userList: any) => {
     }
   };
 
-  // const foundUser = users.filter((user: any) => {
-  //   if (
-  //     user.businessSituation === businessSituation &&
-  //     user.affiliation === affiliation
-  //   ) {
-  //     return user;
-  //   } else if (
-  //     user.businessSituation === businessSituation &&
-  //     !affiliation
-  //   ) {
-  //     return user;
-  //   } else if (
-  //     user.affiliation === affiliation &&
-  //     !businessSituation
-  //   ) {
-  //     return user;
-  //   } else {
-  //     return null;
-  //   }
-  // });
-  // console.log(foundUser);
 
   return (
     <>
@@ -292,44 +325,86 @@ const DbSales = (userList: any) => {
                 <div className="grid grid-cols-4">
                   <div className="">
                     <label htmlFor="3" className="pr-8">
-                      <input type="checkbox" id="3" />
+                      <input
+                        type="checkbox"
+                        id="3"
+                        name="JavaScript"
+                        value="JavaScript"
+                        onChange={handleSkillSummaryChange}
+                      />
                       JavaScript
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="4" className="pr-8">
-                      <input type="checkbox" id="4" />
-                      React
+                      <input
+                        type="checkbox"
+                        id=" 4"
+                        name=" TypeScript"
+                        value="TypeScript"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      TypeScript
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="5" className="pr-8">
-                      <input type="checkbox" id="5" />
-                      Vue
+                      <input
+                        type="checkbox"
+                        id="5"
+                        name="React"
+                        value=" React"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      React
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="6" className="pr-8">
-                      <input type="checkbox" id="6" />
-                      Angular
+                      <input
+                        type="checkbox"
+                        id="6"
+                        name="Vue.js"
+                        value="Vue.js"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Vue.js
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="7" className="pr-8">
-                      <input type="checkbox" id="7" />
-                      jQuery
+                      <input
+                        type="checkbox"
+                        id="7"
+                        name="Angular"
+                        value="Angular"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Angular
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="8" className="pr-8">
-                      <input type="checkbox" id="8" />
-                      React
+                      <input
+                        type="checkbox"
+                        id="8"
+                        name="Jest"
+                        value="Jest"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Jest
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="9" className="pr-8">
-                      <input type="checkbox" id="9" />
-                      React
+                      <input
+                        type="checkbox"
+                        id="9"
+                        name="jQuery"
+                        value="jQuery"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      jQuery
                     </label>
                   </div>
                 </div>
@@ -346,44 +421,86 @@ const DbSales = (userList: any) => {
                 <div className="grid grid-cols-4">
                   <div className="">
                     <label htmlFor="3" className="pr-8">
-                      <input type="checkbox" id="3" />
+                      <input
+                        type="checkbox"
+                        id="3"
+                        onChange={handleSkillSummaryChange}
+                        name="Java"
+                        value="Java"
+                      />
                       Java
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="4" className="pr-8">
-                      <input type="checkbox" id="4" />
-                      React
+                      <input
+                        type="checkbox"
+                        id="4"
+                        name="Spring"
+                        value="Spring"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Spring
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="5" className="pr-8">
-                      <input type="checkbox" id="5" />
-                      Vue
+                      <input
+                        type="checkbox"
+                        id="5"
+                        name="Struts"
+                        value="Struts"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Struts
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="6" className="pr-8">
-                      <input type="checkbox" id="6" />
-                      Angular
+                      <input
+                        type="checkbox"
+                        id="6"
+                        name="Play"
+                        value="Play"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Play
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="7" className="pr-8">
-                      <input type="checkbox" id="7" />
-                      jQuery
+                      <input
+                        type="checkbox"
+                        id="7"
+                        name="Wicket"
+                        value="Wicket"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Wicket
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="8" className="pr-8">
-                      <input type="checkbox" id="8" />
-                      React
+                      <input
+                        type="checkbox"
+                        id="8"
+                        name="MySQL"
+                        value="MySQL"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      MySQL
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="9" className="pr-8">
-                      <input type="checkbox" id="9" />
-                      React
+                      <input
+                        type="checkbox"
+                        id="9"
+                        name="PostgreSQL"
+                        value="PostgreSQL"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      psql
                     </label>
                   </div>
                 </div>
@@ -400,44 +517,86 @@ const DbSales = (userList: any) => {
                 <div className="grid grid-cols-4">
                   <div className="">
                     <label htmlFor="3" className="pr-8">
-                      <input type="checkbox" id="3" />
-                      JavaScript
+                      <input
+                        type="checkbox"
+                        id="3"
+                        name="Java"
+                        value="Java"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Java
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="4" className="pr-8">
-                      <input type="checkbox" id="4" />
-                      React
+                      <input
+                        type="checkbox"
+                        id="4"
+                        name="JUnit"
+                        value="JUnit"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      JUnit
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="5" className="pr-8">
-                      <input type="checkbox" id="5" />
-                      Vue
+                      <input
+                        type="checkbox"
+                        id="5"
+                        name="Selenium"
+                        value="Selenium"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Selenium
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="6" className="pr-8">
-                      <input type="checkbox" id="6" />
-                      Angular
+                      <input
+                        type="checkbox"
+                        id="6"
+                        name="TestNG"
+                        value="TestNG"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      TestNG
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="7" className="pr-8">
-                      <input type="checkbox" id="7" />
-                      jQuery
+                      <input
+                        type="checkbox"
+                        id="7"
+                        name="Jest"
+                        value="Jest"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Jest
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="8" className="pr-8">
-                      <input type="checkbox" id="8" />
-                      React
+                      <input
+                        type="checkbox"
+                        id="8"
+                        name="Pytest"
+                        value="Pytest"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Pytest
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="9" className="pr-8">
-                      <input type="checkbox" id="9" />
-                      React
+                      <input
+                        type="checkbox"
+                        id="9"
+                        name="Mockito"
+                        value="Mockito"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Mockito
                     </label>
                   </div>
                 </div>
@@ -454,44 +613,84 @@ const DbSales = (userList: any) => {
                 <div className="grid grid-cols-4">
                   <div className="">
                     <label htmlFor="3" className="pr-8">
-                      <input type="checkbox" id="3" />
+                      <input
+                        type="checkbox"
+                        id="3"
+                        name="Python"
+                        value="Python"
+                        onChange={handleSkillSummaryChange}
+                      />
                       Python
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="4" className="pr-8">
-                      <input type="checkbox" id="4" />
-                      React
+                      <input
+                        type="checkbox"
+                        id="4"
+                        name="R言語"
+                        value="R言語"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      R言語
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="5" className="pr-8">
-                      <input type="checkbox" id="5" />
-                      Vue
+                      <input
+                        type="checkbox"
+                        id="5"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      NumPy
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="6" className="pr-8">
-                      <input type="checkbox" id="6" />
-                      Angular
+                      <input
+                        type="checkbox"
+                        id="6"
+                        name="Pandas"
+                        value="Pandas"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Pandas
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="7" className="pr-8">
-                      <input type="checkbox" id="7" />
-                      jQuery
+                      <input
+                        type="checkbox"
+                        id="7"
+                        name="Docker"
+                        value="Docker"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Docker
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="8" className="pr-8">
-                      <input type="checkbox" id="8" />
-                      React
+                      <input
+                        type="checkbox"
+                        id="8"
+                        name="pyTorch"
+                        value="pyTorch"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      pyTorch
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="9" className="pr-8">
-                      <input type="checkbox" id="9" />
-                      React
+                      <input
+                        type="checkbox"
+                        id="9"
+                        name="Keras"
+                        value="Keras"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Keras
                     </label>
                   </div>
                 </div>
@@ -508,44 +707,86 @@ const DbSales = (userList: any) => {
                 <div className="grid grid-cols-4">
                   <div className="">
                     <label htmlFor="3" className="pr-8">
-                      <input type="checkbox" id="3" />
-                      JavaScript
+                      <input
+                        type="checkbox"
+                        id="3"
+                        name="AWS"
+                        value="AWS"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      AWS
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="4" className="pr-8">
-                      <input type="checkbox" id="4" />
-                      React
+                      <input
+                        type="checkbox"
+                        id="4"
+                        name="Azure"
+                        value="Azure"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Azure
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="5" className="pr-8">
-                      <input type="checkbox" id="5" />
-                      Vue
+                      <input
+                        type="checkbox"
+                        id="5"
+                        name="GCP"
+                        value="GCP"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      GCP
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="6" className="pr-8">
-                      <input type="checkbox" id="6" />
-                      Angular
+                      <input
+                        type="checkbox"
+                        id="6"
+                        name="Terraform"
+                        value="Terraform"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Terraform
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="7" className="pr-8">
-                      <input type="checkbox" id="7" />
-                      jQuery
+                      <input
+                        type="checkbox"
+                        id="7"
+                        name="Docker"
+                        value="Docker"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Docker
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="8" className="pr-8">
-                      <input type="checkbox" id="8" />
-                      React
+                      <input
+                        type="checkbox"
+                        id="8"
+                        name="Linux"
+                        value="Linux"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Linux
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="9" className="pr-8">
-                      <input type="checkbox" id="9" />
-                      React
+                      <input
+                        type="checkbox"
+                        id="9"
+                        name="Ansible"
+                        value="Ansible"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Ansible
                     </label>
                   </div>
                 </div>
@@ -562,44 +803,86 @@ const DbSales = (userList: any) => {
                 <div className="grid grid-cols-4">
                   <div className="">
                     <label htmlFor="3" className="pr-8">
-                      <input type="checkbox" id="3" />
+                      <input
+                        type="checkbox"
+                        id="3"
+                        name="PHP"
+                        value="PHP"
+                        onChange={handleSkillSummaryChange}
+                      />
                       PHP
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="4" className="pr-8">
-                      <input type="checkbox" id="4" />
-                      React
+                      <input
+                        type="checkbox"
+                        id="4"
+                        name="Laravel"
+                        value="Laravel"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Laravel
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="5" className="pr-8">
-                      <input type="checkbox" id="5" />
-                      Vue
+                      <input
+                        type="checkbox"
+                        id="5"
+                        name="Symfony"
+                        value="Symfony"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      Symfony
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="6" className="pr-8">
-                      <input type="checkbox" id="6" />
-                      Angular
+                      <input
+                        type="checkbox"
+                        id="6"
+                        name="CakePHP"
+                        value="CakePHP"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      CakePHP
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="7" className="pr-8">
-                      <input type="checkbox" id="7" />
-                      jQuery
+                      <input
+                        type="checkbox"
+                        id="7"
+                        name="FuelPHP"
+                        value="FuelPHP"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      FuelPHP
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="8" className="pr-8">
-                      <input type="checkbox" id="8" />
-                      React
+                      <input
+                        type="checkbox"
+                        id="8"
+                        name="MySQL"
+                        value="MySQL"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      MySQL
                     </label>
                   </div>
                   <div className="">
                     <label htmlFor="9" className="pr-8">
-                      <input type="checkbox" id="9" />
-                      React
+                      <input
+                        type="checkbox"
+                        id="9"
+                        name="PostgreSQL"
+                        value="PostgreSQL"
+                        onChange={handleSkillSummaryChange}
+                      />
+                      psql
                     </label>
                   </div>
                 </div>
@@ -610,10 +893,42 @@ const DbSales = (userList: any) => {
           <div className="mt-5">
             <div className="text-2xl">
               その他
-              <input
+              {/* <input
                 type="text"
                 className="ml-3 bg-white shadow-xl border-2 border-slate-300"
-              />
+                onChange={handleSkillSummaryChange}
+              /> */}
+              {autocomplete.autoCalibration && (
+                <Autocomplete
+                  className="ml-3 bg-white shadow-xl border-2 border-slate-300"
+                  multiple
+                  id="tags-filled"
+                  options={autocomplete.autoCalibration.map(
+                    (option:SkillData) => option.skill
+                  )}
+                  onChange={(event, newValue) => {
+                    setSkillUpdate(Array.isArray(newValue) ? newValue : [newValue]);
+                  }}
+                  freeSolo
+                  renderTags={(value: readonly any[], getTagProps) =>
+                    value.map((option: string, index: number) => (
+                      <Chip
+                        variant="outlined"
+                        label={option}
+                        {...getTagProps({ index })}
+                        key={`${option}-${index}`} // タグごとに一意のキーを生成
+                      />
+                    ))
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="standard"
+                      placeholder="検索"
+                    />
+                  )}
+                />
+              )}
             </div>
           </div>
 

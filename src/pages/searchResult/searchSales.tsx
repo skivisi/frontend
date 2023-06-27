@@ -41,8 +41,6 @@ const SearchSales = ({
   query: any;
   affiliation: any;
 }) => {
-  // console.log(query)
-  console.log(affiliation);
   const [users, setUsers] = useState(JSON.parse(query.foundUser));
   const [businessSituation, setBusinessSituation] = useState('');
 
