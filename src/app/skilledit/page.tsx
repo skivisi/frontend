@@ -64,7 +64,6 @@ const skillEdit = () => {
     { skillList: 'ガヤ', skillSelection: false, tagColor: 3 },
   ];
 
-
   useEffect(() => {
     setSkills((p: any) => ({
       ...p,
@@ -83,6 +82,7 @@ const skillEdit = () => {
       }));
     }
   }, [skill, skillPoint, specialAbilities]);
+
 
   // 特有スキル編集
   const handleChangeInherent = (e: any, formIndex: number) => {

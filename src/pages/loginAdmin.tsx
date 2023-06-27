@@ -17,7 +17,12 @@ const LoginAdmin = () => {
   ) => {
     event.preventDefault();
 
-    const loginAdmin:any = {
+    type Login = {
+      email: string | null;
+      password: string | null;
+    }
+
+    const loginAdmin:Login = {
       email:email,
       password:password
     }

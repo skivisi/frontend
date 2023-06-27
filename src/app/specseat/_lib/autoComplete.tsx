@@ -4,13 +4,15 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export const autoComplete = () => {
-  const [autocomplete, setAutocomplete] = useState<any>({});
+  const [autocomplete, 
+        ] = useState<any>({});
 
   useEffect(() => {
     const fetchId = async () => {
       const autoCalibration = await axios.get(
         `http://localhost:8000/api/autoCalibration/get`
       );
+
       const os = autoCalibration.data.filter(
         (p: any) => p.category === 1
       );
@@ -33,6 +35,7 @@ export const autoComplete = () => {
         (p: any) => p.category === 7
       );
 
+
       setAutocomplete((p: any) => ({
         ...p,
         autoCalibration: autoCalibration.data,
@@ -44,7 +47,6 @@ export const autoComplete = () => {
         tool: tool,
         assignedDevelopment: assignedDevelopment,
       }));
-      // setAutocomplete(os)
     };
     fetchId();
   }, []);
