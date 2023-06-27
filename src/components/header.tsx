@@ -1,11 +1,10 @@
-'use client';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 
 const Header = () => {
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const [cookies, setCookie, removeCookie] = useCookies(['userId','affiliation','adminId']);
+  
   const handleLogout = () => {
-    
     if (cookies.userId) {
       removeCookie('userId');
     }
@@ -15,7 +14,23 @@ const Header = () => {
     if (cookies.adminId) {
       removeCookie('adminId');
     }
+  };
 
+  const handleDash = () => {
+    if (
+      cookies.affiliation === 'FR' ||
+      cookies.affiliation === 'JAVA' ||
+      cookies.affiliation === 'QA' ||
+      cookies.affiliation === 'ML' ||
+      cookies.affiliation === 'CL' ||
+      cookies.affiliation === 'PHP'
+    ) {
+      window.location.href = '/dashboard/dbEngineer';
+    } else if (cookies.affiliation === '営業') {
+      window.location.href = '/dashboard/dbSales';
+    } else {
+      window.location.href = '/dashboard/dbAdmin';
+    }
   };
   return (
     <div>
@@ -27,7 +42,10 @@ const Header = () => {
             </span>
           </a>
           <nav className="md:ml-auto flex flex-wrap items-center text-base justify-end"></nav>
-          <button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0 text-sky-900">
+          <button
+            onClick={handleDash}
+            className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0 text-sky-900"
+          >
             ダッシュボードへ
           </button>
 

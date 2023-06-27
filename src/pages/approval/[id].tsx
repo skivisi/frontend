@@ -28,7 +28,7 @@ export const getServerSideProps = async (
 ) => {
   const { query: userId, req: serverRequest } = context;
   const cookies = serverRequest.cookies;
-  const cookie = cookies.userId;
+  const cookie = cookies.userId || null;
 
   return {
     props: {

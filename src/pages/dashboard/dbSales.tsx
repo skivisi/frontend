@@ -13,7 +13,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     `http://localhost:8000/api/search/users`
   );
   const userList = userData.data;
-  console.log(userList);
+  // console.log(userList);
 
   return {
     props: {
@@ -62,7 +62,7 @@ const DbSales = (userList: any) => {
         }
       );
       const foundUser = response.data;
-      console.log(foundUser);
+      // console.log(foundUser);
 
       router.push(
         `/searchResult/searchSales?foundUser=${encodeURIComponent(

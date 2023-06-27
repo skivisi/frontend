@@ -56,16 +56,26 @@ const Register = () => {
           message: '半角数字を入力してください',
           path: ['employeeNumber'],
         }),
-      affiliation: z.string().nonempty('所属を入力してください'),
+      affiliation: z
+        .string()
+        .nullable()
+        .refine((value) => value !== null && value !== '', {
+          message: '所属を入力してください',
+          path: ['affiliation'],
+        }),
       businessSituation: z
         .string()
-        .nonempty('業務状況を入力してください'),
+        .nullable()
+        .refine((value) => value !== null && value !== '', {
+          message: '業務状況を入力してください',
+          path: ['businessSituation'],
+        }),
       password: z
         .string()
-        .min(4, 'パスワードは4文字以上で入力してください'),
+        .min(8, 'パスワードは8文字以上で入力してください'),
       confirmPassword: z
         .string()
-        .min(4, 'パスワードは4文字以上で入力してください'),
+        .min(8, 'パスワードは8文字以上で入力してください'),
     });
 
     try {
@@ -78,25 +88,29 @@ const Register = () => {
         confirmPassword,
       });
 
-      console.log('成功', values);
       setPasswordError(null); // パスワードのエラーをリセット
-
 
       // userId追加する
       setUserCount(userCount + 1);
 
-      const response = await axios.post('http://localhost:8000/api/auth/register', {
-        email,
-        employeeNumber,
-        joinDate: selectedDate,
-        userName,
-        affiliation,
-        businessSituation,
-        password,
-        confirmPassword,
-        createdAt: new Date(), 
-        updatedAt: new Date(), 
-      });
+      const response = await axios.post(
+        'http://localhost:8000/api/auth/register',
+        {
+          email,
+          employeeNumber,
+          joinDate: selectedDate?.toLocaleDateString('ja-JP', {
+            year: 'numeric',
+            month: '2-digit',
+          }),
+          userName,
+          affiliation,
+          businessSituation,
+          password,
+          confirmPassword,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        }
+      );
       console.log(response.data);
       window.location.href = '/login';
     } catch (error) {
@@ -121,12 +135,11 @@ const Register = () => {
   };
 
   // 入社年月選択の記述
-
   const handleDateChange = (date: Date) => {
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 月は0から始まるため、1を加えて調整
-    const selectedDate = new Date(`${year}-${month}`);
-    setSelectedDate(selectedDate);
+    const formattedDate = `${year}/${month}`;
+    setSelectedDate(new Date(formattedDate));
   };
 
   return (
