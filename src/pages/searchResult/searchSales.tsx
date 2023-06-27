@@ -4,52 +4,67 @@ import { useRouter } from 'next/router';
 import { GetServerSideProps, NextApiRequest } from 'next';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { User } from '../../../types/types';
+import Cookies from 'js-cookie';
 
 // 検索結果(営業)
-// export const getServerSideProps: GetServerSideProps = async ({
-//   query,
-//   req,
-// }) => {
-//   const cookies = req.cookies;
-// console.log(cookies)
-//   const affiliation = cookies.affiliation || null;
-//   return {
-//     props: {
-//       query,
-//       affiliation,
-//     },
-//   };
-// };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (
+  context
+) => {
   const { query, req } = context;
   const cookies = req.cookies;
-  console.log(cookies);
-  const affiliation = cookies.affiliation || null;
+  // const affiliation = cookies.affiliation || null;
+  // const adminId = cookies.adminId || null
+  // console.log(affiliation)
+  // console.log(adminId)
+  const getCookie = (Name: any) => {
+    return Cookies.get(Name);
+  };
+  // const affiliation1 = getCookie('affiliation')
+  // const adminId1 = getCookie('adminId')
+  // const affiliation = String(affiliation1)
+  // const adminId = Number(adminId1) 
+  // console.log(affiliation)
+  // console.log(adminId)
+  
   return {
     props: {
       query,
-      affiliation,
+      // affiliation,
+      // adminId
     },
   };
 };
 
 const SearchSales = ({
   query,
-  affiliation,
+  // affiliation,
+  // adminId,
 }: {
   query: any;
-  affiliation: any;
+  // affiliation: User;
+  // adminId: any
 }) => {
   const [users, setUsers] = useState(JSON.parse(query.foundUser));
   const [businessSituation, setBusinessSituation] = useState('');
 
-  if(!affiliation) {
-    location.reload()
-    return <div>Loading...</div>
+  const getCookie = (Name: any) => {
+    return Cookies.get(Name);
+  };
+  const affiliation1 = getCookie('affiliation')
+  const adminId1 = getCookie('adminId')
+  const affiliation = String(affiliation1)
+  const adminId = Number(adminId1) 
+  console.log(affiliation)
+  console.log(adminId)
+
+  if (!affiliation) {
+    window.location.reload();
+    return <div>Loading...</div>;
   }
 
-  const handleChange = async (user: any) => {
+  const handleChange = async (user: User) => {
     try {
       const changedBusinessSituation =
         user.businessSituation === 'アサイン中'
@@ -67,7 +82,7 @@ const SearchSales = ({
       setBusinessSituation(changedBusinessSituation);
 
       // users配列内のユーザーのbusinessSituationを更新する
-      const updatedUsers = users.map((u: any) => {
+      const updatedUsers = users.map((u: User) => {
         if (u.userId === user.userId) {
           return {
             ...u,
@@ -110,7 +125,7 @@ const SearchSales = ({
 
             {affiliation ? (
               <div>
-                {users.map((user: any, index: number) => (
+                {users.map((user: User, index: number) => (
                   <a
                     key={index}
                     href="#"
@@ -128,7 +143,7 @@ const SearchSales = ({
               </div>
             ) : (
               <div>
-                {users.map((user: any, index: number) => (
+                {users.map((user: User, index: number) => (
                   <div
                     key={index}
                     className="mt-14 text-lg border-b-2 border-light-blue-500 pb-2"

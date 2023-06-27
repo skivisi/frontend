@@ -5,18 +5,15 @@ import axios from 'axios';
 import useSWR from 'swr';
 import { useEffect } from 'react';
 import Cookies from 'js-cookie';
+import { User, Request } from '../../types/types';
 
 // 通知一覧(エンジニア)
-// const fetcher = (
-//   resource: RequestInfo,
-//   init: RequestInit | undefined
-// ) => fetch(resource, init).then((res) => res.json());
 
 const fetcher = (url: RequestInfo | URL) =>
   fetch(url).then((res) => res.json());
 
 const NotificationEngineer = () => {
-  const getCookie = (name: any) => {
+  const getCookie = (name: string) => {
     return Cookies.get(name);
   };
   const cookie = getCookie('userId');
@@ -48,7 +45,7 @@ const NotificationEngineer = () => {
 
   // userIdをログインしているcookieIdと結びつける
   const filteredrequest = sortRequest.filter(
-    (item: any) => item.userId === userId
+    (item: User) => item.userId === userId
   );
 
   if (!filteredrequest) {
@@ -58,7 +55,7 @@ const NotificationEngineer = () => {
   // console.log(filteredrequest);
 
   // statusによって表示を変える
-  const status = filteredrequest.map((item: any, index: number) =>
+  const status = filteredrequest.map((item: Request, index: number) =>
     item.status === 3 ? (
       <div key={index}>
         <div className="flex bg-blue-200 text-xl space-x-10 py-5 pl-8 border-b-2 border-r-2 border-l-2 border-black">
@@ -96,10 +93,10 @@ const NotificationEngineer = () => {
 
   // 申請結果通知の件数を計算
   const approvedCount = filteredrequest.filter(
-    (item: any) => item.status === 3
+    (item: Request) => item.status === 3
   ).length;
   const returnedCount = filteredrequest.filter(
-    (item: any) => item.status === 2
+    (item: Request) => item.status === 2
   ).length;
   const totalCount = approvedCount + returnedCount;
 

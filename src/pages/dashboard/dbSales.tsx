@@ -7,36 +7,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { string } from 'zod';
 import { autoComplete } from '../../app/specseat/_lib/autoComplete';
-
-
 import { Autocomplete, TextField, Chip } from '@mui/material';
-
-type User = {
-  affiliation: string;
-  businessSituation: string;
-  createdAt: string;
-  email: string;
-  employeeNumber: number;
-  joinDate: string;
-  updatedAt: string;
-  userId: number;
-  userName: string;
-};
+import {User,SkillData} from '../../../types/types'
 
 type UserList = {
   userList: User[];
-};
-
-type SkillData = {
-  CL: number;
-  FR: number;
-  JAVA: number;
-  ML: number;
-  PHP: number;
-  QA: number;
-  autoCalibrationId: number;
-  category: number;
-  skill: string;
 };
 
 // 営業DB(検索機能)
@@ -45,8 +20,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
     `http://localhost:8000/api/search/users`
   );
   const userList = userData.data;
-
-
 
   return {
     props: {
@@ -906,8 +879,11 @@ const DbSales = (userList: UserList) => {
                   options={autocomplete.autoCalibration.map(
                     (option:SkillData) => option.skill
                   )}
+                  // onChange={(event, newValue) => {
+                  //   setSkillUpdate(Array.isArray(newValue) ? newValue : [newValue]);
+                  // }}
                   onChange={(event, newValue) => {
-                    setSkillUpdate(Array.isArray(newValue) ? newValue : [newValue]);
+                    setSkillUpdate(Array.isArray(newValue) ? (newValue as string[]) : [newValue as string]);
                   }}
                   freeSolo
                   renderTags={(value: readonly any[], getTagProps) =>

@@ -6,34 +6,13 @@ import { useEffect, useState } from 'react';
 import requestHandler from './api/request';
 import useSWR from 'swr';
 import Link from 'next/link';
+import { Request } from '../../types/types';
 
 // 申請通知リスト(管理者)
-// const fetcher = (
-//   resource: RequestInfo,
-//   init: RequestInit | undefined
-// ) => fetch(resource, init).then((res) => res.json());
-
 const fetcher = (url: RequestInfo | URL) =>
   fetch(url).then((res) => res.json());
 
-export const getServerSideProps: GetServerSideProps = async ({
-  req,
-}) => {
-  // ログイン中のadminのidを取得
-  const cookies = req.cookies;
-  const cookie = cookies.id;
-
-  return {
-    props: {
-      // adminId: cookie,
-      // userData: userData,
-    },
-  };
-};
-
-const NotificationList = (
-  // { userData }: { userData: any }
-  ) => {
+const NotificationList = () => {
   // トグル状態管理
   const [expanded, setExpanded] = useState<{ [id: number]: boolean }>(
     {}
@@ -43,11 +22,13 @@ const NotificationList = (
   const { data, error } = useSWR('/api/request', fetcher);
 
   if (!data) {
-    return <>
-    <Header />
-    <div>通知はありません</div>
-    <Footer />
-  </>; 
+    return (
+      <>
+        <Header />
+        <div>通知はありません</div>
+        <Footer />
+      </>
+    );
   }
 
   // エンジニアコメントのトグル
@@ -60,7 +41,7 @@ const NotificationList = (
 
   // 申請結果通知の件数を計算
   const totalCount = data.filter(
-    (item: any) => item.status === 1
+    (item: Request) => item.status === 1
   ).length;
 
   return (
@@ -84,17 +65,17 @@ const NotificationList = (
             </div>
 
             <div>
-              {data.map((request: any, index: number) => (
-                  <div
-                    key={index}
-                    className="border-b-2 border-light-blue-500 pb-2"
-                  >
-                    <div className="flex justify-center mt-14 md:pl-36 text-lg space-x-2 md:space-x-32 pr-24">
-                      <Link legacyBehavior href={`/approval/${request.user?.userId}`}>
-                      <a
-
-                        className="relative flex justify-center space-x-32"
-                      >
+              {data.map((request: Request, index: number) => (
+                <div
+                  key={index}
+                  className="border-b-2 border-light-blue-500 pb-2"
+                >
+                  <div className="flex justify-center mt-14 md:pl-36 text-lg space-x-2 md:space-x-32 pr-24">
+                    <Link
+                      legacyBehavior
+                      href={`/approval/${request.user?.userId}`}
+                    >
+                      <a className="relative flex justify-center space-x-32">
                         <div className="w-24">
                           {request.user?.employeeNumber}
                         </div>
@@ -114,19 +95,21 @@ const NotificationList = (
                           {request.user?.affiliation}
                         </div>
                       </a>
-                      </Link>
-                      <button
-                        onClick={() => handleToggle(request.user?.userId)}
-                      >
-                        {expanded[request.user?.userId] ? '▲' : '▼'}
-                      </button>
-                    </div>
-                    {expanded[request.user?.userId] && (
-                      <div className="pt-7 text-left pl-40">
-                        <p>{request.engineerComment}</p>
-                      </div>
-                    )}
+                    </Link>
+                    <button
+                      onClick={() =>
+                        handleToggle(request.user?.userId)
+                      }
+                    >
+                      {expanded[request.user?.userId] ? '▲' : '▼'}
+                    </button>
                   </div>
+                  {expanded[request.user?.userId] && (
+                    <div className="pt-7 text-left pl-40">
+                      <p>{request.engineerComment}</p>
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           </div>

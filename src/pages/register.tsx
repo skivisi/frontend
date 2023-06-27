@@ -18,9 +18,7 @@ const Register = () => {
     string | null
   >(null);
   const [password, setPassword] = useState<string | null>(null);
-  const [confirmPassword, setConfirmPassword] = useState<
-    string | null
-  >(null);
+  const [confirmPassword, setConfirmPassword] = useState<string | null>(null);
   const [userCount, setUserCount] = useState(0);
 
   const [emailError, setEmailError] = useState<string | null>(null);
@@ -52,7 +50,7 @@ const Register = () => {
         .email('有効なメールアドレスを入力してください'),
       employeeNumber: z
         .number()
-        .refine((value: any) => Number.isInteger(value), {
+        .refine((value: number) => Number.isInteger(value), {
           message: '半角数字を入力してください',
           path: ['employeeNumber'],
         }),
