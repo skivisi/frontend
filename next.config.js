@@ -2,11 +2,9 @@
 const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
-  rewrites: async () => {
-    return [
-      
-    ];
-  },
+  // images: {
+  //   domains: process.env.API_SECRET_URL,
+  // },
 };
 
 module.exports = nextConfig;
