@@ -143,12 +143,12 @@ const skillEdit = () => {
     try {
       if (typeof skill === 'undefined') {
         await axios.post(
-          `http://localhost:8000/api/skill/postSkillData/${userId}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/skill/postSkillData/${userId}`,
           formData
         );
       } else {
         await axios.put(
-          `http://localhost:8000/api/skill/update/${userId}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/skill/update/${userId}`,
           formData
         );
       }

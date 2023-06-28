@@ -26,7 +26,7 @@ export const userFetch = (isTrue: boolean, argId: number) => {
   useEffect(() => {
     const fetchId = async () => {
       const getUserData = await axios.get(
-        `http://localhost:8000/api/users?userId=${cookies.userId}`
+        `${process.env.NEXT_PUBLIC_API_URL}/users?userId=${cookies.userId}`
       );
       const {
         createdAt,
@@ -64,7 +64,7 @@ export const userFetch = (isTrue: boolean, argId: number) => {
       // 最新スペックシートの取得
      if(specs.length > 0){
       const getSpecIds = await axios.get(
-        `http://localhost:8000/api/spec/get/${
+        `${process.env.NEXT_PUBLIC_API_URL}/spec/get/${
           isTrue ? argId : cookies.userId
         }`
       );

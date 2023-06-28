@@ -11,7 +11,6 @@ import { userFetch } from './_lib/userFetch';
 const Page = () => {
   const userData = userFetch(false, 0);
 
-
   // タブの切り替え
   const selected =
     'w-32 bg-blue-700 text-white text-xl font-black border-x-4 border-t-4 border-blue-300 rounded-t-2xl px-5 py-3 transition-all';
@@ -33,7 +32,8 @@ const Page = () => {
       <div className="flex justify-center mt-10">
         <button
           onClick={() => changePageState(true)}
-          className="mr-20 px-8 bg-black text-white text-2xl rounded-tl-3xl rounded-tr-lg bg-gradient-to-b from-zinc-800 via-zinc-500 to-zinc-800 border-x-4 border-t-4 border-zinc-500 hover:scale-110 transition-all"
+          className="mr-20 px-8 bg-black text-white text-2xl rounded-tl-3xl rounded-tr-lg bg-gradient-to-b from-zinc-800 via-zinc-500 to-zinc-800 border-x-4 border-t-4 border-zinc-500 hover:scale-110 transform transition-transform duration-100 z-20 relative"
+          style={{ transition: 'all 0.2s' }}
         >
           L
         </button>
@@ -55,21 +55,25 @@ const Page = () => {
         </div>
         <button
           onClick={() => changePageState(false)}
-          className="ml-20 px-8 bg-black text-white text-2xl rounded-tr-3xl rounded-tl-lg bg-gradient-to-b from-zinc-800 via-zinc-500 to-zinc-800 border-x-4 border-t-4 border-zinc-500 hover:scale-110 transition-all"
+          className="ml-20 px-8 bg-black text-white text-2xl rounded-tr-3xl rounded-tl-lg bg-gradient-to-b from-zinc-800 via-zinc-500 to-zinc-800 border-x-4 border-t-4 border-zinc-500 hover:scale-110 transform transition-transform duration-100 z-20 relative"
+          style={{ transition: 'all 0.2s' }}
         >
           R
         </button>
       </div>
+        <style jsx>{`
+          button:active {
+            transform: translateY(10px);
+          }
+        `}</style>
 
-      <section className="bg-blue-200 text-sky-900 max-w-4xl p-10 shadow-xl m-auto border-4 border-sky-800">
+      <section className="bg-blue-200 text-sky-900 max-w-4xl p-10 shadow-xl m-auto border-4 border-sky-800 z-30 relative">
         <div className="flex">
           <h2 className="text-3xl font-bold mb-5 drop-shadow-white">
             {pageState ? 'スキルシート' : 'スペックシート'}
           </h2>
           <div className="text-center">
-            <Link
-              href={pageState ? '/skilledit' : '/specseat'}
-            >
+            <Link href={pageState ? '/skilledit' : '/specseat'}>
               <button
                 type="button"
                 className="shadow-md h-12 ml-2 relative bottom-2 cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid"

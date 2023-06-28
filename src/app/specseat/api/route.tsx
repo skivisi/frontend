@@ -9,19 +9,17 @@ export async function POST(req: Request) {
 
   // * 1, `api/spec/post/:userId`に新しいspecシートをpost
   const response = await axios.post(
-    `http://localhost:8000/api/spec/post/${userId}`,
+    `${process.env.API_SECRET_URL}/spec/post/${userId}`,
     specData
   );
   // * 2, postしたスペックシートIdの取得
   const { specId } = await response.data;
-  await axios.post(
-    `http://localhost:8000/api/spec/postData/${specId}`,
-    specDetail
-  );
 
   // * 3, `api/spec/postData/:specId`にスペックシートデータをpost
-
-  // * 4, `api/upload/`に画像データpost
+  await axios.post(
+    `${process.env.API_SECRET_URL}/spec/postData/${specId}`,
+    specDetail
+  );
 
   return NextResponse.json({ message: 'ok' });
 }
