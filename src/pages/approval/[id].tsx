@@ -10,6 +10,7 @@ import { GetServerSideProps, NextApiRequest } from 'next';
 import { useState } from 'react';
 import { userFetch } from '../../app/mypage/_lib/userFetch';
 import Specview from '@/components/mypage/Specview';
+import { Request } from '../../../types/types';
 
 /**
  * スキルの取得
@@ -22,18 +23,21 @@ const fetcher = (
   init: RequestInit | undefined
 ) => fetch(resource, init).then((res) => res.json());
 
-export const getServerSideProps = async (
-  context: { query: any; req: NextApiRequest },
-  req: NextApiRequest
-) => {
+export const getServerSideProps = async (context: {
+  query: any;
+  req: NextApiRequest;
+}) => {
   const { query: userId, req: serverRequest } = context;
   const cookies = serverRequest.cookies;
-  const cookie = cookies.userId || null;
+  const cookie = cookies.userId;
+  const adminId = cookies.adminId;
+  console.log(adminId);
 
   return {
     props: {
-      cookie,
+      cookie: cookie || null,
       userId,
+      adminId,
     },
   };
 };
@@ -41,34 +45,36 @@ export const getServerSideProps = async (
 const Approval = ({
   userId,
   cookie,
+  adminId,
 }: {
-  userId: any;
+  userId: { id: number };
   cookie: number | null;
+  adminId: number;
 }) => {
   const userData = userFetch(true, userId.id);
   const [adminComment, setAdminComment] = useState('');
 
-  console.log(userId.id);
   let queryId = Number(userId.id);
 
   const { data, error } = useSWR(`/api/request/`, fetcher);
-  console.log(data);
 
   if (!data) {
     return <div>Loading...</div>;
   }
 
+  console.log(data);
+
   const filteredRequest = data.filter(
-    (item: any) => item.userId === queryId
+    (item: Request) => item.userId === queryId
   );
-  console.log(filteredRequest);
-  console.log(filteredRequest[0].applicationId);
+  // console.log(filteredRequest);
+  // console.log(filteredRequest[0].applicationId);
 
   // 承認の処理
-  const approvalSubmit = async (e: any) => {
+  const approvalSubmit = async () => {
     try {
       const requestBody = {
-        adminId: Number(cookie), // 現在のログイン中のcookie
+        adminId: Number(adminId), // 現在のログイン中のcookie
       };
       const response = await axios.put(
         `http://localhost:8000/api/request/approval/${filteredRequest[0].applicationId}`,
@@ -81,10 +87,10 @@ const Approval = ({
   };
 
   // 差し戻しの処理
-  const sendBackSubmit = async (e: any) => {
+  const sendBackSubmit = async () => {
     try {
       const requestBody = {
-        adminId: Number(cookie), // 現在のログイン中のcookieのid
+        adminId: Number(adminId), // 現在のログイン中のcookieのid
         // status: 2, // 変更後のstatusの値
         // resultedAt: new Date(), // 現在の日時を設定
         adminComment: adminComment, // 差し戻しコメント
@@ -99,7 +105,7 @@ const Approval = ({
       console.log(cookie);
     }
   };
-  const handleAdminComment = (event: any) => {
+  const handleAdminComment = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setAdminComment(event.target.value);
   };
 
@@ -111,12 +117,11 @@ const Approval = ({
       </div>
       <div className="text-sky-900 flex justify-center">
         <form className="bg-blue-200 text-sky-900 max-w-4xl p-10 my-10 shadow-xl">
-
           <Specview userData={userData} />
 
           <div className="text-center">
             <button
-              onClick={(e) => approvalSubmit(e)}
+              onClick={(e) => approvalSubmit()}
               type="button"
               className="shadow-md mt-10 h-12  cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid"
             >
@@ -148,7 +153,7 @@ const Approval = ({
           </div>
           <div className="text-center">
             <button
-              onClick={(e) => sendBackSubmit(e)}
+              onClick={(e) => sendBackSubmit()}
               type="button"
               className="shadow-md mt-10 h-12 cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid"
             >
