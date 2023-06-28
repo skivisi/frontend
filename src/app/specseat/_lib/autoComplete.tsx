@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export const autoComplete = () => {
-  const [autocomplete, 
+  const [autocomplete, setAutocomplete
         ] = useState<any>({});
 
   useEffect(() => {
