@@ -34,6 +34,7 @@ function Home() {
   const userData = userFetch(false, 0);
   const autocomplete = autoComplete();
 
+
   // 既存データ
   const [defaultData, setDefaultData] = useState<any>({
     spec: {},
@@ -78,8 +79,8 @@ function Home() {
     userData.qualification,
     userData.sellingPoint,
     userData.skillSummaries,
-    userData.spec.github,
-    userData.spec.offHours,
+    userData.spec?.github,
+    userData.spec?.offHours,
   ]);
 
   // qualification日付の形式変換

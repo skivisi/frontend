@@ -2,10 +2,23 @@
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import {
+  autoCalibrationArray,
+  autoCalibration,
+  autoCalibrations,
+} from '../../../../types/types';
 
 export const autoComplete = () => {
-  const [autocomplete, 
-        ] = useState<any>({});
+  const [autocomplete, setAutocomplete] = useState<autoCalibrations>({
+    autoCalibration: [],
+    os: [],
+    lang: [],
+    framework: [],
+    library: [],
+    cloud: [],
+    tool: [],
+    assignedDevelopment: [],
+  });
 
   useEffect(() => {
     const fetchId = async () => {
@@ -14,29 +27,28 @@ export const autoComplete = () => {
       );
 
       const os = autoCalibration.data.filter(
-        (p: any) => p.category === 1
+        (p: autoCalibration) => p.category === 1
       );
       const lang = autoCalibration.data.filter(
-        (p: any) => p.category === 2
+        (p: autoCalibration) => p.category === 2
       );
       const framework = autoCalibration.data.filter(
-        (p: any) => p.category === 3
+        (p: autoCalibration) => p.category === 3
       );
       const library = autoCalibration.data.filter(
-        (p: any) => p.category === 4
+        (p: autoCalibration) => p.category === 4
       );
       const cloud = autoCalibration.data.filter(
-        (p: any) => p.category === 5
+        (p: autoCalibration) => p.category === 5
       );
       const tool = autoCalibration.data.filter(
-        (p: any) => p.category === 6
+        (p: autoCalibration) => p.category === 6
       );
       const assignedDevelopment = autoCalibration.data.filter(
-        (p: any) => p.category === 7
+        (p: autoCalibration) => p.category === 7
       );
 
-
-      setAutocomplete((p: any) => ({
+      setAutocomplete((p: autoCalibrations) => ({
         ...p,
         autoCalibration: autoCalibration.data,
         os: os,
@@ -53,3 +65,55 @@ export const autoComplete = () => {
 
   return autocomplete;
 };
+// import { useState, useEffect } from 'react';
+// import axios from 'axios';
+
+// export const autoComplete = () => {
+//   const [autocomplete,setAutocomplete] = useState<any>({});
+
+//   useEffect(() => {
+//     const fetchId = async () => {
+//       const autoCalibration = await axios.get(
+//         `http://localhost:8000/api/autoCalibration/get`
+//       );
+
+//       const os = autoCalibration.data.filter(
+//         (p: any) => p.category === 1
+//       );
+//       const lang = autoCalibration.data.filter(
+//         (p: any) => p.category === 2
+//       );
+//       const framework = autoCalibration.data.filter(
+//         (p: any) => p.category === 3
+//       );
+//       const library = autoCalibration.data.filter(
+//         (p: any) => p.category === 4
+//       );
+//       const cloud = autoCalibration.data.filter(
+//         (p: any) => p.category === 5
+//       );
+//       const tool = autoCalibration.data.filter(
+//         (p: any) => p.category === 6
+//       );
+//       const assignedDevelopment = autoCalibration.data.filter(
+//         (p: any) => p.category === 7
+//       );
+
+
+//       setAutocomplete((p: any) => ({
+//         ...p,
+//         autoCalibration: autoCalibration.data,
+//         os: os,
+//         lang: lang,
+//         framework: framework,
+//         library: library,
+//         cloud: cloud,
+//         tool: tool,
+//         assignedDevelopment: assignedDevelopment,
+//       }));
+//     };
+//     fetchId();
+//   }, []);
+
+//   return autocomplete;
+// };

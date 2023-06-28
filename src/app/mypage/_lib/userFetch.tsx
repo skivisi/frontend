@@ -60,7 +60,7 @@ export const userFetch = (isTrue: boolean, argId: number) => {
         specialAbility: specialAbilities,
         spec: specs[0],
     }));
-    console.log(userId)
+
       // 最新スペックシートの取得
      if(specs.length > 0){
       const getSpecIds = await axios.get(
@@ -91,7 +91,7 @@ export const userFetch = (isTrue: boolean, argId: number) => {
     }
     };
     fetchId();
-  }, [argId, cookies, isTrue]);
+  }, [argId, isTrue]);
 
   return userData;
 };
