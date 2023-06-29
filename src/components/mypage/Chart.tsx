@@ -10,6 +10,7 @@ import {
   ChartOptions,
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
+import { SkillPoints } from '../../../types/types';
 
 ChartJS.register(
   RadialLinearScale,
@@ -20,7 +21,7 @@ ChartJS.register(
   Legend
 );
 
-export const Chart = ({ skill }: { skill: any }) => {
+export const Chart = ({ skill }: { skill: SkillPoints}) => {
   const chartData: ChartData<'radar'> = {
     labels: [
       'フロントエンド',
