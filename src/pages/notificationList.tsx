@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { Request } from '../../types/types';
 
 // 申請通知リスト(管理者)
-const fetcher = (url: RequestInfo | URL) =>
+const fetcher = (url: RequestInfo) =>
   fetch(url).then((res) => res.json());
 
 const NotificationList = () => {

@@ -164,6 +164,8 @@ type SkillSummaries = {
   cloud: string[];
   tool: string[];
   developmentDomain: string[];
+  skillSummaryId:number
+  specId:number
 };
 //mypage/Skillview.tsxで使用
 type Spec = {

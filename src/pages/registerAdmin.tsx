@@ -13,11 +13,11 @@ const RegisterAdmin = () => {
     e: React.FormEvent<HTMLFormElement>
   ) => {
     try {
-      const response = await axios.post('http://localhost:8000/api/auth/admin/register', {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/admin/register`, {
         name,
         email,
         password,
-        createdAt: new Date(), 
+        createdAt: new Date(),
       });
       console.log(response.data);
       window.location.href = '/loginAdmin';

@@ -49,6 +49,7 @@ export const autoComplete = () => {
 
       setAutocomplete((p: autoCalibrations) => ({
         ...p,
+        autoCalibration:autoCalibration.data,
         os:os,
         lang:lang,
         framework:framework,

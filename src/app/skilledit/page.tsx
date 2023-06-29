@@ -57,7 +57,7 @@ const skillEdit = () => {
     },
     abilities: [],
   });
-  console.log(skill);
+
 
   // 初回のデータがない場合挿入
   let defaultSkillPoint: SkillPoint = {

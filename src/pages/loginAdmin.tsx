@@ -30,7 +30,7 @@ const LoginAdmin = () => {
     try {
       axios
         .post(
-          `http://localhost:8000/api/auth/admin/login`,loginAdmin
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/admin/login`,loginAdmin
         )
         .then((response) => {
           let userData = response.data;
