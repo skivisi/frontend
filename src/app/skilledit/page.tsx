@@ -35,8 +35,6 @@ const skillEdit = () => {
   const skill = userData.skill;
   const skillPoint = userData.skillPoint;
   const specialAbilities = userData.specialAbility;
-  console.log(specialAbilities);
-  console.log(skillPoint);
   const userId = userData.userId;
 
   const [skills, setSkills] = useState<SkillsData>({
@@ -59,7 +57,7 @@ const skillEdit = () => {
     },
     abilities: [],
   });
-  console.log(skill);
+
 
   // 初回のデータがない場合挿入
   let defaultSkillPoint: SkillPoint = {
@@ -168,7 +166,7 @@ const skillEdit = () => {
     };
 
     try {
-      if (typeof skill) {
+      if (typeof skill === 'undefined') {
         await axios.post(
           `${process.env.NEXT_PUBLIC_API_URL}/skill/postSkillData/${userId}`,
           formData

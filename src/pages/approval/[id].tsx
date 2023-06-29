@@ -55,7 +55,7 @@ const Approval = ({
   cookie: number | null;
   adminId: number | null;
 }) => {
-  // const userData = userFetch(true, userId.id);
+  const userData = userFetch(true, userId.id);
   const [adminComment, setAdminComment] = useState('');
 
   let queryId = Number(userId.id);
@@ -81,7 +81,7 @@ const Approval = ({
         adminId: Number(adminId), // 現在のログイン中のcookie
       };
       const response = await axios.put(
-        `http://localhost:8000/api/request/approval/${filteredRequest[0].applicationId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/request/approval/${filteredRequest[0].applicationId}`,
         requestBody
       );
       console.log(response);
@@ -100,7 +100,7 @@ const Approval = ({
         adminComment: adminComment, // 差し戻しコメント
       };
       const response = await axios.put(
-        `http://localhost:8000/api/request/denial/${filteredRequest[0].applicationId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/request/denial/${filteredRequest[0].applicationId}`,
         requestBody
       );
       console.log(response);
@@ -121,7 +121,7 @@ const Approval = ({
       </div>
       <div className="text-sky-900 flex justify-center">
         <form className="bg-blue-200 text-sky-900 max-w-4xl p-10 my-10 shadow-xl">
-          {/* <Specview userData={userData} /> */}
+          <Specview userData={userData} />
 
           <div className="text-center">
             <button

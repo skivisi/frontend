@@ -16,7 +16,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const cookie = cookies.userId;
 
   const { data: requestData } = await axios.get(
-    `http://localhost:8000/api/request/receive/${cookie}`
+    `${process.env.NEXT_PUBLIC_API_URL}/request/receive/${cookie}`
   );
 
   return {

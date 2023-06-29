@@ -57,7 +57,7 @@ const Login = () => {
       };
 
       axios
-        .post(`http://localhost:8000/api/auth/login`, login)
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, login)
         .then((response) => {
           let userData = response.data;
           console.log(userData);

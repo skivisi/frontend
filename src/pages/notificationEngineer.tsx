@@ -21,7 +21,7 @@ const NotificationEngineer = () => {
   console.log(userId);
 
   const { data, error } = useSWR(
-    `http://localhost:8000/api/request/receive/${userId}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/request/receive/${userId}`,
     fetcher
   );
 
