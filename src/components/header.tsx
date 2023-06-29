@@ -7,13 +7,13 @@ const Header = () => {
   
   const handleLogout = () => {
     if (cookies.userId) {
-      removeCookie('userId');
+      removeCookie('userId',{ path: '/' });
     }
     if (cookies.affiliation) {
-      removeCookie('affiliation');
+      removeCookie('affiliation',{ path: '/' });  
     }
     if (cookies.adminId) {
-      removeCookie('adminId');
+      removeCookie('adminId',{ path: '/' });
     }
   };
 
@@ -37,7 +37,7 @@ const Header = () => {
     <div>
       <header className="text-gray-600 body-font bg-gradient-to-tr from-blue-600 to-sky-300 shadow-lg">
         <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-          <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+          <a  onClick={handleDash} className="cursor-pointer flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
             <span className="text-3xl text-white font-bold">
               パワプロ
             </span>

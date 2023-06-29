@@ -53,8 +53,8 @@ const Login = () => {
           console.log(userData);
           let id = userData.userId;
           let affiliation = userData.affiliation;
-          setCookie('userId', id);
-          setCookie('affiliation', affiliation);
+          setCookie('userId', id, { path: '/' });
+          setCookie('affiliation', affiliation, { path: '/' });
           if (
             affiliation === 'FR' ||
             affiliation === 'JAVA' ||

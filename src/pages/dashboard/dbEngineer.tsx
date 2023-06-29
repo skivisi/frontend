@@ -64,7 +64,7 @@ const DbEngineer = ({ requestData }: { requestData: Request[] }) => {
             </div>
           </div>
           <button className="bg-indigo-700 font-semibold text-white py-4 mr-96 my-8 w-80 rounded-xl shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 border-2 border-white border-solid">
-            マイページへ移動
+            <Link href="/mypage">マイページへ移動</Link>
           </button>
           <button
             className="font-semibold text-white py-4 ml-96 my-8 w-80 rounded-xl shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 border-2 border-white border-solid"
