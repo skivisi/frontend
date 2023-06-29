@@ -9,6 +9,7 @@ const RequestButton = ({
   previousWorks,
   developmentExperiences,
   uploadFiles,
+  requestComment,
 }: {
   userData: any;
   defaultData: any;
@@ -18,6 +19,7 @@ const RequestButton = ({
   previousWorks: any;
   developmentExperiences: any;
   uploadFiles: any;
+  requestComment: string;
 }) => {
   // データの送信  ================================================================
   const submitHandler = async (e: any) => {
@@ -48,6 +50,10 @@ const RequestButton = ({
         qualifications: defaultData.qualifications,
         previousWorks: defaultData.previousWorks,
         developmentExperiences: defaultData.developmentExperiences,
+      },
+      request: {
+        userId: userData.user.userId,
+        engineerComment: requestComment,
       },
     };
 

@@ -10,8 +10,9 @@
 import SkillScores from '@/components/skilledit/SkillScores';
 import styles from './style.module.css';
 import { userFetch } from '../mypage/_lib/userFetch';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
+import { Skill,SkillPoint,Ability,SkillsData } from '../../../types/types';
 
 // スペシャルスキルカラーバリエーション
 const unselected =
@@ -23,6 +24,7 @@ const selected_2 =
 const selected_3 =
   'w-32 text-center m-1 bg-green-300 border-4 border-green-400 rounded-xl p-1 font-bold text-green-800';
 
+
 const skillEdit = () => {
 
   const userData = userFetch(false,0);
@@ -33,14 +35,29 @@ const skillEdit = () => {
   const userId = userData.userId;
 
 
-  const [skills, setSkills] = useState<any>({
-    skill: '',
-    skillPoint: '',
-    abilities: '',
+  const [skills, setSkills] = useState<SkillsData>({
+    skill: {
+      InherentDescription: "",
+      InherentName: "",
+      skillId: 0,
+      updatedAt: "",
+      userId: userId,
+    },
+    skillPoint: {
+      userId: userId,
+      FR: null,
+      BK: null,
+      DB: null,
+      SBR: null,
+      AR: null,
+      TS: null,
+      COM: null,
+    },
+    abilities: [],
   });
-  console.log(skill);
+
   // 初回のデータがない場合挿入
-  let defaultSkillPoint = {
+  let defaultSkillPoint: SkillPoint  = {
     userId: userId,
     FR: null,
     BK: null,
@@ -51,7 +68,7 @@ const skillEdit = () => {
     COM: null,
   };
 
-  let defaultAbilities = [
+  let defaultAbilities: Ability[] = [
     { skillList: '予知能力', skillSelection: false, tagColor: 1 },
     { skillList: 'テックリード', skillSelection: false, tagColor: 2 },
     { skillList: 'vim職人', skillSelection: false, tagColor: 2 },
@@ -65,7 +82,7 @@ const skillEdit = () => {
   ];
 
   useEffect(() => {
-    setSkills((p: any) => ({
+    setSkills((p: SkillsData) => ({
       ...p,
       skill: skill,
       skillPoint: skillPoint,
@@ -75,7 +92,7 @@ const skillEdit = () => {
       typeof skillPoint == 'undefined' ||
       typeof specialAbilities == 'undefined'
     ) {
-      setSkills((p: any) => ({
+      setSkills((p: SkillsData) => ({
         ...p,
         skillPoint: defaultSkillPoint,
         abilities: defaultAbilities,
@@ -85,16 +102,16 @@ const skillEdit = () => {
 
 
   // 特有スキル編集
-  const handleChangeInherent = (e: any, formIndex: number) => {
+  const handleChangeInherent = (e:ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, formIndex: number) => {
     if (formIndex === 1) {
-      setSkills((prev: any) => {
+      setSkills((prev: SkillsData) => {
         return {
           ...prev,
           skill: { ...prev.skill, InherentName: e.target.value },
         };
       });
     } else {
-      setSkills((prev: any) => {
+      setSkills((prev: SkillsData) => {
         return {
           ...prev,
           skill: {
@@ -115,7 +132,7 @@ const skillEdit = () => {
       newAbilityValue[index]['skillSelection'] = true;
     }
 
-    setSkills((prev: any) => {
+    setSkills((prev: SkillsData) => {
       return {
         ...prev,
         abilities: newAbilityValue,
@@ -124,7 +141,7 @@ const skillEdit = () => {
   };
 
   // 編集内容の送信
-  const submitHandler = async (e: any) => {
+  const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = {
@@ -139,7 +156,7 @@ const skillEdit = () => {
       COM: skills.skillPoint?.COM,
       abilities: skills.abilities,
     };
-    console.log(formData);
+
     try {
       if (typeof skill === 'undefined') {
         await axios.post(
@@ -234,7 +251,7 @@ const skillEdit = () => {
                 ? skills.skill?.InherentName
                 : ''
             }
-            onChange={(e) => handleChangeInherent(e, 1)}
+            onChange={(e:ChangeEvent<HTMLInputElement>) => handleChangeInherent(e, 1)}
           />
         </div>
         <div className="w-full flex border-2 border-slate-300 shadow-md">
@@ -255,7 +272,7 @@ const skillEdit = () => {
                 ? skills.skill?.InherentDescription
                 : ''
             }
-            onChange={(e) => handleChangeInherent(e, 2)}
+            onChange={(e:ChangeEvent<HTMLTextAreaElement>) => handleChangeInherent(e, 2)}
           ></textarea>
         </div>
       </section>
@@ -312,26 +329,26 @@ const skillEdit = () => {
 export default skillEdit;
 
 // 初回のデータがない場合挿入
-let defaultSkillPoint = {
-  userId: 1,
-  FR: null,
-  BK: null,
-  DB: null,
-  SBR: null,
-  AR: null,
-  TS: null,
-  COM: null,
-};
+// let defaultSkillPoint = {
+//   userId: 1,
+//   FR: null,
+//   BK: null,
+//   DB: null,
+//   SBR: null,
+//   AR: null,
+//   TS: null,
+//   COM: null,
+// };
 
-let defaultAbilities = [
-  { property: '予知能力', value: false, tagColor: 1 },
-  { property: 'テックリード', value: false, tagColor: 2 },
-  { property: 'vim職人', value: false, tagColor: 2 },
-  { property: 'shell芸人', value: false, tagColor: 3 },
-  { property: '超ポジティブ', value: false, tagColor: 3 },
-  { property: '遅刻魔', value: false, tagColor: 1 },
-  { property: '気分屋', value: false, tagColor: 1 },
-  { property: '新人', value: false, tagColor: 2 },
-  { property: 'お喋り野郎', value: false, tagColor: 1 },
-  { property: 'ガヤ', value: false, tagColor: 3 },
-];
+// let defaultAbilities = [
+//   { property: '予知能力', value: false, tagColor: 1 },
+//   { property: 'テックリード', value: false, tagColor: 2 },
+//   { property: 'vim職人', value: false, tagColor: 2 },
+//   { property: 'shell芸人', value: false, tagColor: 3 },
+//   { property: '超ポジティブ', value: false, tagColor: 3 },
+//   { property: '遅刻魔', value: false, tagColor: 1 },
+//   { property: '気分屋', value: false, tagColor: 1 },
+//   { property: '新人', value: false, tagColor: 2 },
+//   { property: 'お喋り野郎', value: false, tagColor: 1 },
+//   { property: 'ガヤ', value: false, tagColor: 3 },
+// ];

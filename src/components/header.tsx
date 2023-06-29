@@ -3,12 +3,8 @@ import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 
 const Header = () => {
-  const [cookies, setCookie, removeCookie] = useCookies([
-    'userId',
-    'affiliation',
-    'adminId',
-  ]);
-
+  const [cookies, setCookie, removeCookie] = useCookies(['userId','affiliation','adminId']);
+  
   const handleLogout = () => {
     if (cookies.userId) {
       removeCookie('userId');

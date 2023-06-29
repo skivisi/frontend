@@ -9,60 +9,44 @@ import Cookies from 'js-cookie';
 
 // 検索結果(営業)
 
+type Query = {
+  foundUser: string;
+};
+
 export const getServerSideProps: GetServerSideProps = async (
   context
 ) => {
   const { query, req } = context;
-  const cookies = req.cookies;
-  // const affiliation = cookies.affiliation || null;
-  // const adminId = cookies.adminId || null
-  // console.log(affiliation)
-  // console.log(adminId)
-  const getCookie = (Name: any) => {
-    return Cookies.get(Name);
-  };
-  // const affiliation1 = getCookie('affiliation')
-  // const adminId1 = getCookie('adminId')
-  // const affiliation = String(affiliation1)
-  // const adminId = Number(adminId1) 
-  // console.log(affiliation)
-  // console.log(adminId)
   
   return {
     props: {
       query,
-      // affiliation,
-      // adminId
     },
   };
 };
 
 const SearchSales = ({
   query,
-  // affiliation,
-  // adminId,
 }: {
-  query: any;
-  // affiliation: User;
-  // adminId: any
+  query: Query;
 }) => {
   const [users, setUsers] = useState(JSON.parse(query.foundUser));
   const [businessSituation, setBusinessSituation] = useState('');
 
-  const getCookie = (Name: any) => {
+  const getCookie = (Name: string) => {
     return Cookies.get(Name);
   };
-  const affiliation1 = getCookie('affiliation')
-  const adminId1 = getCookie('adminId')
-  const affiliation = String(affiliation1)
-  const adminId = Number(adminId1) 
+  const affiliationCookie = getCookie('affiliation')
+  const adminIdCookie = getCookie('adminId')
+  const affiliation = affiliationCookie !== undefined ? affiliationCookie : null;
+  const adminId = Number(adminIdCookie) 
   console.log(affiliation)
   console.log(adminId)
 
-  if (!affiliation) {
-    window.location.reload();
-    return <div>Loading...</div>;
-  }
+  // if (!affiliation) {
+  //   window.location.reload();
+  //   return <div>Loading...</div>;
+  // }
 
   const handleChange = async (user: User) => {
     try {
@@ -123,7 +107,7 @@ const SearchSales = ({
               </div>
             </div>
 
-            {affiliation ? (
+            {affiliation !== null ? (
               <div>
                 {users.map((user: User, index: number) => (
                   <a

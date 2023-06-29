@@ -12,6 +12,13 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import RequestButton from './components/RequestButton';
+import { DefaultUser } from '../../../types/t';
+import { InputData } from '../../../types/t';
+import { Portfolio } from '../../../types/t';
+import { SellingPoint } from '../../../types/t';
+import { Qualification } from '../../../types/t';
+import { PreviousWork } from '../../../types/t';
+import { DevelopmentExperience } from '../../../types/t';
 
 function handleBlur() {
   // ここでバリデーションチェックしたらサブミット前にクライアントに入力の誤りわかるからいいよね
@@ -23,28 +30,43 @@ function Home() {
   const autocomplete = autoComplete();
 
   // 既存データ
-  const [defaultData, setDefaultData] = useState<any>({
-    spec: {},
+  const [defaultData, setDefaultData] = useState<DefaultUser>({
+    spec: {
+      github: '',
+      offHours: ''
+    },
     portfolios: [],
-    skillSummaries: [],
+    skillSummaries: {
+      cloud: [],
+      developmentDomain: [],
+      environment: [],
+      framework: [],
+      library: [],
+      programmingLanguage: [],
+      skillSummaryId: null,
+      specId: null,
+      tool: [],
+    },
     sellingPoints: [],
     qualifications: [],
     previousWorks: [],
     developmentExperiences: [],
   });
-  // console.log(userData.user.userId);
+  console.log(defaultData);
   // console.log(defaultData.skillSummaries);
 
   // アップロード画像格納
-  const [uploadFiles, setUploadFiles] = useState<any>([]);
-  // console.log(uploadFiles);
+  const [uploadFiles, setUploadFiles] = useState<InputData>([]);
+
+  // リクエストコメント
+  const [requestComment, setRequestComment] = useState<string>("");
 
   useEffect(() => {
-    setDefaultData((p: any) => ({
+    setDefaultData((p: DefaultUser) => ({
       ...p,
       spec: {
-        github: userData.spec.github,
-        offHours: userData.spec.offHours,
+        github: userData?.spec?.github,
+        offHours: userData?.spec?.offHours,
       },
       portfolios: userData.portfolio,
       skillSummaries: userData.skillSummaries,
@@ -55,7 +77,7 @@ function Home() {
     }));
     if (userData.developmentExperience) {
       for (let i = 0; i < defaultData?.qualifications?.length; i++) {
-        setUploadFiles((prevFiles: any) => [...prevFiles, null]);
+        setUploadFiles((prevFiles: InputData) => [...prevFiles, null]);
       }
     }
   }, [
@@ -66,14 +88,14 @@ function Home() {
     userData.qualification,
     userData.sellingPoint,
     userData.skillSummaries,
-    userData.spec.github,
-    userData.spec.offHours,
+    userData.spec?.github,
+    userData.spec?.offHours,
   ]);
 
   // qualification日付の形式変換
-  let tentative: any[] = [];
+  let tentative: Qualification[] = [];
   for (let i = 0; i < defaultData?.qualifications?.length; i++) {
-    const date = defaultData.qualifications[i].acquisitionDate;
+    const date: any = defaultData.qualifications[i].acquisitionDate;
     const yearAndMonth = date.split('年'); // ["2022", "10月"]
     const year = yearAndMonth[0]; // "2022"
     const month = yearAndMonth[1].replace('月', ''); // "10"
@@ -87,12 +109,12 @@ function Home() {
     detail: string,
     setIndex: number
   ) => {
-    // ~の追加がないフォーム
+    // ~の追加がないフォーム    
     if (setIndex == 999) {
-      setDefaultData((prev: any) => {
+      setDefaultData((prev: DefaultUser) => {
         return {
           ...prev,
-          [category]: { ...prev[category], [detail]: e.target.value },
+          [category]: { ...prev[category as keyof DefaultUser], [detail]: e.target.value },
         };
       });
       // qualification日付データの入力
@@ -113,7 +135,7 @@ function Home() {
     } else if (detail === 'img') {
       const newFile = recreateFiles(e);
 
-      setUploadFiles((prevFiles: any) => {
+      setUploadFiles((prevFiles: InputData) => {
         const newFiles = [...prevFiles];
         newFiles[setIndex] = newFile;
         return newFiles;
@@ -148,7 +170,7 @@ function Home() {
 
   // 新規追加データ  =======================================================================
   // ポートフォリオ
-  const [portfolios, setPortfolios] = useState<any>([]);
+  const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
   // 増やすボタンの関数
   const handleAddPortfoliosForm = () => {
     setPortfolios([...portfolios, { heading: '', url: '' }]);
@@ -176,7 +198,7 @@ function Home() {
   };
 
   // アピールポイント
-  const [selling, setSelling] = useState<any>([]);
+  const [selling, setSelling] = useState<SellingPoint[]>([]);
   // 増やすボタンの関数
   const handleAddSellingForm = () => {
     setSelling([...selling, { title: '', content: '' }]);
@@ -204,8 +226,8 @@ function Home() {
   };
 
   // 資格
-  const [qualifications, setQualifications] = useState<any>([]);
-  const [qls, setQls] = useState<any>([]);
+  const [qualifications, setQualifications] = useState<Qualification[]>([]);
+  const [qls, setQls] = useState<Qualification[]>([]);
   // 増やすボタンの関数
   const handleAddQualificationsForm = () => {
     setQualifications([
@@ -247,7 +269,7 @@ function Home() {
   };
 
   // 前職
-  const [previousWorks, setPreviousWorks] = useState<any>([]);
+  const [previousWorks, setPreviousWorks] = useState<PreviousWork[]>([]);
   // 増やすボタンの関数
   const handleAddPreviousWorksForm = () => {
     setPreviousWorks([
@@ -281,7 +303,7 @@ function Home() {
 
   // 開発経験
   const [developmentExperiences, setDevelopmentExperiences] =
-    useState<any>([]);
+    useState<DevelopmentExperience[]>([]);
   // 増やすボタンの関数
   const handleAddDevelopmentExperiencesForm = () => {
     setDevelopmentExperiences([
@@ -296,14 +318,14 @@ function Home() {
         projectName: '',
         jobDuties: '',
         img: '',
-        environments: '',
-        programmingLanguages: '',
-        frameworks: '',
-        tools: '',
+        environments: [],
+        programmingLanguages: [],
+        frameworks: [],
+        tools: [],
       },
     ]);
     // 画像ファイルファイル
-    setUploadFiles((prevFiles: any) => [...prevFiles, {}]);
+    setUploadFiles((prevFiles: InputData) => [...prevFiles, {}]);
   };
   // 削除
   const handleRemoveDevelopmentExperiencesFormSet = (
@@ -363,7 +385,7 @@ function Home() {
 
       const defaultDevNumber = userData.developmentExperience.length;
       const trueIndex = setIndex + defaultDevNumber;
-      setUploadFiles((prevFiles: any) => {
+      setUploadFiles((prevFiles: InputData) => {
         const newFiles = [...prevFiles];
         newFiles[trueIndex] = newFile;
         return newFiles;
@@ -1030,7 +1052,7 @@ function Home() {
           <textarea
             name=""
             id=""
-            className={`${styles.focus} border-2 border-transparent border-slate-300 p-2 w-full`}
+            className={`${styles.focus} border-2 border-slate-300 shadow-md p-2 w-full`}
             rows={8}
             value={
               defaultData?.spec.offHours
@@ -1972,8 +1994,8 @@ function Home() {
               id=""
               className={`${styles.focus} border-2 border-transparent p-2 w-3/4`}
               rows={8}
-              // value={}
-              // onChange={(e) =>}
+              value={requestComment}
+              onChange={(e) => setRequestComment(e.target.value)}
             ></textarea>
           </div>
         </div>
@@ -1989,6 +2011,7 @@ function Home() {
           previousWorks={previousWorks}
           developmentExperiences={developmentExperiences}
           uploadFiles={uploadFiles}
+          requestComment={requestComment}
         />
 
         {/* <div className="text-center">
