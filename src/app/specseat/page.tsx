@@ -12,13 +12,13 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import RequestButton from './components/RequestButton';
-import { DefaultUser } from '../../../types/t';
-import { InputData } from '../../../types/t';
-import { Portfolio } from '../../../types/t';
-import { SellingPoint } from '../../../types/t';
-import { Qualification } from '../../../types/t';
-import { PreviousWork } from '../../../types/t';
-import { DevelopmentExperience } from '../../../types/t';
+import { DefaultUser } from '../types/t';
+import { InputData } from '../types/t';
+import { Portfolio } from '../types/t';
+import { SellingPoint } from '../types/t';
+import { Qualification } from '../types/t';
+import { PreviousWork } from '../types/t';
+import { DevelopmentExperience } from '../types/t';
 
 function handleBlur() {
   // ここでバリデーションチェックしたらサブミット前にクライアントに入力の誤りわかるからいいよね
