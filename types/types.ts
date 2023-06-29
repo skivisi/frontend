@@ -41,7 +41,7 @@ type SkillData = {
   category: number;
   skill: string;
 };
-//skilledit/page.tsxで使用
+//skilledit/page.tsx,mypage/Skillview.tsxで使用
 type Skill = {
   InherentDescription: string;
   InherentName: string;
@@ -97,6 +97,125 @@ type autoCalibrations = {
 };
 //autoComplete.tsxで使用
 type autoCalibrationArray = autoCalibration[];
+//mypage/Skillview.tsxで使用
+type DevelopmentExperience = {
+  specId: number;
+  startYear: string;
+  startDate: string;
+  duration: string;
+  assignedTask: string;
+  teamSize: string;
+  totalProjectHeadcount: string;
+  projectName: string;
+  jobDuties: string;
+  img: string;
+  environments: string[];
+  programmingLanguages: string[];
+  frameworks: string[];
+  tools: string[];
+};
+//mypage/Skillview.tsxで使用
+type Portfolio = {
+  portfolioId: number;
+  specId: number;
+  heading: string;
+  url: string;
+};
+//mypage/Skillview.tsxで使用
+type PreviousWork = {
+  previousWorkId: number;
+  specId: number;
+  industry: string;
+  occupation: string;
+  JobDuties: string;
+};
+//mypage/Skillview.tsxで使用
+type Qualification = {
+  qualificationId: number;
+  specId: number;
+  credential: string;
+  acquisitionDate: string;
+};
+//mypage/Skillview.tsxで使用
+type SellingPoint = {
+  content: string;
+  sellingPointId: number;
+  specId: number;
+  title: string;
+};
+//mypage/Skillview.tsxで使用
+type SkillPoints = {
+  AR: number;
+  BK: number;
+  COM: number;
+  DB: number;
+  FR: number;
+  SBR: number;
+  TS: number;
+  skillPointId: number;
+  userId: number;
+};
+//mypage/Skillview.tsxで使用
+type SkillSummaries = {
+  environment: string[];
+  programmingLanguage: string[];
+  framework: string[];
+  library: string[];
+  cloud: string[];
+  tool: string[];
+  developmentDomain: string[];
+};
+//mypage/Skillview.tsxで使用
+type Spec = {
+  createdAt: string;
+  github: string;
+  offHours: string;
+  searchs: boolean;
+  specId: number;
+  userId: number;
+};
+//mypage/Skillview.tsxで使用
+type SpecialAbility = {
+  spaecialAbilityId: number;
+  userId: number;
+  skillList: string;
+  skillSelection: boolean;
+  tagColor: number;
+};
+//mypage/Skillview.tsxで使用
+type otherUser = {
+  userId: number;
+  affiliation: string;
+  businessSituation: string;
+  userName: string;
+  employeeNumber: number;
+};
+//mypage/Skillview.tsxで使用
+type UserData = {
+  developmentExperience: DevelopmentExperience[];
+  portfolio: Portfolio[];
+  previousWork: PreviousWork[];
+  qualification: Qualification[];
+  sellingPoint: SellingPoint[];
+  skill: Skill;
+  skillPoint: SkillPoints;
+  skillSummaries: SkillSummaries;
+  spec: Spec;
+  specId: number;
+  specialAbility: SpecialAbility[];
+  user: otherUser;
+  userId: number;
+};
+
+type transformedObject = {
+  コミュ力?: string;
+  サーバーレス?: string;
+  テスト?: string;
+  データベース?: string;
+  バック?: string;
+  フロントエンド?: string;
+  設計?: string;
+};
 
 export type { User };
 export type { Admin };
@@ -109,3 +228,12 @@ export type { SkillsData };
 export type { autoCalibration };
 export type { autoCalibrations };
 export type { autoCalibrationArray };
+export type { UserData };
+export type { Portfolio };
+export type { SkillSummaries };
+export type { SellingPoint };
+export type { Qualification };
+export type { PreviousWork };
+export type { DevelopmentExperience };
+export type {  transformedObject };
+export type { SkillPoints };

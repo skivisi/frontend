@@ -1,8 +1,10 @@
 import styles from './style.module.css';
 import { Chart } from './Chart';
 import { Suspense } from 'react';
+import { UserData,transformedObject } from '../../../types/types';
 
-const skillview = ({ userData }: { userData: any }) => {
+const skillview = ({ userData }: { userData: UserData }) => {
+
   const skillScore = {
     フロントエンド: userData.skillPoint?.FR,
     バック: userData.skillPoint?.BK,
@@ -34,10 +36,11 @@ const skillview = ({ userData }: { userData: any }) => {
     }
   };
 
-  const transformedObject: any = {};
+  const transformedObject: transformedObject = {};
+
   for (const [name, value] of Object.entries(skillScore)) {
     const rank = convertValueToRank(value);
-    transformedObject[name] = rank;
+    transformedObject[name as keyof transformedObject] = rank;
   }
 
   const unselected =
@@ -92,7 +95,7 @@ const skillview = ({ userData }: { userData: any }) => {
 
           <section className="flex justify-center mt-10">
             {Object.entries(transformedObject).map(
-              ([key, value]: any) => (
+              ([key, value]:[string,string]) => (
                 <div
                   key={key}
                   className=" text-center bg-sky-50 p-2 rounded-t-xl border-2 shadow-md m-1"
