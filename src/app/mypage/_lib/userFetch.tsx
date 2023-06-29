@@ -5,6 +5,7 @@ import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+import { UserObject } from '../../types/t';
 
 export const userFetch = (isTrue: boolean, argId: number) => {
   // console.log(process.env.API_SECRET_URL);
@@ -16,24 +17,64 @@ export const userFetch = (isTrue: boolean, argId: number) => {
   let userIds = Number(cookie);
   console.log(userIds);
   const [cookies, setCookie, removeCookie] = useCookies(['userId']);
-  const [userData, setUserData] = useState<any>({
-    user: '',
-    skill: '',
-    skillPoint: '',
-    specialAbility: '',
-    spec: '',
-    portfolio: '',
-    sellingPoint: '',
-    qualification: '',
-    previousWork: '',
-    developmentExperience: '',
-    techResult: '',
+  const [userData, setUserData] = useState<UserObject>({
+    user: {
+      affiliation: '',
+      businessSituation: '',
+      employeeNumber: 0,
+      userId: 0,
+      userName: '',
+    },
+    skill: {
+      InherentDescription: '',
+      InherentName: '',
+      skillId: 0,
+      updatedAt: '',
+      userId: 0,
+    },
+    skillPoint: {
+      AR: 0,
+      BK: 0,
+      COM: 0,
+      DB: 0,
+      FR: 0,
+      SBR: 0,
+      TS: 0,
+      skillPointId: 0,
+      userId: 0,
+    },
+    specialAbility: [],
+    spec: {
+      createdAt: '',
+      github: '',
+      offHours: '',
+      searchs: false,
+      specId: 0,
+      userId: 0,
+    },
+    portfolio: [],
+    sellingPoint: [],
+    qualification: [],
+    previousWork: [],
+    developmentExperience: [],
+    skillSummaries: {
+      cloud: [],
+      developmentDomain: [],
+      environment: [],
+      framework: [],
+      library: [],
+      programmingLanguage: [],
+      skillSummaryId: 0,
+      specId: 0,
+      tool: [],
+    },
+    userId: 0,
   });
 
   useEffect(() => {
     const fetchId = async () => {
       const getUserData = await axios.get(
-        `http://localhost:8000/api/users?userId=${userIds}`
+        `${process.env.NEXT_PUBLIC_API_URL}/users?userId=${cookies.userId}`
       );
       const {
         createdAt,
@@ -52,7 +93,7 @@ export const userFetch = (isTrue: boolean, argId: number) => {
         userName,
       } = getUserData.data;
 
-       setUserData((p: any) => ({
+      setUserData((p: any) => ({
         ...p,
         user: {
           userId: userId,
@@ -66,36 +107,36 @@ export const userFetch = (isTrue: boolean, argId: number) => {
         skillPoint: skillPoints[0],
         specialAbility: specialAbilities,
         spec: specs[0],
-    }));
+      }));
 
       // 最新スペックシートの取得
-     if(specs.length > 0){
-      const getSpecIds = await axios.get(
-        `http://localhost:8000/api/spec/get/${
-          isTrue ? argId : userIds
-        }`
-      );
-      const {
-        specId,
-        developmentExperiences,
-        portfolios,
-        previousWorks,
-        qualifications,
-        sellingPoints,
-        skillSummaries,
-      } = getSpecIds.data;
+      if (specs.length > 0) {
+        const getSpecIds = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/spec/get/${
+            isTrue ? argId : cookies.userId
+          }`
+        );
+        const {
+          specId,
+          developmentExperiences,
+          portfolios,
+          previousWorks,
+          qualifications,
+          sellingPoints,
+          skillSummaries,
+        } = getSpecIds.data;
 
-      setUserData((p: any) => ({
-        ...p,
-        specId:specId,
-        portfolio: portfolios,
-        sellingPoint: sellingPoints,
-        qualification: qualifications,
-        previousWork: previousWorks,
-        developmentExperience: developmentExperiences,
-        skillSummaries: skillSummaries[0],
-    }));
-    }
+        setUserData((p: any) => ({
+          ...p,
+          specId: specId,
+          portfolio: portfolios,
+          sellingPoint: sellingPoints,
+          qualification: qualifications,
+          previousWork: previousWorks,
+          developmentExperience: developmentExperiences,
+          skillSummaries: skillSummaries[0],
+        }));
+      }
     };
     fetchId();
   }, [argId, isTrue]);

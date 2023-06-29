@@ -12,7 +12,12 @@ import styles from './style.module.css';
 import { userFetch } from '../mypage/_lib/userFetch';
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
-import { Skill,SkillPoint,Ability,SkillsData } from '../../../types/types';
+import {
+  Skill,
+  SkillPoint,
+  Ability,
+  SkillsData,
+} from '../../../types/types';
 
 // スペシャルスキルカラーバリエーション
 const unselected =
@@ -24,10 +29,8 @@ const selected_2 =
 const selected_3 =
   'w-32 text-center m-1 bg-green-300 border-4 border-green-400 rounded-xl p-1 font-bold text-green-800';
 
-
 const skillEdit = () => {
-
-  const userData = userFetch(false,0);
+  const userData = userFetch(false, 0);
 
   const skill = userData.skill;
   const skillPoint = userData.skillPoint;
@@ -36,13 +39,12 @@ const skillEdit = () => {
   console.log(skillPoint);
   const userId = userData.userId;
 
-
   const [skills, setSkills] = useState<SkillsData>({
     skill: {
-      InherentDescription: "",
-      InherentName: "",
+      InherentDescription: '',
+      InherentName: '',
       skillId: 0,
-      updatedAt: "",
+      updatedAt: '',
       userId: userId,
     },
     skillPoint: {
@@ -57,9 +59,10 @@ const skillEdit = () => {
     },
     abilities: [],
   });
+  console.log(skill);
 
   // 初回のデータがない場合挿入
-  let defaultSkillPoint: SkillPoint  = {
+  let defaultSkillPoint: SkillPoint = {
     userId: userId,
     FR: null,
     BK: null,
@@ -92,8 +95,9 @@ const skillEdit = () => {
     }));
     if (
       typeof skillPoint == 'undefined' ||
-      typeof specialAbilities == 'undefined'
+      specialAbilities.length == 0
     ) {
+      console.log(2222);
       setSkills((p: SkillsData) => ({
         ...p,
         skillPoint: defaultSkillPoint,
@@ -102,9 +106,13 @@ const skillEdit = () => {
     }
   }, [skill, skillPoint, specialAbilities]);
 
-
   // 特有スキル編集
-  const handleChangeInherent = (e:ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, formIndex: number) => {
+  const handleChangeInherent = (
+    e:
+      | ChangeEvent<HTMLInputElement>
+      | ChangeEvent<HTMLTextAreaElement>,
+    formIndex: number
+  ) => {
     if (formIndex === 1) {
       setSkills((prev: SkillsData) => {
         return {
@@ -160,14 +168,14 @@ const skillEdit = () => {
     };
 
     try {
-      if (typeof skill === 'undefined') {
+      if (typeof skill) {
         await axios.post(
-          `http://localhost:8000/api/skill/postSkillData/${userId}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/skill/postSkillData/${userId}`,
           formData
         );
       } else {
         await axios.put(
-          `http://localhost:8000/api/skill/update/${userId}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/skill/update/${userId}`,
           formData
         );
       }
@@ -253,7 +261,9 @@ const skillEdit = () => {
                 ? skills.skill?.InherentName
                 : ''
             }
-            onChange={(e:ChangeEvent<HTMLInputElement>) => handleChangeInherent(e, 1)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              handleChangeInherent(e, 1)
+            }
           />
         </div>
         <div className="w-full flex border-2 border-slate-300 shadow-md">
@@ -274,7 +284,9 @@ const skillEdit = () => {
                 ? skills.skill?.InherentDescription
                 : ''
             }
-            onChange={(e:ChangeEvent<HTMLTextAreaElement>) => handleChangeInherent(e, 2)}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+              handleChangeInherent(e, 2)
+            }
           ></textarea>
         </div>
       </section>

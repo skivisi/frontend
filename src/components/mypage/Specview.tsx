@@ -11,10 +11,10 @@ const specview = ({ userData }: { userData: UserData }) => {
 
   return (
     <>
-      {userData ? (
+      {userData.developmentExperience.length > 0 ? (
         <>
           <div>
-            <div className="w-full flex border-2 border-slate-300 mt-2 h-10 shadow-md">
+            <div className="w-full flex border-2 border-slate-300 mt-2 shadow-md">
               <div className="bg-slate-200 block w-1/4 p-1">
                 スタッフID
               </div>
@@ -51,7 +51,7 @@ const specview = ({ userData }: { userData: UserData }) => {
             <h3 className="mt-10 text-xl font-bold">スキル要約</h3>
 
             <div className="mt-4">
-              <div className="w-full flex border-2 border-slate-300 h-10 shadow-md">
+              <div className="w-full flex border-2 border-slate-300 shadow-md">
                 <div className="bg-slate-200 block w-1/4 p-1">
                   動作環境（OS）
                 </div>
@@ -65,7 +65,7 @@ const specview = ({ userData }: { userData: UserData }) => {
                   )}
                 </div>
               </div>
-              <div className="w-full flex border-2 border-slate-300 h-10 shadow-md">
+              <div className="w-full flex border-2 border-slate-300 shadow-md">
                 <div className="bg-slate-200 block w-1/4 p-1">
                   言語
                 </div>
@@ -79,7 +79,7 @@ const specview = ({ userData }: { userData: UserData }) => {
                   )}
                 </div>
               </div>
-              <div className="w-full flex border-2 border-slate-300 h-10 shadow-md">
+              <div className="w-full flex border-2 border-slate-300 shadow-md">
                 <div className="bg-slate-200 block w-1/4 p-1">
                   フレームワーク
                 </div>
@@ -93,7 +93,7 @@ const specview = ({ userData }: { userData: UserData }) => {
                   )}
                 </div>
               </div>
-              <div className="w-full flex border-2 border-slate-300 h-10 shadow-md">
+              <div className="w-full flex border-2 border-slate-300 shadow-md">
                 <div className="bg-slate-200 block w-1/4 p-1">
                   ライブラリ
                 </div>
@@ -107,7 +107,7 @@ const specview = ({ userData }: { userData: UserData }) => {
                   )}
                 </div>
               </div>
-              <div className="w-full flex border-2 border-slate-300 h-10 shadow-md">
+              <div className="w-full flex border-2 border-slate-300 shadow-md">
                 <div className="bg-slate-200 block w-1/4 p-1">
                   クラウド
                 </div>
@@ -121,7 +121,7 @@ const specview = ({ userData }: { userData: UserData }) => {
                   )}
                 </div>
               </div>
-              <div className="w-full flex border-2 border-slate-300 h-10 shadow-md">
+              <div className="w-full flex border-2 border-slate-300 shadow-md">
                 <div className="bg-slate-200 block w-1/4 p-1">
                   ツール・その他
                 </div>
@@ -135,7 +135,7 @@ const specview = ({ userData }: { userData: UserData }) => {
                   )}
                 </div>
               </div>
-              <div className="w-full flex border-2 border-slate-300 h-10 shadow-md">
+              <div className="w-full flex border-2 border-slate-300 shadow-md">
                 <div className="bg-slate-200 block w-1/4 p-1">
                   担当開発工程
                 </div>
@@ -189,7 +189,7 @@ const specview = ({ userData }: { userData: UserData }) => {
             </h3>
             <div className="flex mt-2">
               <div className="block w-full p-2 bg-white border-2 border-slate-300 shadow-md">
-                {userData.spec.offHours.split('\n')}
+                {userData?.spec?.offHours.split('\n')}
               </div>
             </div>
           </div>
@@ -203,7 +203,7 @@ const specview = ({ userData }: { userData: UserData }) => {
               {/* 繰り返し処理入れる */}
               {userData.qualification.map((i: Qualification) => (
                 <div className=" w-full" key={i.specId}>
-                  <div className="flex border-2 border-slate-300 mt-2 h-10 shadow-md">
+                  <div className="flex border-2 border-slate-300 mt-2 shadow-md">
                     <div className="bg-slate-200 block w-1/4 p-1">
                       取得年月
                     </div>
@@ -212,7 +212,7 @@ const specview = ({ userData }: { userData: UserData }) => {
                     </div>
                   </div>
 
-                  <div className=" flex border-2 border-slate-300 h-10 shadow-md">
+                  <div className=" flex border-2 border-slate-300 shadow-md">
                     <div className="bg-slate-200 block w-1/4 p-1">
                       資格
                     </div>
@@ -233,7 +233,7 @@ const specview = ({ userData }: { userData: UserData }) => {
             {userData.previousWork.map((i: PreviousWork, index: number) => (
               <div className=" flex mt-2" key={i.specId}>
                 <div>
-                  <div className="w-full flex border-2 border-slate-300 h-10 shadow-md">
+                  <div className="w-full flex border-2 border-slate-300 shadow-md">
                     <div className="bg-slate-200 block w-1/4 p-1">
                       業界
                     </div>
@@ -241,7 +241,7 @@ const specview = ({ userData }: { userData: UserData }) => {
                       {i.industry}
                     </div>
                   </div>
-                  <div className="w-full flex border-2 border-slate-300 h-10 shadow-md">
+                  <div className="w-full flex border-2 border-slate-300 shadow-md">
                     <div className="bg-slate-200 block w-1/4 p-1">
                       業種
                     </div>
@@ -275,7 +275,7 @@ const specview = ({ userData }: { userData: UserData }) => {
                 <div className="" key={i.specId}>
                   <div className="flex">
                     <div className=" w-full">
-                      <div className="flex border-2 border-slate-300 mt-2 h-10 shadow-md">
+                      <div className="flex border-2 border-slate-300 mt-2 shadow-md">
                         <div className="bg-slate-200 block w-1/4 p-1">
                           開始年月
                         </div>
@@ -284,7 +284,7 @@ const specview = ({ userData }: { userData: UserData }) => {
                         </div>
                       </div>
 
-                      <div className=" flex border-2 border-slate-300 h-10 shadow-md">
+                      <div className=" flex border-2 border-slate-300 shadow-md">
                         <div className="bg-slate-200 block w-1/4 p-1">
                           担当役割
                         </div>
@@ -293,7 +293,7 @@ const specview = ({ userData }: { userData: UserData }) => {
                         </div>
                       </div>
 
-                      <div className=" flex border-2 border-slate-300 h-10 shadow-md">
+                      <div className=" flex border-2 border-slate-300 shadow-md">
                         <div className="bg-slate-200 block w-1/4 p-1">
                           チーム人数
                         </div>
@@ -302,7 +302,7 @@ const specview = ({ userData }: { userData: UserData }) => {
                         </div>
                       </div>
 
-                      <div className=" flex border-2 border-slate-300 h-10 shadow-md">
+                      <div className=" flex border-2 border-slate-300 shadow-md">
                         <div className="bg-slate-200 block w-1/4 p-1">
                           PJ全体人数
                         </div>
@@ -311,7 +311,7 @@ const specview = ({ userData }: { userData: UserData }) => {
                         </div>
                       </div>
 
-                      <div className=" flex border-2 border-slate-300 h-10 shadow-md">
+                      <div className=" flex border-2 border-slate-300 shadow-md">
                         <div className="bg-slate-200 block w-1/4 p-1">
                           プロジェクト名
                         </div>
@@ -320,7 +320,7 @@ const specview = ({ userData }: { userData: UserData }) => {
                         </div>
                       </div>
 
-                      <div className=" flex border-2 border-slate-300 h-10 shadow-md">
+                      <div className=" flex border-2 border-slate-300 shadow-md">
                         <div className="bg-slate-200 block w-1/4 p-1">
                           動作環境
                         </div>
@@ -329,7 +329,7 @@ const specview = ({ userData }: { userData: UserData }) => {
                         </div>
                       </div>
 
-                      <div className=" flex border-2 border-slate-300 h-10 shadow-md">
+                      <div className=" flex border-2 border-slate-300 shadow-md">
                         <div className="bg-slate-200 block w-1/4 p-1">
                           言語
                         </div>
@@ -338,7 +338,7 @@ const specview = ({ userData }: { userData: UserData }) => {
                         </div>
                       </div>
 
-                      <div className=" flex border-2 border-slate-300 h-10 shadow-md">
+                      <div className=" flex border-2 border-slate-300 shadow-md">
                         <div className="bg-slate-200 block w-1/4 p-1">
                           フレームワーク
                         </div>
@@ -347,7 +347,7 @@ const specview = ({ userData }: { userData: UserData }) => {
                         </div>
                       </div>
 
-                      <div className=" flex border-2 border-slate-300 h-10 shadow-md">
+                      <div className=" flex border-2 border-slate-300 shadow-md">
                         <div className="bg-slate-200 block w-1/4 p-1">
                           ツール・その他
                         </div>
@@ -366,7 +366,7 @@ const specview = ({ userData }: { userData: UserData }) => {
                     </div>
                   </div>
 
-                  <div className=" flex border-2 border-slate-300 h-10 shadow-md">
+                  <div className=" flex border-2 border-slate-300 shadow-md">
                     <div className="bg-slate-200 block w-1/4 p-1">
                       業務内容
                     </div>
@@ -381,7 +381,9 @@ const specview = ({ userData }: { userData: UserData }) => {
           {/* developmentExperience */}
         </>
       ) : (
-        <p>no data</p>
+        <div className="flex justify-center items-center h-60 font-bold text-2xl">
+          スペックシートが登録されてないよ！
+        </div>
       )}
     </>
   );
