@@ -47,7 +47,7 @@ type Skill = {
   InherentName: string;
   skillId: number;
   updatedAt: string;
-  userId: number;
+  userId: number | null;
 };
 //skilledit/page.tsxで使用
 type SkillPoint = {

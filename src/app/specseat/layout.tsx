@@ -10,7 +10,7 @@ export default function SpecSeatEditLayout({
 }) {
   return (
     <>
-      <main className={` flex justify-center`}>{children}</main>
+      <main className="flex justify-center">{children}</main>
     </>
   );
 }

@@ -1,14 +1,3 @@
-/**
- * - スペックシートのポスト
- *  - postの形式確認
- * 1, `api/spec/post/:userId`に新しいspecシートをpost
- * 2, postしたスペックシートIdの取得
- * 3, `api/spec/postData/:specId`にスペックシートデータをpost
- * 4, `api/upload/`に画像データpost
- *
- * - 元データ取得・反映（skill編集確認）
- */
-
 /* eslint-disable react/jsx-key */
 'use client';
 
@@ -18,12 +7,18 @@ import { useState, useEffect } from 'react';
 import { userFetch } from '../mypage/_lib/userFetch';
 import { autoComplete } from './_lib/autoComplete';
 import { recreateFiles } from './_lib/recreateFiles';
-
-import axios from 'axios';
-
 import Chip from '@mui/material/Chip';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import RequestButton from './components/RequestButton';
+import { DefaultUser } from '../types/t';
+import { InputData } from '../types/t';
+import { Portfolio } from '../types/t';
+import { SellingPoint } from '../types/t';
+import { Qualification } from '../types/t';
+import { PreviousWork } from '../types/t';
+import { DevelopmentExperience } from '../types/t';
 
 function handleBlur() {
   // ここでバリデーションチェックしたらサブミット前にクライアントに入力の誤りわかるからいいよね
@@ -34,30 +29,44 @@ function Home() {
   const userData = userFetch(false, 0);
   const autocomplete = autoComplete();
 
-
   // 既存データ
-  const [defaultData, setDefaultData] = useState<any>({
-    spec: {},
+  const [defaultData, setDefaultData] = useState<DefaultUser>({
+    spec: {
+      github: '',
+      offHours: ''
+    },
     portfolios: [],
-    skillSummaries: [],
+    skillSummaries: {
+      cloud: [],
+      developmentDomain: [],
+      environment: [],
+      framework: [],
+      library: [],
+      programmingLanguage: [],
+      skillSummaryId: null,
+      specId: null,
+      tool: [],
+    },
     sellingPoints: [],
     qualifications: [],
     previousWorks: [],
     developmentExperiences: [],
   });
-  // console.log(userData.user.userId);
-  console.log(defaultData.skillSummaries);
+  console.log(defaultData);
+  // console.log(defaultData.skillSummaries);
 
   // アップロード画像格納
-  const [uploadFiles, setUploadFiles] = useState<any>([]);
-  // console.log(uploadFiles);
+  const [uploadFiles, setUploadFiles] = useState<InputData>([]);
+
+  // リクエストコメント
+  const [requestComment, setRequestComment] = useState<string>("");
 
   useEffect(() => {
-    setDefaultData((p: any) => ({
+    setDefaultData((p: DefaultUser) => ({
       ...p,
       spec: {
-        github: userData.spec.github,
-        offHours: userData.spec.offHours,
+        github: userData?.spec?.github,
+        offHours: userData?.spec?.offHours,
       },
       portfolios: userData.portfolio,
       skillSummaries: userData.skillSummaries,
@@ -68,7 +77,7 @@ function Home() {
     }));
     if (userData.developmentExperience) {
       for (let i = 0; i < defaultData?.qualifications?.length; i++) {
-        setUploadFiles((prevFiles: any) => [...prevFiles, null]);
+        setUploadFiles((prevFiles: InputData) => [...prevFiles, null]);
       }
     }
   }, [
@@ -84,9 +93,9 @@ function Home() {
   ]);
 
   // qualification日付の形式変換
-  let tentative: any[] = [];
+  let tentative: Qualification[] = [];
   for (let i = 0; i < defaultData?.qualifications?.length; i++) {
-    const date = defaultData.qualifications[i].acquisitionDate;
+    const date: any = defaultData.qualifications[i].acquisitionDate;
     const yearAndMonth = date.split('年'); // ["2022", "10月"]
     const year = yearAndMonth[0]; // "2022"
     const month = yearAndMonth[1].replace('月', ''); // "10"
@@ -100,12 +109,12 @@ function Home() {
     detail: string,
     setIndex: number
   ) => {
-    // ~の追加がないフォーム
+    // ~の追加がないフォーム    
     if (setIndex == 999) {
-      setDefaultData((prev: any) => {
+      setDefaultData((prev: DefaultUser) => {
         return {
           ...prev,
-          [category]: { ...prev[category], [detail]: e.target.value },
+          [category]: { ...prev[category as keyof DefaultUser], [detail]: e.target.value },
         };
       });
       // qualification日付データの入力
@@ -126,7 +135,7 @@ function Home() {
     } else if (detail === 'img') {
       const newFile = recreateFiles(e);
 
-      setUploadFiles((prevFiles: any) => {
+      setUploadFiles((prevFiles: InputData) => {
         const newFiles = [...prevFiles];
         newFiles[setIndex] = newFile;
         return newFiles;
@@ -161,7 +170,7 @@ function Home() {
 
   // 新規追加データ  =======================================================================
   // ポートフォリオ
-  const [portfolios, setPortfolios] = useState<any>([]);
+  const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
   // 増やすボタンの関数
   const handleAddPortfoliosForm = () => {
     setPortfolios([...portfolios, { heading: '', url: '' }]);
@@ -189,7 +198,7 @@ function Home() {
   };
 
   // アピールポイント
-  const [selling, setSelling] = useState<any>([]);
+  const [selling, setSelling] = useState<SellingPoint[]>([]);
   // 増やすボタンの関数
   const handleAddSellingForm = () => {
     setSelling([...selling, { title: '', content: '' }]);
@@ -217,8 +226,8 @@ function Home() {
   };
 
   // 資格
-  const [qualifications, setQualifications] = useState<any>([]);
-  const [qls, setQls] = useState<any>([]);
+  const [qualifications, setQualifications] = useState<Qualification[]>([]);
+  const [qls, setQls] = useState<Qualification[]>([]);
   // 増やすボタンの関数
   const handleAddQualificationsForm = () => {
     setQualifications([
@@ -260,7 +269,7 @@ function Home() {
   };
 
   // 前職
-  const [previousWorks, setPreviousWorks] = useState<any>([]);
+  const [previousWorks, setPreviousWorks] = useState<PreviousWork[]>([]);
   // 増やすボタンの関数
   const handleAddPreviousWorksForm = () => {
     setPreviousWorks([
@@ -294,7 +303,7 @@ function Home() {
 
   // 開発経験
   const [developmentExperiences, setDevelopmentExperiences] =
-    useState<any>([]);
+    useState<DevelopmentExperience[]>([]);
   // 増やすボタンの関数
   const handleAddDevelopmentExperiencesForm = () => {
     setDevelopmentExperiences([
@@ -309,14 +318,14 @@ function Home() {
         projectName: '',
         jobDuties: '',
         img: '',
-        environments: '',
-        programmingLanguages: '',
-        frameworks: '',
-        tools: '',
+        environments: [],
+        programmingLanguages: [],
+        frameworks: [],
+        tools: [],
       },
     ]);
     // 画像ファイルファイル
-    setUploadFiles((prevFiles: any) => [...prevFiles, {}]);
+    setUploadFiles((prevFiles: InputData) => [...prevFiles, {}]);
   };
   // 削除
   const handleRemoveDevelopmentExperiencesFormSet = (
@@ -376,7 +385,7 @@ function Home() {
 
       const defaultDevNumber = userData.developmentExperience.length;
       const trueIndex = setIndex + defaultDevNumber;
-      setUploadFiles((prevFiles: any) => {
+      setUploadFiles((prevFiles: InputData) => {
         const newFiles = [...prevFiles];
         newFiles[trueIndex] = newFile;
         return newFiles;
@@ -402,78 +411,86 @@ function Home() {
   }
 
   // データの送信  ================================================================
-  const submitHandler = async (e: any) => {
-    e.preventDefault();
+  // const submitHandler = async (e: any) => {
+  //   e.preventDefault();
 
-    // 既存と新規合算
-    if (portfolios.length > 0) {
-      defaultData.portfolios = [
-        ...defaultData.portfolios,
-        ...portfolios,
-      ];
-    }
-    const formData = {
-      userId: userData.user.userId,
-      specData: defaultData.spec,
-      specDetail: {
-        portfolios: defaultData.portfolios,
-        skillSummaries: [defaultData.skillSummaries],
-        sellingPoints: defaultData.sellingPoints,
-        qualifications: defaultData.qualifications,
-        previousWorks: defaultData.previousWorks,
-        developmentExperiences: defaultData.developmentExperiences
-      }
-    };
+  //   // 既存と新規合算
+  //   const addRequestContents = {
+  //     portfolios: portfolios,
+  //     sellingPoints: selling,
+  //     qualifications: qls,
+  //     previousWorks: previousWorks,
+  //     developmentExperiences: developmentExperiences,
+  //   };
 
-    try {
-      const response = await axios.post('/specseat/api', formData);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+  //   for (const [key, value] of Object.entries(addRequestContents)) {
+  //     if (value.length > 0) {
+  //       defaultData[key] = [...defaultData[key], ...value];
+  //     }
+  //   }
 
-    // 画像アップロード
-    const files = uploadFiles.filter((i: any) => i !== null);
-    if (files && files.length > 0) {
-      const data = new FormData();
-      for (let i = 0; i < files.length; i++) {
-        if (files[i] === null) {
-          continue;
-        }
-        const file = files[i];
-        const fileName = file.name;
-        data.append('name', fileName);
-        data.append('file', file);
-      }
+  //   const formData = {
+  //     userId: userData.user.userId,
+  //     specData: defaultData.spec,
+  //     specDetail: {
+  //       portfolios: defaultData.portfolios,
+  //       skillSummaries: [defaultData.skillSummaries],
+  //       sellingPoints: defaultData.sellingPoints,
+  //       qualifications: defaultData.qualifications,
+  //       previousWorks: defaultData.previousWorks,
+  //       developmentExperiences: defaultData.developmentExperiences,
+  //     },
+  //   };
 
-      try {
-        const res = await axios.post(
-          'http://localhost:8000/api/upload',
-          data
-        );
-        console.log(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
+  //   try {
+  //     const response = await axios.post('/specseat/api', formData);
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+
+  //   // 画像アップロード
+  //   const files = uploadFiles.filter((i: any) => i !== null);
+  //   if (files && files.length > 0) {
+  //     const data = new FormData();
+  //     for (let i = 0; i < files.length; i++) {
+  //       if (files[i] === null) {
+  //         continue;
+  //       }
+  //       const file = files[i];
+  //       const fileName = file.name;
+  //       data.append('name', fileName);
+  //       data.append('file', file);
+  //     }
+
+  //     try {
+  //       const res = await axios.post(
+  //         'http://localhost:8000/api/upload',
+  //         data
+  //       );
+  //       console.log(res.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  // };
 
   return (
-    <section className=" bg-blue-200 text-sky-900 max-w-4xl p-10 my-10 shadow-xl">
+    <section className="w-full bg-blue-200 text-sky-900 max-w-4xl p-10 shadow-xl my-10 border-4 border-sky-800">
       <h2 className="drop-shadow-white text-3xl font-bold mb-5">
         スペックシート登録
       </h2>
-      <form onSubmit={submitHandler}>
+      <form>
         <div>
           <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
             <label
-              className="bg-slate-200 block w-32 p-1"
+              className="bg-slate-200 block w-1/4 p-1"
               htmlFor="stuff"
             >
               スタッフID
             </label>
             <input
-              className={`${styles.focus} block w-96 p-2`}
+              className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
               id="stuff"
               type="text"
               readOnly
@@ -486,13 +503,13 @@ function Home() {
             </h3>
             <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
               <label
-                className="bg-slate-200 block w-32 p-1"
+                className="bg-slate-200 block w-1/4 p-1"
                 htmlFor="portfolio"
               >
                 github
               </label>
               <input
-                className={`${styles.focus} block w-96 p-2`}
+                className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                 type="text"
                 name=""
                 id="portfolio"
@@ -509,38 +526,40 @@ function Home() {
             </div>
 
             {portfolios.map((formSet: any, setIndex: number) => (
-              <div
-                className="w-full flex flex-row border-2 border-slate-300 shadow-md"
-                key={setIndex}
-              >
+              <div className="mt-6">
                 <button
                   onClick={() =>
                     handleRemovePortfoliosFormSet(setIndex)
                   }
                 >
-                  x
+                  <HighlightOffIcon />
                 </button>
-                <input
-                  className={`${styles.focus} bg-slate-200 block w-32 p-1`}
-                  type="text"
-                  name=""
-                  placeholder="qiita"
-                  value={formSet.heading}
-                  onChange={(e) =>
-                    handleChangePortfolios(e, setIndex, 1)
-                  }
-                />
+                <div
+                  className="w-full flex flex-row border-2 border-slate-300 shadow-md"
+                  key={setIndex}
+                >
+                  <input
+                    className={`${styles.focus} border-2 border-transparent bg-slate-200 block w-1/4 p-1`}
+                    type="text"
+                    name=""
+                    placeholder="qiita"
+                    value={formSet.heading}
+                    onChange={(e) =>
+                      handleChangePortfolios(e, setIndex, 1)
+                    }
+                  />
 
-                <input
-                  className={`${styles.focus} block w-96 p-2`}
-                  type="text"
-                  name=""
-                  placeholder="http://..."
-                  value={formSet.url}
-                  onChange={(e) =>
-                    handleChangePortfolios(e, setIndex, 2)
-                  }
-                />
+                  <input
+                    className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
+                    type="text"
+                    name=""
+                    placeholder="http://..."
+                    value={formSet.url}
+                    onChange={(e) =>
+                      handleChangePortfolios(e, setIndex, 2)
+                    }
+                  />
+                </div>
               </div>
             ))}
 
@@ -548,7 +567,7 @@ function Home() {
               <button
                 onClick={handleAddPortfoliosForm}
                 type="button"
-                className={`${styles.focus} shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 h-10 rounded-xl border-2 border-white border-solid`}
+                className={`${styles.focus} border-2 border-transparent shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 h-10 rounded-xl border-white border-solid`}
               >
                 <span className="text-white font-bold m-4">
                   + ポートフォリオの追加
@@ -562,13 +581,16 @@ function Home() {
         <div>
           <h3 className="mt-10 text-xl font-bold">スキル要約</h3>
           <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
-            <label className="bg-slate-200 block w-32 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               動作環境(OS)
             </label>
 
             {autocomplete.os && (
               <Autocomplete
-                className={`${styles.focus} block w-96 bg-white px-1`}
+                className={`${styles.focus} border-2 border-transparent block w-3/4 bg-white px-1`}
                 multiple
                 id="tags-filled"
                 value={
@@ -610,12 +632,15 @@ function Home() {
           </div>
 
           <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
-            <label className="bg-slate-200 block w-32 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               言語
             </label>
             {autocomplete.lang && (
               <Autocomplete
-                className={`${styles.focus} block w-96 bg-white px-1`}
+                className={`${styles.focus} border-2 border-transparent block w-3/4 bg-white px-1`}
                 multiple
                 id="tags-filled"
                 value={
@@ -656,12 +681,15 @@ function Home() {
             )}
           </div>
           <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
-            <label className="bg-slate-200 block w-32 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               フレームワーク
             </label>
             {autocomplete.framework && (
               <Autocomplete
-                className={`${styles.focus} block w-96 bg-white px-1`}
+                className={`${styles.focus} border-2 border-transparent block w-3/4 bg-white px-1`}
                 multiple
                 id="tags-filled"
                 value={
@@ -702,12 +730,15 @@ function Home() {
             )}
           </div>
           <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
-            <label className="bg-slate-200 block w-32 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               ライブラリ
             </label>
             {autocomplete.library && (
               <Autocomplete
-                className={`${styles.focus} block w-96 bg-white px-1`}
+                className={`${styles.focus} border-2 border-transparent block w-3/4 bg-white px-1`}
                 multiple
                 id="tags-filled"
                 value={
@@ -748,12 +779,15 @@ function Home() {
             )}
           </div>
           <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
-            <label className="bg-slate-200 block w-32 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               クラウド
             </label>
             {autocomplete.cloud && (
               <Autocomplete
-                className={`${styles.focus} block w-96 bg-white px-1`}
+                className={`${styles.focus} border-2 border-transparent block w-3/4 bg-white px-1`}
                 multiple
                 id="tags-filled"
                 value={
@@ -794,12 +828,15 @@ function Home() {
             )}
           </div>
           <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
-            <label className="bg-slate-200 block w-32 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               ツール･その他
             </label>
             {autocomplete.tool && (
               <Autocomplete
-                className={`${styles.focus} block w-96 bg-white px-1`}
+                className={`${styles.focus} border-2 border-transparent block w-3/4 bg-white px-1`}
                 multiple
                 id="tags-filled"
                 value={
@@ -840,12 +877,15 @@ function Home() {
             )}
           </div>
           <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
-            <label className="bg-slate-200 block w-32 p-1" htmlFor="">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
               担当開発工程
             </label>
             {autocomplete.assignedDevelopment && (
               <Autocomplete
-                className={`${styles.focus} block w-96 bg-white px-1`}
+                className={`${styles.focus} border-2 border-transparent block w-3/4 bg-white px-1`}
                 multiple
                 id="tags-filled"
                 value={
@@ -899,13 +939,13 @@ function Home() {
                 <div className="mt-3" key={index}>
                   <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                     <label
-                      className="bg-slate-200 block w-32 p-1"
+                      className="bg-slate-200 block w-1/4 p-1"
                       htmlFor=""
                     >
                       タイトル
                     </label>
                     <input
-                      className={`${styles.focus} block w-96 p-2`}
+                      className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                       type="text"
                       name=""
                       id=""
@@ -922,7 +962,7 @@ function Home() {
                   </div>
                   <div className="flex-row w-full flex border-2 border-slate-300 shadow-md">
                     <label
-                      className="bg-slate-200 block w-40 pt-1 px-2"
+                      className="bg-slate-200 block w-1/4 pt-1 px-2"
                       htmlFor=""
                     >
                       内容
@@ -930,7 +970,7 @@ function Home() {
                     <textarea
                       name=""
                       id=""
-                      className={`${styles.focus} p-2 w-full`}
+                      className={`${styles.focus} border-2 border-transparent p-2 w-3/4`}
                       rows={8}
                       value={point.content ? point.content : ''}
                       onChange={(e) =>
@@ -952,17 +992,17 @@ function Home() {
               <button
                 onClick={() => handleRemoveSellingFormSet(setIndex)}
               >
-                x
+                <HighlightOffIcon />
               </button>
               <div className="w-full flex flex-row border-2 border-slate-300shadow-md">
                 <label
-                  className="bg-slate-200 block w-32 p-1"
+                  className="bg-slate-200 block w-1/4 p-1"
                   htmlFor="appealTitle"
                 >
                   タイトル
                 </label>
                 <input
-                  className={`${styles.focus} block w-96 p-2`}
+                  className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                   type="text"
                   id="appealTitle"
                   value={states.title}
@@ -973,14 +1013,14 @@ function Home() {
               </div>
               <div className="flex-row w-full flex border-2 border-slate-300 shadow-md">
                 <label
-                  className="bg-slate-200 block w-40 pt-1 px-2"
+                  className="bg-slate-200 block w-1/4 pt-1 px-2"
                   htmlFor="appealContent"
                 >
                   内容
                 </label>
                 <textarea
                   id="appealContent"
-                  className={`${styles.focus} p-2 w-full`}
+                  className={`${styles.focus} border-2 border-transparent p-2 w-3/4`}
                   rows={8}
                   value={states.content}
                   onChange={(e) =>
@@ -995,7 +1035,7 @@ function Home() {
             <button
               onClick={handleAddSellingForm}
               type="button"
-              className={`${styles.focus} shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 h-10 rounded-xl border-2 border-white border-solid`}
+              className={`${styles.focus} border-2 border-transparent shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 h-10 rounded-xl border-white border-solid`}
             >
               <span className="text-white font-bold m-4">
                 + アピールポイントの追加
@@ -1012,7 +1052,7 @@ function Home() {
           <textarea
             name=""
             id=""
-            className={`${styles.focus} border-2 border-slate-300 p-2 w-full`}
+            className={`${styles.focus} border-2 border-slate-300 shadow-md p-2 w-full`}
             rows={8}
             value={
               defaultData?.spec.offHours
@@ -1042,7 +1082,7 @@ function Home() {
                     <select
                       name=""
                       id=""
-                      className={`${styles.focus} w-1/4 text-center`}
+                      className={`${styles.focus} border-2 border-transparent w-1/4 text-center`}
                       value={
                         point.acquisitionDate
                           ? decodeYearAndMonth(
@@ -1074,7 +1114,7 @@ function Home() {
                     <select
                       name=""
                       id=""
-                      className={`${styles.focus} w-1/4 text-center`}
+                      className={`${styles.focus} border-2 border-transparent w-1/4 text-center`}
                       value={
                         point.acquisitionDate
                           ? decodeYearAndMonth(
@@ -1108,13 +1148,13 @@ function Home() {
                   </div>
                   <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                     <label
-                      className="bg-slate-200 block w-32 p-1"
+                      className="bg-slate-200 block w-1/4 p-1"
                       htmlFor=""
                     >
                       資格
                     </label>
                     <input
-                      className={`${styles.focus} block w-96 p-2`}
+                      className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                       type="text"
                       value={point.credential ? point.credential : ''}
                       onChange={(e) =>
@@ -1138,7 +1178,7 @@ function Home() {
                   handleRemoveQualificationsFormSet(setIndex)
                 }
               >
-                x
+                <HighlightOffIcon />
               </button>
               <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                 <label
@@ -1150,7 +1190,7 @@ function Home() {
                 <select
                   name=""
                   id=""
-                  className={`${styles.focus} w-1/4 text-center`}
+                  className={`${styles.focus} border-2 border-transparent w-1/4 text-center`}
                   value={states.year}
                   onChange={(e) =>
                     handleChangeQualifications(e, setIndex, 1)
@@ -1168,7 +1208,7 @@ function Home() {
                 <select
                   name=""
                   id=""
-                  className={`${styles.focus} w-1/4 text-center`}
+                  className={`${styles.focus} border-2 border-transparent w-1/4 text-center`}
                   value={states.month}
                   onChange={(e) =>
                     handleChangeQualifications(e, setIndex, 2)
@@ -1180,13 +1220,13 @@ function Home() {
               </div>
               <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                 <label
-                  className="bg-slate-200 block w-32 p-1"
+                  className="bg-slate-200 block w-1/4 p-1"
                   htmlFor=""
                 >
                   資格
                 </label>
                 <input
-                  className={`${styles.focus} block w-96 p-2`}
+                  className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                   type="text"
                   value={states.credential}
                   onChange={(e) =>
@@ -1201,7 +1241,7 @@ function Home() {
             <button
               onClick={handleAddQualificationsForm}
               type="button"
-              className={`${styles.focus} shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 h-10 rounded-xl border-2 border-white border-solid`}
+              className={`${styles.focus} border-2 border-transparent shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 h-10 rounded-xl border-white border-solid`}
             >
               <span className="text-white font-bold m-4">
                 + 資格の追加
@@ -1219,13 +1259,13 @@ function Home() {
                 <div className="mt-3" key={index}>
                   <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                     <label
-                      className="bg-slate-200 block w-32 p-1"
+                      className="bg-slate-200 block w-1/4 p-1"
                       htmlFor=""
                     >
                       業界
                     </label>
                     <input
-                      className={`${styles.focus} block w-96 p-2`}
+                      className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                       type="text"
                       value={point.industry ? point.industry : ''}
                       onChange={(e) =>
@@ -1240,13 +1280,13 @@ function Home() {
                   </div>
                   <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                     <label
-                      className="bg-slate-200 block w-32 p-1"
+                      className="bg-slate-200 block w-1/4 p-1"
                       htmlFor=""
                     >
                       業種
                     </label>
                     <input
-                      className={`${styles.focus} block w-96 p-2`}
+                      className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                       type="text"
                       value={point.occupation ? point.occupation : ''}
                       onChange={(e) =>
@@ -1261,7 +1301,7 @@ function Home() {
                   </div>
                   <div className="flex-row w-full flex border-2 border-slate-300 shadow-md">
                     <label
-                      className="bg-slate-200 block w-32 p-1"
+                      className="bg-slate-200 block w-1/4 p-1"
                       htmlFor=""
                     >
                       業務内容
@@ -1269,7 +1309,7 @@ function Home() {
                     <textarea
                       name=""
                       id=""
-                      className={`${styles.focus} p-2 w-full`}
+                      className={`${styles.focus} border-2 border-transparent p-2 w-3/4`}
                       rows={8}
                       value={point.JobDuties ? point.JobDuties : ''}
                       onChange={(e) =>
@@ -1287,26 +1327,26 @@ function Home() {
             )}
 
           {previousWorks.map(
-            (previousWorkss: any, setIndex: number) => (
+            (previousWork: any, setIndex: number) => (
               <div key={setIndex} className="mt-6">
                 <button
                   onClick={() =>
                     handleRemovePreviousWorksFormSet(setIndex)
                   }
                 >
-                  x
+                  <HighlightOffIcon />
                 </button>
                 <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                   <label
-                    className="bg-slate-200 block w-32 p-1"
+                    className="bg-slate-200 block w-1/4 p-1"
                     htmlFor=""
                   >
                     業界
                   </label>
                   <input
-                    className={`${styles.focus} block w-96 p-2`}
+                    className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                     type="text"
-                    value={previousWorkss.form1}
+                    value={previousWork.form1}
                     onChange={(e) =>
                       handleChangePreviousWorks(e, setIndex, 1)
                     }
@@ -1314,15 +1354,15 @@ function Home() {
                 </div>
                 <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                   <label
-                    className="bg-slate-200 block w-32 p-1"
+                    className="bg-slate-200 block w-1/4 p-1"
                     htmlFor=""
                   >
                     業種
                   </label>
                   <input
-                    className={`${styles.focus} block w-96 p-2`}
+                    className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                     type="text"
-                    value={previousWorkss.form1}
+                    value={previousWork.form1}
                     onChange={(e) =>
                       handleChangePreviousWorks(e, setIndex, 2)
                     }
@@ -1330,7 +1370,7 @@ function Home() {
                 </div>
                 <div className="flex-row w-full flex border-2 border-slate-300 shadow-md">
                   <label
-                    className="bg-slate-200 block w-32 p-1"
+                    className="bg-slate-200 block w-1/4 p-1"
                     htmlFor=""
                   >
                     業務内容
@@ -1338,9 +1378,9 @@ function Home() {
                   <textarea
                     name=""
                     id=""
-                    className={`${styles.focus} p-2 w-full`}
+                    className={`${styles.focus} border-2 border-transparent p-2 w-3/4`}
                     rows={8}
-                    value={previousWorkss.form1}
+                    value={previousWork.form1}
                     onChange={(e) =>
                       handleChangePreviousWorks(e, setIndex, 3)
                     }
@@ -1354,7 +1394,7 @@ function Home() {
             <button
               onClick={handleAddPreviousWorksForm}
               type="button"
-              className={`${styles.focus} shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 h-10 rounded-xl border-2 border-white border-solid`}
+              className={`${styles.focus} border-2 border-transparent shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 h-10 rounded-xl border-white border-solid`}
             >
               <span className="text-white font-bold m-4">
                 + 前職の追加
@@ -1381,7 +1421,7 @@ function Home() {
                     <select
                       name=""
                       id=""
-                      className={`${styles.focus} w-1/4 text-center`}
+                      className={`${styles.focus} border-2 border-transparent w-1/4 text-center`}
                       value={point.startYear ? point.startYear : ''}
                       onChange={(e) =>
                         handleEditDefaultData(
@@ -1405,7 +1445,7 @@ function Home() {
                     <select
                       name=""
                       id=""
-                      className={`${styles.focus} w-1/4 text-center`}
+                      className={`${styles.focus} border-2 border-transparent w-1/4 text-center`}
                       value={point.startDate ? point.startDate : ''}
                       onChange={(e) =>
                         handleEditDefaultData(
@@ -1432,13 +1472,13 @@ function Home() {
                   </div>
                   <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                     <label
-                      className="bg-slate-200 block w-32 p-1"
+                      className="bg-slate-200 block w-1/4 p-1"
                       htmlFor=""
                     >
                       期間
                     </label>
                     <input
-                      className={`${styles.focus} block w-96 p-2`}
+                      className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                       type="text"
                       value={point.duration ? point.duration : ''}
                       onChange={(e) =>
@@ -1453,13 +1493,13 @@ function Home() {
                   </div>
                   <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                     <label
-                      className="bg-slate-200 block w-32 p-1"
+                      className="bg-slate-200 block w-1/4 p-1"
                       htmlFor=""
                     >
                       担当役割
                     </label>
                     <input
-                      className={`${styles.focus} block w-96 p-2`}
+                      className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                       type="text"
                       value={
                         point.assignedTask ? point.assignedTask : ''
@@ -1476,13 +1516,13 @@ function Home() {
                   </div>
                   <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                     <label
-                      className="bg-slate-200 block w-32 p-1"
+                      className="bg-slate-200 block w-1/4 p-1"
                       htmlFor=""
                     >
                       チーム人数
                     </label>
                     <input
-                      className={`${styles.focus} block w-96 p-2`}
+                      className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                       type="text"
                       value={
                         point.assignedTask ? point.assignedTask : ''
@@ -1499,13 +1539,13 @@ function Home() {
                   </div>
                   <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                     <label
-                      className="bg-slate-200 block w-32 p-1"
+                      className="bg-slate-200 block w-1/4 p-1"
                       htmlFor=""
                     >
                       PJ全体人数
                     </label>
                     <input
-                      className={`${styles.focus} block w-96 p-2`}
+                      className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                       type="text"
                       value={point.teamSize ? point.teamSize : ''}
                       onChange={(e) =>
@@ -1520,13 +1560,13 @@ function Home() {
                   </div>
                   <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                     <label
-                      className="bg-slate-200 block w-32 p-1"
+                      className="bg-slate-200 block w-1/4 p-1"
                       htmlFor=""
                     >
                       プロジェクト名
                     </label>
                     <input
-                      className={`${styles.focus} block w-96 p-2`}
+                      className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                       type="text"
                       value={
                         point.projectName ? point.projectName : ''
@@ -1543,55 +1583,55 @@ function Home() {
                   </div>
                   <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                     <label
-                      className="bg-slate-200 block w-32 p-1"
+                      className="bg-slate-200 block w-1/4 p-1"
                       htmlFor=""
                     >
                       動作環境
                     </label>
                     <input
-                      className={`${styles.focus} block w-96 p-2`}
+                      className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                       type="text"
                     />
                   </div>
                   <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                     <label
-                      className="bg-slate-200 block w-32 p-1"
+                      className="bg-slate-200 block w-1/4 p-1"
                       htmlFor=""
                     >
                       言語
                     </label>
                     <input
-                      className={`${styles.focus} block w-96 p-2`}
+                      className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                       type="text"
                     />
                   </div>
                   <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                     <label
-                      className="bg-slate-200 block w-32 p-1"
+                      className="bg-slate-200 block w-1/4 p-1"
                       htmlFor=""
                     >
                       フレームワーク
                     </label>
                     <input
-                      className={`${styles.focus} block w-96 p-2`}
+                      className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                       type="text"
                     />
                   </div>
                   <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                     <label
-                      className="bg-slate-200 block w-32 p-1"
+                      className="bg-slate-200 block w-1/4 p-1"
                       htmlFor=""
                     >
                       ツール･その他
                     </label>
                     <input
-                      className={`${styles.focus} block w-96 p-2`}
+                      className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                       type="text"
                     />
                   </div>
                   <div className="flex-row w-full flex border-2 border-slate-300 shadow-md">
                     <label
-                      className="bg-slate-200 block w-32 p-1"
+                      className="bg-slate-200 block w-1/4 p-1"
                       htmlFor=""
                     >
                       業務内容
@@ -1599,7 +1639,7 @@ function Home() {
                     <textarea
                       name=""
                       id=""
-                      className={`${styles.focus} p-2 w-full`}
+                      className={`${styles.focus} border-2 border-transparent p-2 w-3/4`}
                       rows={8}
                       value={point.jobDuties ? point.jobDuties : ''}
                       onChange={(e) =>
@@ -1614,13 +1654,13 @@ function Home() {
                   </div>
                   <div className="w-full flex h-10 ">
                     <label
-                      className="bg-slate-200 block w-32 pt-2 px-1 text-sm border-2 border-slate-300 shadow-md"
+                      className="bg-slate-200 block w-1/4 pt-2 px-1 text-sm border-2 border-slate-300 shadow-md"
                       htmlFor=""
                     >
                       アーキテクチャ
                     </label>
                     <input
-                      className=" block w-96 mt-1 ml-2"
+                      className="block mt-1 ml-2"
                       type="file"
                       accept=".png, .jpeg, .jpg"
                       onChange={(e) =>
@@ -1655,7 +1695,7 @@ function Home() {
                     )
                   }
                 >
-                  x
+                  <HighlightOffIcon />
                 </button>
                 <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                   <label
@@ -1667,7 +1707,7 @@ function Home() {
                   <select
                     name=""
                     id=""
-                    className={`${styles.focus} w-1/4 text-center`}
+                    className={`${styles.focus} border-2 border-transparent w-1/4 text-center`}
                     value={des.form1}
                     onChange={(e) =>
                       handleChangeDevelopmentExperiences(
@@ -1689,7 +1729,7 @@ function Home() {
                   <select
                     name=""
                     id=""
-                    className={`${styles.focus} w-1/4 text-center`}
+                    className={`${styles.focus} border-2 border-transparent w-1/4 text-center`}
                     value={des.form1}
                     onChange={(e) =>
                       handleChangeDevelopmentExperiences(
@@ -1705,13 +1745,13 @@ function Home() {
                 </div>
                 <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                   <label
-                    className="bg-slate-200 block w-32 p-1"
+                    className="bg-slate-200 block w-1/4 p-1"
                     htmlFor=""
                   >
                     期間
                   </label>
                   <input
-                    className={`${styles.focus} block w-96 p-2`}
+                    className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                     type="text"
                     value={des.form1}
                     onChange={(e) =>
@@ -1725,13 +1765,13 @@ function Home() {
                 </div>
                 <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                   <label
-                    className="bg-slate-200 block w-32 p-1"
+                    className="bg-slate-200 block w-1/4 p-1"
                     htmlFor=""
                   >
                     担当役割
                   </label>
                   <input
-                    className={`${styles.focus} block w-96 p-2`}
+                    className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                     type="text"
                     value={des.form1}
                     onChange={(e) =>
@@ -1745,13 +1785,13 @@ function Home() {
                 </div>
                 <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                   <label
-                    className="bg-slate-200 block w-32 p-1"
+                    className="bg-slate-200 block w-1/4 p-1"
                     htmlFor=""
                   >
                     チーム人数
                   </label>
                   <input
-                    className={`${styles.focus} block w-96 p-2`}
+                    className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                     type="text"
                     value={des.form1}
                     onChange={(e) =>
@@ -1765,13 +1805,13 @@ function Home() {
                 </div>
                 <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                   <label
-                    className="bg-slate-200 block w-32 p-1"
+                    className="bg-slate-200 block w-1/4 p-1"
                     htmlFor=""
                   >
                     PJ全体人数
                   </label>
                   <input
-                    className={`${styles.focus} block w-96 p-2`}
+                    className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                     type="text"
                     value={des.form1}
                     onChange={(e) =>
@@ -1785,13 +1825,13 @@ function Home() {
                 </div>
                 <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                   <label
-                    className="bg-slate-200 block w-32 p-1"
+                    className="bg-slate-200 block w-1/4 p-1"
                     htmlFor=""
                   >
                     プロジェクト名
                   </label>
                   <input
-                    className={`${styles.focus} block w-96 p-2`}
+                    className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                     type="text"
                     value={des.form1}
                     onChange={(e) =>
@@ -1805,13 +1845,13 @@ function Home() {
                 </div>
                 <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                   <label
-                    className="bg-slate-200 block w-32 p-1"
+                    className="bg-slate-200 block w-1/4 p-1"
                     htmlFor=""
                   >
                     動作環境
                   </label>
                   <input
-                    className={`${styles.focus} block w-96 p-2`}
+                    className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                     type="text"
                     value={des.form1}
                     onChange={(e) =>
@@ -1825,13 +1865,13 @@ function Home() {
                 </div>
                 <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                   <label
-                    className="bg-slate-200 block w-32 p-1"
+                    className="bg-slate-200 block w-1/4 p-1"
                     htmlFor=""
                   >
                     言語
                   </label>
                   <input
-                    className={`${styles.focus} block w-96 p-2`}
+                    className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                     type="text"
                     value={des.form1}
                     onChange={(e) =>
@@ -1845,13 +1885,13 @@ function Home() {
                 </div>
                 <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                   <label
-                    className="bg-slate-200 block w-32 p-1"
+                    className="bg-slate-200 block w-1/4 p-1"
                     htmlFor=""
                   >
                     フレームワーク
                   </label>
                   <input
-                    className={`${styles.focus} block w-96 p-2`}
+                    className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                     type="text"
                     value={des.form1}
                     onChange={(e) =>
@@ -1865,13 +1905,13 @@ function Home() {
                 </div>
                 <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                   <label
-                    className="bg-slate-200 block w-32 p-1"
+                    className="bg-slate-200 block w-1/4 p-1"
                     htmlFor=""
                   >
                     ツール･その他
                   </label>
                   <input
-                    className={`${styles.focus} block w-96 p-2`}
+                    className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
                     type="text"
                     value={des.form1}
                     onChange={(e) =>
@@ -1885,13 +1925,13 @@ function Home() {
                 </div>
                 <div className="w-full flex h-10 ">
                   <label
-                    className="bg-slate-200 block w-32 pt-2 px-1 text-sm border-2 border-slate-300 shadow-md"
+                    className="bg-slate-200 block w-1/4 pt-2 px-1 text-sm border-2 border-slate-300 shadow-md"
                     htmlFor=""
                   >
                     アーキテクチャ
                   </label>
                   <input
-                    className=" block w-96 mt-1 ml-2"
+                    className="block mt-1 ml-2"
                     type="file"
                     accept=".png, .jpeg, .jpg"
                     value={des.form1}
@@ -1906,7 +1946,7 @@ function Home() {
                 </div>
                 <div className="flex-row w-full flex border-2 border-slate-300 shadow-md">
                   <label
-                    className="bg-slate-200 block w-32 p-1"
+                    className="bg-slate-200 block w-1/4 p-1"
                     htmlFor=""
                   >
                     業務内容
@@ -1914,7 +1954,7 @@ function Home() {
                   <textarea
                     name=""
                     id=""
-                    className={`${styles.focus} p-2 w-full`}
+                    className={`${styles.focus} border-2 border-transparent p-2 w-3/4`}
                     rows={8}
                     value={des.form1}
                     onChange={(e) =>
@@ -1934,16 +1974,47 @@ function Home() {
             <button
               onClick={handleAddDevelopmentExperiencesForm}
               type="button"
-              className={`${styles.focus} shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 h-10 rounded-xl border-2 border-white border-solid`}
+              className={`${styles.focus} border-2 border-transparent shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 h-10 rounded-xl border-white border-solid`}
             >
               <span className="text-white font-bold m-4">
                 + 開発経験の追加
               </span>
             </button>
           </div>
+
+          <div className="flex-row w-full flex border-2 border-slate-300 shadow-md mt-6">
+            <label
+              className="bg-slate-200 block w-1/4 p-1"
+              htmlFor=""
+            >
+              リクエストコメント
+            </label>
+            <textarea
+              name=""
+              id=""
+              className={`${styles.focus} border-2 border-transparent p-2 w-3/4`}
+              rows={8}
+              value={requestComment}
+              onChange={(e) => setRequestComment(e.target.value)}
+            ></textarea>
+          </div>
         </div>
         {/* developmentExperience */}
-        <div className="text-center">
+
+        {/* データPOSTのボタン・関数 */}
+        <RequestButton
+          userData={userData}
+          defaultData={defaultData}
+          portfolios={portfolios}
+          selling={selling}
+          qls={qls}
+          previousWorks={previousWorks}
+          developmentExperiences={developmentExperiences}
+          uploadFiles={uploadFiles}
+          requestComment={requestComment}
+        />
+
+        {/* <div className="text-center">
           <button
             type="submit"
             className="shadow-md mt-10 h-12  cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid"
@@ -1952,7 +2023,7 @@ function Home() {
               確認画面へ
             </span>
           </button>
-        </div>
+        </div> */}
       </form>
     </section>
   );
