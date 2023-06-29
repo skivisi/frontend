@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import { UserObject } from '../../types/t';
-import {userData} from '../../../../types/types'
 
 export const userFetch = (isTrue: boolean, argId: number) => {
   // console.log(process.env.API_SECRET_URL);
