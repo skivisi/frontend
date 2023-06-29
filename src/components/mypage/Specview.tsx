@@ -11,7 +11,7 @@ const specview = ({ userData }: { userData: UserData }) => {
 
   return (
     <>
-      {userData.developmentExperience.length > 0 ? (
+      {userData.portfolio.length > 0 ? (
         <>
           <div>
             <div className="w-full flex border-2 border-slate-300 mt-2 shadow-md">

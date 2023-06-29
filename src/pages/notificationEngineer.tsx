@@ -9,7 +9,7 @@ import { User, Request } from '../../types/types';
 
 // 通知一覧(エンジニア)
 
-const fetcher = (url: RequestInfo | URL) =>
+const fetcher = (url: RequestInfo) =>
   fetch(url).then((res) => res.json());
 
 const NotificationEngineer = () => {
@@ -21,7 +21,7 @@ const NotificationEngineer = () => {
   console.log(userId);
 
   const { data, error } = useSWR(
-    `http://localhost:8000/api/request/receive/${userId}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/request/receive/${userId}`,
     fetcher
   );
 

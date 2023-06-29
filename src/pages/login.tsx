@@ -5,29 +5,39 @@ import '../styles/globals.css';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 
-const fetcher = (resource: RequestInfo, init: RequestInit | undefined) =>
-  fetch(resource, init).then((res) => res.json());
+const fetcher = (
+  resource: RequestInfo,
+  init: RequestInit | undefined
+) => fetch(resource, init).then((res) => res.json());
 
 const Login = () => {
-  const [email, setEmail] = useState<string>("");
+  const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string | null>(null);
   const [cookie, setCookie] = useCookies();
 
   const [emailError, setEmailError] = useState<string | null>(null);
-  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(
+    null
+  );
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
 
     type Login = {
       email: string;
       password: string | null;
-    }
+    };
 
     const loginSchema = z.object({
-      email: z.string().email('有効なメールアドレスを入力してください'),
-      password: z.string().min(8, 'パスワードは8文字以上で入力してください'),
+      email: z
+        .string()
+        .email('有効なメールアドレスを入力してください'),
+      password: z
+        .string()
+        .min(8, 'パスワードは8文字以上で入力してください'),
     });
 
     try {
@@ -47,7 +57,7 @@ const Login = () => {
       };
 
       axios
-        .post(`http://localhost:8000/api/auth/login`, login)
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, login)
         .then((response) => {
           let userData = response.data;
           console.log(userData);
@@ -56,21 +66,24 @@ const Login = () => {
           setCookie('userId', id, { path: '/' });
           setCookie('affiliation', affiliation, { path: '/' });
           if (
-            affiliation === 'FR' ||
-            affiliation === 'JAVA' ||
-            affiliation === 'QA' ||
-            affiliation === 'ML' ||
-            affiliation === 'CL' ||
-            affiliation === 'PHP'
+            affiliation === '営業'
+            // affiliation === 'FR' ||
+            // affiliation === 'JAVA' ||
+            // affiliation === 'QA' ||
+            // affiliation === 'ML' ||
+            // affiliation === 'CL' ||
+            // affiliation === 'PHP'
           ) {
-            window.location.href = '/dashboard/dbEngineer';
-          } else if (affiliation === '営業') {
             window.location.href = '/dashboard/dbSales';
+          } else {
+            window.location.href = '/dashboard/dbEngineer';
           }
         })
         .catch((error) => {
           if (error.response && error.response.status === 401) {
-            setSubmitError('ログインに失敗しました。メールアドレスかパスワードが一致しません。');
+            setSubmitError(
+              'ログインに失敗しました。メールアドレスかパスワードが一致しません。'
+            );
             setEmail('');
             setPassword(null);
           }
@@ -121,7 +134,9 @@ const Login = () => {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <div className="text-red-500 text-sm">{emailError}</div>
+                <div className="text-red-500 text-sm">
+                  {emailError}
+                </div>
               </div>
             </div>
 
@@ -144,7 +159,9 @@ const Login = () => {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <div className="text-red-500 text-sm">{passwordError}</div>
+                <div className="text-red-500 text-sm">
+                  {passwordError}
+                </div>
               </div>
             </div>
 
@@ -155,7 +172,9 @@ const Login = () => {
               ログイン
             </button>
             {submitError && (
-              <div className="text-red-500 text-sm">{submitError}</div>
+              <div className="text-red-500 text-sm">
+                {submitError}
+              </div>
             )}
           </form>
 
