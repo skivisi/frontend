@@ -23,8 +23,12 @@ const fetcher = (
   init: RequestInit | undefined
 ) => fetch(resource, init).then((res) => res.json());
 
+type Query = {
+  QueryId:number
+}
+
 export const getServerSideProps = async (context: {
-  query: any;
+  query: Query;
   req: NextApiRequest;
 }) => {
   const { query: userId, req: serverRequest } = context;
@@ -49,9 +53,9 @@ const Approval = ({
 }: {
   userId: { id: number };
   cookie: number | null;
-  adminId: number;
+  adminId: number | null;
 }) => {
-  const userData = userFetch(true, userId.id);
+  // const userData = userFetch(true, userId.id);
   const [adminComment, setAdminComment] = useState('');
 
   let queryId = Number(userId.id);
@@ -117,7 +121,7 @@ const Approval = ({
       </div>
       <div className="text-sky-900 flex justify-center">
         <form className="bg-blue-200 text-sky-900 max-w-4xl p-10 my-10 shadow-xl">
-          <Specview userData={userData} />
+          {/* <Specview userData={userData} /> */}
 
           <div className="text-center">
             <button
