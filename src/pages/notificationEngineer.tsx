@@ -9,7 +9,7 @@ import { User, Request } from '../../types/types';
 
 // 通知一覧(エンジニア)
 
-const fetcher = (url: RequestInfo | URL) =>
+const fetcher = (url: RequestInfo) =>
   fetch(url).then((res) => res.json());
 
 const NotificationEngineer = () => {

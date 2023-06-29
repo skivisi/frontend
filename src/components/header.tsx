@@ -7,13 +7,13 @@ const Header = () => {
 
   const handleLogout = () => {
     if (cookies.userId) {
-      removeCookie('userId');
+      removeCookie('userId',{ path: '/' });
     }
     if (cookies.affiliation) {
-      removeCookie('affiliation');
+      removeCookie('affiliation',{ path: '/' });
     }
     if (cookies.adminId) {
-      removeCookie('adminId');
+      removeCookie('adminId',{ path: '/' });
     }
   };
 

@@ -3,11 +3,18 @@
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 
 export const userFetch = (isTrue: boolean, argId: number) => {
   // console.log(process.env.API_SECRET_URL);
   // console.log(process.env.NEXT_PUBLIC_API_URL);
+  const getCookie = (name: string) => {
+    return Cookies.get(name);
+  };
+  const cookie = getCookie('userId');
+  let userIds = Number(cookie);
+  console.log(userIds);
   const [cookies, setCookie, removeCookie] = useCookies(['userId']);
   const [userData, setUserData] = useState<any>({
     user: '',
@@ -26,7 +33,7 @@ export const userFetch = (isTrue: boolean, argId: number) => {
   useEffect(() => {
     const fetchId = async () => {
       const getUserData = await axios.get(
-        `http://localhost:8000/api/users?userId=${cookies.userId}`
+        `http://localhost:8000/api/users?userId=${userIds}`
       );
       const {
         createdAt,
@@ -65,7 +72,7 @@ export const userFetch = (isTrue: boolean, argId: number) => {
      if(specs.length > 0){
       const getSpecIds = await axios.get(
         `http://localhost:8000/api/spec/get/${
-          isTrue ? argId : cookies.userId
+          isTrue ? argId : userIds
         }`
       );
       const {

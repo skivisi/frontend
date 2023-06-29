@@ -32,6 +32,8 @@ const skillEdit = () => {
   const skill = userData.skill;
   const skillPoint = userData.skillPoint;
   const specialAbilities = userData.specialAbility;
+  console.log(specialAbilities);
+  console.log(skillPoint);
   const userId = userData.userId;
 
 
