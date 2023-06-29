@@ -53,14 +53,15 @@ const skillview = ({ userData }: { userData: UserData }) => {
     'w-32 text-center m-1 bg-green-300 border-4 border-green-400 rounded-xl p-1 font-bold text-green-800';
   return (
     <>
-      {userData ? (
+      {userData.specialAbility.length > 0 ? (
         <>
           <section className="flex justify-around">
             <div className="">
               <div className="bg-sky-50 p-5 shadow-md text-lg">
                 <div className="mb-3">
                   {/* 出しわけ */}
-                  {userData.user.businessSituation === "アサイン中" ? (
+                  {userData.user.businessSituation ===
+                  'アサイン中' ? (
                     <span className="bg-sky-300 border-2 border-sky-400 rounded-xl p-1 font-bold text-sky-800">
                       エントリー
                     </span>
@@ -133,7 +134,7 @@ const skillview = ({ userData }: { userData: UserData }) => {
                     ability: {
                       skillList: string;
                       skillSelection: boolean;
-                      tagColor: number
+                      tagColor: number;
                     },
                     index: number
                   ) => (
@@ -157,7 +158,9 @@ const skillview = ({ userData }: { userData: UserData }) => {
           </section>
         </>
       ) : (
-        <p>no data</p>
+        <div className="flex justify-center items-center h-60 font-bold text-2xl">
+          スキルが登録されてないよ！
+        </div>
       )}
     </>
   );
