@@ -20,6 +20,9 @@ module.exports = {
       dropShadow: {
         white: ' 2px 2px 2px #fff',
       },
+      letterSpacing: {
+        xl: '1em',
+      }
     },
   },
   plugins: [],

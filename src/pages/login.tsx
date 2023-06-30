@@ -63,8 +63,11 @@ const Login = () => {
           console.log(userData);
           let id = userData.userId;
           let affiliation = userData.affiliation;
-          setCookie('userId', id, { path: '/' });
-          setCookie('affiliation', affiliation, { path: '/' });
+          setCookie('userId', id, { path: '/', secure: true });
+          setCookie('affiliation', affiliation, {
+            path: '/',
+            secure: true,
+          });
           if (
             affiliation === '営業'
             // affiliation === 'FR' ||
