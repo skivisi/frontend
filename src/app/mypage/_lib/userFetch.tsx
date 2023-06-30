@@ -69,7 +69,7 @@ export const userFetch = (isTrue: boolean, argId: number) => {
   useEffect(() => {
     const fetchId = async () => {
       const getUserData = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/users?userId=${cookies.userId}`
+        `${process.env.NEXT_PUBLIC_API_URL}/users?userId=${isTrue ? argId : cookies.userId}`
       );
       const {
         createdAt,
