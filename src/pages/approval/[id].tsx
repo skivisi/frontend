@@ -7,7 +7,7 @@ import axios from 'axios';
 import useSWR from 'swr';
 import Link from 'next/link';
 import { GetServerSideProps, NextApiRequest } from 'next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { userFetch } from '../../app/mypage/_lib/userFetch';
 import Specview from '@/components/mypage/Specview';
 import { Request } from '../../../types/types';
@@ -24,8 +24,8 @@ const fetcher = (
 ) => fetch(resource, init).then((res) => res.json());
 
 type Query = {
-  QueryId:number
-}
+  QueryId: number;
+};
 
 export const getServerSideProps = async (context: {
   query: Query;
@@ -34,8 +34,7 @@ export const getServerSideProps = async (context: {
   const { query: userId, req: serverRequest } = context;
   const cookies = serverRequest.cookies;
   const cookie = cookies.userId;
-  const adminId = cookies.adminId || null;;
-  console.log(adminId);
+  const adminId = cookies.adminId;
 
 
   return {
@@ -56,12 +55,10 @@ const Approval = ({
   cookie: number | null;
   adminId: number | null;
 }) => {
-  const userData = userFetch(true, userId.id);
+  let argId = Number(userId.id);
+
+  const userData = userFetch(true, argId);
   const [adminComment, setAdminComment] = useState('');
-
-  console.log(userId.id)
-
-  let queryId = Number(userId.id);
 
   const { data, error } = useSWR(`/api/request/`, fetcher);
 
@@ -70,10 +67,8 @@ const Approval = ({
   }
 
   const filteredRequest = data.filter(
-    (item: Request) => item.userId === queryId
+    (item: Request) => item.userId === argId
   );
-  console.log(filteredRequest);
-  // console.log(filteredRequest[0].applicationId);
 
   // 承認の処理
   const approvalSubmit = async () => {
@@ -110,7 +105,9 @@ const Approval = ({
       console.log(cookie);
     }
   };
-  const handleAdminComment = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleAdminComment = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setAdminComment(event.target.value);
   };
 

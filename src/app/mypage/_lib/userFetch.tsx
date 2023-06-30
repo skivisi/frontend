@@ -10,6 +10,7 @@ export const userFetch = (isTrue: boolean, argId: number) => {
   // console.log(process.env.API_SECRET_URL);
   // console.log(process.env.NEXT_PUBLIC_API_URL);
 
+
   const [cookies, setCookie, removeCookie] = useCookies(['userId']);
   const [userData, setUserData] = useState<UserData>({
     user: {
@@ -88,7 +89,7 @@ export const userFetch = (isTrue: boolean, argId: number) => {
         userName,
       } = getUserData.data;
 
-      setUserData((p: any) => ({
+      setUserData((p: UserData) => ({
         ...p,
         user: {
           userId: userId,
@@ -105,7 +106,7 @@ export const userFetch = (isTrue: boolean, argId: number) => {
       }));
 
       // 最新スペックシートの取得
-      if (specs.length > 0) {
+        if (specs.length > 0) {
         const getSpecIds = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/spec/get/${
             isTrue ? argId : cookies.userId
@@ -121,7 +122,7 @@ export const userFetch = (isTrue: boolean, argId: number) => {
           skillSummaries,
         } = getSpecIds.data;
 
-        setUserData((p: any) => ({
+        setUserData((p: UserData) => ({
           ...p,
           specId: specId,
           portfolio: portfolios,
