@@ -4,11 +4,18 @@
 */
 
 import Image from 'next/image';
-import { UserData,Portfolio ,SellingPoint,Qualification, PreviousWork, DevelopmentExperience  } from '../../../types/types';
-import website from '../../public/Website.png';
+import {
+  UserData,
+  Portfolio,
+  SellingPoint,
+  Qualification,
+  PreviousWork,
+  DevelopmentExperience,
+} from '../../../types/types';
+import noimaged from '@/public/noimaged.png';
 
 const specview = ({ userData }: { userData: UserData }) => {
-
+  console.log(userData);
   return (
     <>
       {userData.portfolio.length > 0 ? (
@@ -30,18 +37,20 @@ const specview = ({ userData }: { userData: UserData }) => {
 
               <div className="mt-4">
                 {userData &&
-                  userData.portfolio.map((i:Portfolio, index: number) => (
-                    <div key={index} className="w-full flex">
-                      <div className="w-full flex border-2 border-slate-300 shadow-md">
-                        <div className="bg-slate-200 block w-1/4 p-1">
-                          {i.heading}
-                        </div>
-                        <div className="block w-3/4 p-2 bg-white">
-                          {i.url}
+                  userData.portfolio.map(
+                    (i: Portfolio, index: number) => (
+                      <div key={index} className="w-full flex">
+                        <div className="w-full flex border-2 border-slate-300 shadow-md">
+                          <div className="bg-slate-200 block w-1/4 p-1">
+                            {i.heading}
+                          </div>
+                          <div className="block w-3/4 p-2 bg-white">
+                            {i.url}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  )}
               </div>
             </div>
           </div>
@@ -230,39 +239,41 @@ const specview = ({ userData }: { userData: UserData }) => {
           <div>
             <h3 className="mt-10 text-xl font-bold">前職</h3>
 
-            {userData.previousWork.map((i: PreviousWork, index: number) => (
-              <div className=" flex mt-2" key={i.specId}>
-                <div>
-                  <div className="w-full flex border-2 border-slate-300 shadow-md">
-                    <div className="bg-slate-200 block w-1/4 p-1">
-                      業界
+            {userData.previousWork.map(
+              (i: PreviousWork, index: number) => (
+                <div className=" flex mt-2" key={i.specId}>
+                  <div>
+                    <div className="w-full flex border-2 border-slate-300 shadow-md">
+                      <div className="bg-slate-200 block w-1/4 p-1">
+                        業界
+                      </div>
+                      <div className="block w-3/4 p-2 bg-white">
+                        {i.industry}
+                      </div>
                     </div>
-                    <div className="block w-3/4 p-2 bg-white">
-                      {i.industry}
+                    <div className="w-full flex border-2 border-slate-300 shadow-md">
+                      <div className="bg-slate-200 block w-1/4 p-1">
+                        業種
+                      </div>
+                      <div className="block w-3/4 p-2 bg-white">
+                        {i.occupation}
+                      </div>
                     </div>
-                  </div>
-                  <div className="w-full flex border-2 border-slate-300 shadow-md">
-                    <div className="bg-slate-200 block w-1/4 p-1">
-                      業種
-                    </div>
-                    <div className="block w-3/4 p-2 bg-white">
-                      {i.occupation}
-                    </div>
-                  </div>
-                  <div className="w-full flex border-2 border-slate-300 shadow-md">
-                    <label
-                      className="bg-slate-200 block w-1/4 p-1"
-                      htmlFor=""
-                    >
-                      業務内容
-                    </label>
-                    <div className="block w-3/4 p-2 bg-white ">
-                      {i.JobDuties.split('\n')}
+                    <div className="w-full flex border-2 border-slate-300 shadow-md">
+                      <label
+                        className="bg-slate-200 block w-1/4 p-1"
+                        htmlFor=""
+                      >
+                        業務内容
+                      </label>
+                      <div className="block w-3/4 p-2 bg-white ">
+                        {i.JobDuties.split('\n')}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            )}
           </div>
           {/* previousWork */}
 
@@ -358,10 +369,14 @@ const specview = ({ userData }: { userData: UserData }) => {
                     </div>
                     <div className=" items-center">
                       <Image
-                        src={website}
-                        width={500}
-                        height={100}
-                        alt="Picture of the author"
+                        src={
+                          i.img
+                            ? `http://127.0.0.1:8000/public/images/${i.img}`
+                            : noimaged
+                        }
+                        width={600}
+                        height={400}
+                        alt="Picture of the architecture"
                       />
                     </div>
                   </div>

@@ -27,23 +27,24 @@ const DbAdmin = () => {
   return (
     <>
       <Header />
-      <div className="flex justify-center mt-48 ">
-        <div className="relative">
-          <button className="font-semibold text-white py-4 my-8 mr-16 w-80 rounded-xl shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 border-2 border-white border-solid">
-            <Link href="/notificationList">申請通知</Link>
-          </button>
-          <div
-            className="absolute flex items-center justify-center ml-1 h-10 w-10 rounded-full bg-blue-500 text-white font-bold"
-            style={{ top: '17%', right: '15%' }}
-          >
-            {requests.length}
+      <section>
+        <div className="flex lg:justify-between justify-center font-bold flex-wrap max-w-4xl m-auto mt-10 lg:mt-20">
+          <div className="relative">
+            <button className="w-80 py-4 mt-10 lg:mt-20 mx-10 text-orange-50 text-4xl text-center rounded-2xl shadow-lg cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 border-4 border-orange-50  hover:scale-110 transition-all">
+              <Link href="/notificationList">申請通知</Link>
+            </button>
+            <div
+              className="absolute rounded-full bg-blue-500 text-blue-50 py-1 px-3 text-2xl text-center lg:right-6 lg:top-16 right-6 top-8 cursor-pointer"
+            >
+                <Link href="/notificationEngineer">{requests.length}</Link>
+            </div>
           </div>
-        </div>
 
-        <button className="font-semibold text-white py-4 my-8 ml-16 w-80 rounded-xl shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 border-2 border-white border-solid">
-          <Link href="/dashboard/dbSales">エンジニア検索</Link>
-        </button>
-      </div>
+          <button className="w-80 py-4 mt-10 lg:mt-20 mx-10  text-orange-50 text-4xl text-center rounded-2xl shadow-lg cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 border-4 border-orange-50  hover:scale-110 transition-all">
+            <Link href="/dashboard/dbSales">エンジニア検索</Link>
+          </button>
+        </div>
+      </section>
       <div className="absolute w-full" style={{ bottom: '0%' }}>
         <Footer />
       </div>
