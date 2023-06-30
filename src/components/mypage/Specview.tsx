@@ -4,16 +4,23 @@
 */
 
 import Image from 'next/image';
-import { UserData,Portfolio ,SellingPoint,Qualification, PreviousWork, DevelopmentExperience  } from '../../../types/types';
+import {
+  UserData,
+  Portfolio,
+  SellingPoint,
+  Qualification,
+  PreviousWork,
+  DevelopmentExperience,
+} from '../../../types/types';
 import website from '../../public/Website.png';
 
 const specview = ({ userData }: { userData: UserData }) => {
-
   return (
     <>
       {userData.portfolio.length > 0 ? (
         <>
           <div>
+          <h3 className="mt-10 text-xl font-bold">スタッフID</h3>
             <div className="w-full flex border-2 border-slate-300 mt-2 shadow-md">
               <div className="bg-slate-200 block w-1/4 p-1">
                 スタッフID
@@ -24,24 +31,43 @@ const specview = ({ userData }: { userData: UserData }) => {
             </div>
 
             <div className="">
+              <h3 className="mt-10 text-xl font-bold">Github</h3>
+
+              <div className="mt-4">
+                <div className="w-full flex">
+                  <div className="w-full flex border-2 border-slate-300 shadow-md">
+                    <div className="bg-slate-200 block w-1/4 p-1">
+                      Github
+                    </div>
+                    <div className="block w-3/4 p-2 bg-white">
+                      {userData.spec.github}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* github */}
+            <div className="">
               <h3 className="mt-10 text-xl font-bold">
                 ポートフォリオ
               </h3>
 
               <div className="mt-4">
                 {userData &&
-                  userData.portfolio.map((i:Portfolio, index: number) => (
-                    <div key={index} className="w-full flex">
-                      <div className="w-full flex border-2 border-slate-300 shadow-md">
-                        <div className="bg-slate-200 block w-1/4 p-1">
-                          {i.heading}
-                        </div>
-                        <div className="block w-3/4 p-2 bg-white">
-                          {i.url}
+                  userData.portfolio.map(
+                    (i: Portfolio, index: number) => (
+                      <div key={index} className="w-full flex">
+                        <div className="w-full flex border-2 border-slate-300 shadow-md">
+                          <div className="bg-slate-200 block w-1/4 p-1">
+                            {i.heading}
+                          </div>
+                          <div className="block w-3/4 p-2 bg-white">
+                            {i.url}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  )}
               </div>
             </div>
           </div>
@@ -230,39 +256,41 @@ const specview = ({ userData }: { userData: UserData }) => {
           <div>
             <h3 className="mt-10 text-xl font-bold">前職</h3>
 
-            {userData.previousWork.map((i: PreviousWork, index: number) => (
-              <div className=" flex mt-2" key={i.specId}>
-                <div>
-                  <div className="w-full flex border-2 border-slate-300 shadow-md">
-                    <div className="bg-slate-200 block w-1/4 p-1">
-                      業界
+            {userData.previousWork.map(
+              (i: PreviousWork, index: number) => (
+                <div className=" flex mt-2" key={i.specId}>
+                  <div>
+                    <div className="w-full flex border-2 border-slate-300 shadow-md">
+                      <div className="bg-slate-200 block w-1/4 p-1">
+                        業界
+                      </div>
+                      <div className="block w-3/4 p-2 bg-white">
+                        {i.industry}
+                      </div>
                     </div>
-                    <div className="block w-3/4 p-2 bg-white">
-                      {i.industry}
+                    <div className="w-full flex border-2 border-slate-300 shadow-md">
+                      <div className="bg-slate-200 block w-1/4 p-1">
+                        業種
+                      </div>
+                      <div className="block w-3/4 p-2 bg-white">
+                        {i.occupation}
+                      </div>
                     </div>
-                  </div>
-                  <div className="w-full flex border-2 border-slate-300 shadow-md">
-                    <div className="bg-slate-200 block w-1/4 p-1">
-                      業種
-                    </div>
-                    <div className="block w-3/4 p-2 bg-white">
-                      {i.occupation}
-                    </div>
-                  </div>
-                  <div className="w-full flex border-2 border-slate-300 shadow-md">
-                    <label
-                      className="bg-slate-200 block w-1/4 p-1"
-                      htmlFor=""
-                    >
-                      業務内容
-                    </label>
-                    <div className="block w-3/4 p-2 bg-white ">
-                      {i.JobDuties.split('\n')}
+                    <div className="w-full flex border-2 border-slate-300 shadow-md">
+                      <label
+                        className="bg-slate-200 block w-1/4 p-1"
+                        htmlFor=""
+                      >
+                        業務内容
+                      </label>
+                      <div className="block w-3/4 p-2 bg-white ">
+                        {i.JobDuties.split('\n')}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            )}
           </div>
           {/* previousWork */}
 
