@@ -2,9 +2,14 @@
 const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
-  // images: {
-  //   domains: process.env.API_SECRET_URL,
-  // },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: '127.0.0.1',
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

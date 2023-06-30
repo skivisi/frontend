@@ -12,9 +12,10 @@ import {
   PreviousWork,
   DevelopmentExperience,
 } from '../../../types/types';
-import website from '../../public/Website.png';
+import noimaged from '@/public/noimaged.png';
 
 const specview = ({ userData }: { userData: UserData }) => {
+  console.log(userData);
   return (
     <>
       {userData.portfolio.length > 0 ? (
@@ -386,10 +387,14 @@ const specview = ({ userData }: { userData: UserData }) => {
                     </div>
                     <div className=" items-center">
                       <Image
-                        src={website}
-                        width={500}
-                        height={100}
-                        alt="Picture of the author"
+                        src={
+                          i.img
+                            ? `http://127.0.0.1:8000/public/images/${i.img}`
+                            : noimaged
+                        }
+                        width={600}
+                        height={400}
+                        alt="Picture of the architecture"
                       />
                     </div>
                   </div>

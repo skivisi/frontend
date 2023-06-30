@@ -3,6 +3,7 @@
 
 import '../globals.css';
 import styles from './style.module.css';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { userFetch } from '../mypage/_lib/userFetch';
 import { autoComplete } from './_lib/autoComplete';
@@ -12,13 +13,16 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import RequestButton from './components/RequestButton';
-import { DefaultUser } from '../types/t';
-import { InputData } from '../types/t';
-import { Portfolio } from '../types/t';
-import { SellingPoint } from '../types/t';
-import { Qualification } from '../types/t';
-import { PreviousWork } from '../types/t';
 import { DevelopmentExperience } from '../types/t';
+import {
+  DefaultUser,
+  InputData,
+  Portfolio,
+  SellingPoint,
+  Qualification,
+  PreviousWork,
+} from '../types/t';
+import noimaged from '@/public/noimaged.png';
 
 function handleBlur() {
   // ここでバリデーションチェックしたらサブミット前にクライアントに入力の誤りわかるからいいよね
@@ -33,7 +37,7 @@ function Home() {
   const [defaultData, setDefaultData] = useState<DefaultUser>({
     spec: {
       github: '',
-      offHours: ''
+      offHours: '',
     },
     portfolios: [],
     skillSummaries: {
@@ -59,7 +63,7 @@ function Home() {
   const [uploadFiles, setUploadFiles] = useState<InputData>([]);
 
   // リクエストコメント
-  const [requestComment, setRequestComment] = useState<string>("");
+  const [requestComment, setRequestComment] = useState<string>('');
 
   useEffect(() => {
     setDefaultData((p: DefaultUser) => ({
@@ -77,7 +81,10 @@ function Home() {
     }));
     if (userData.developmentExperience) {
       for (let i = 0; i < defaultData?.qualifications?.length; i++) {
-        setUploadFiles((prevFiles: InputData) => [...prevFiles, null]);
+        setUploadFiles((prevFiles: InputData) => [
+          ...prevFiles,
+          null,
+        ]);
       }
     }
   }, [
@@ -109,12 +116,15 @@ function Home() {
     detail: string,
     setIndex: number
   ) => {
-    // ~の追加がないフォーム    
+    // ~の追加がないフォーム
     if (setIndex == 999) {
       setDefaultData((prev: DefaultUser) => {
         return {
           ...prev,
-          [category]: { ...prev[category as keyof DefaultUser], [detail]: e.target.value },
+          [category]: {
+            ...prev[category as keyof DefaultUser],
+            [detail]: e.target.value,
+          },
         };
       });
       // qualification日付データの入力
@@ -226,7 +236,9 @@ function Home() {
   };
 
   // 資格
-  const [qualifications, setQualifications] = useState<Qualification[]>([]);
+  const [qualifications, setQualifications] = useState<
+    Qualification[]
+  >([]);
   const [qls, setQls] = useState<Qualification[]>([]);
   // 増やすボタンの関数
   const handleAddQualificationsForm = () => {
@@ -269,7 +281,9 @@ function Home() {
   };
 
   // 前職
-  const [previousWorks, setPreviousWorks] = useState<PreviousWork[]>([]);
+  const [previousWorks, setPreviousWorks] = useState<PreviousWork[]>(
+    []
+  );
   // 増やすボタンの関数
   const handleAddPreviousWorksForm = () => {
     setPreviousWorks([
@@ -1410,7 +1424,7 @@ function Home() {
           {defaultData.developmentExperiences &&
             defaultData.developmentExperiences.map(
               (point: any, index: number) => (
-                <div className="" key={index}>
+                <div className="mt-4" key={index}>
                   <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
                     <label
                       className="bg-slate-200 block w-1/4 p-1"
@@ -1673,13 +1687,17 @@ function Home() {
                       }
                     />
                   </div>
-                  <div className="">
-                    {/* <Image
-                      src={point.img ? `${process.env.NEXT_PUBLIC_API_URL}/public/images/${point.img}` : "/default_image_path.jpg"}
-                      width={500}
-                      height={500}
-                      alt="Picture of the author"
-                    /> */}
+                  <div className="flex justify-center">
+                    <Image
+                      src={
+                        point.img
+                          ? `http://127.0.0.1:8000/public/images/${point.img}`
+                          : noimaged
+                      }
+                      width={600}
+                      height={400}
+                      alt="Picture of the architecture"
+                    />
                   </div>
                 </div>
               )

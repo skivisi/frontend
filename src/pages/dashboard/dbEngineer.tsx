@@ -51,69 +51,58 @@ const DbEngineer = ({ requestData }: { requestData: Request[] }) => {
     <div>
       <Header />
       <section>
-        <div className="grid grid-cols-2 grid-rows-2 gap-4 justify-center mt-48 relative ml-32">
+        <div className="flex lg:justify-between justify-center font-bold flex-wrap max-w-4xl m-auto mt-10 lg:mt-20">
           <div className="relative">
-            <button className="bg-indigo-700 font-semibold text-white py-4 mx-96 my-8 w-80 rounded-xl shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 border-2 border-white border-solid">
+            <button className="w-80 py-4 mt-10 lg:mt-20 mx-10 text-orange-50 text-4xl text-center rounded-2xl shadow-lg cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 border-4 border-orange-50  hover:scale-110 transition-all">
               <Link href="/notificationEngineer">申請結果通知</Link>
             </button>
-            <div
-              className="absolute flex items-center justify-center ml-1 h-10 w-10 rounded-full bg-blue-500 text-white font-bold"
-              style={{ top: '17%', right: '15%' }}
-            >
-              {totalCount}
+
+            <div className="absolute rounded-full bg-blue-500 text-blue-50 py-1 px-3 text-2xl text-center lg:right-6 lg:top-16 right-6 top-8 cursor-pointer">
+              <Link href="/notificationEngineer">{totalCount}</Link>
             </div>
           </div>
-          <button className="bg-indigo-700 font-semibold text-white py-4 mr-96 my-8 w-80 rounded-xl shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 border-2 border-white border-solid">
-            <Link href="/mypage">マイページへ移動</Link>
+
+          <button className="w-80 py-4 mt-10 lg:mt-20 mx-10  text-orange-50 text-4xl text-center rounded-2xl shadow-lg cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 border-4 border-orange-50  hover:scale-110 transition-all">
+            <Link href="/mypage">マイページ</Link>
           </button>
-          <button
-            className="font-semibold text-white py-4 ml-96 my-8 w-80 rounded-xl shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 border-2 border-white border-solid"
-            onClick={handleTemplateButton}
-            onMouseEnter={handleTemplateButton}
-          >
-            テンプレートを見る
-          </button>
-          {showTemplateButtons && (
-            <>
-              <button
-                className="absolute bg-gray-600 font-semibold text-white py-4 ml-96 my-8 w-80 rounded border-2 border-white border-solid"
-                style={{ top: '75%' }}
+
+          <div className="">
+            <button
+              className="w-80 py-4 mt-10 lg:mt-20 mx-10  text-orange-50 text-4xl text-center rounded-2xl shadow-lg cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 border-4 border-orange-50  hover:scale-110 transition-all"
+              onMouseEnter={handleTemplateButton}
+              onMouseLeave={handleTemplateButton}
+            >
+              テンプレート閲覧
+            </button>
+
+            {showTemplateButtons && (
+              <div
+                className="absolute z-40 ml-1"
+                onMouseEnter={handleTemplateButton}
+                onMouseLeave={handleTemplateButton}
               >
-                <a href="#">FR</a>
-              </button>
-              <button
-                className="absolute bg-gray-600 font-semibold text-white py-4 ml-96 my-8 w-80 border-2 border-white border-solid"
-                style={{ top: '96%' }}
-              >
-                <a href="#">JAVA</a>
-              </button>
-              <button
-                className="absolute bg-gray-600 font-semibold text-white py-4 ml-96 my-8 w-80 border-2 border-white border-solid"
-                style={{ top: '117%' }}
-              >
-                <a href="#">QA</a>
-              </button>
-              <button
-                className="absolute bg-gray-600 font-semibold text-white py-4 ml-96 my-8 w-80 border-2 border-white border-solid"
-                style={{ top: '138%' }}
-              >
-                <a href="#">ML</a>
-              </button>
-              <button
-                className="absolute bg-gray-600 font-semibold text-white py-4 ml-96 my-8 w-80 border-2 border-white border-solid"
-                style={{ top: '159%' }}
-              >
-                <a href="#">CL</a>
-              </button>
-              <button
-                className="absolute bg-gray-600 font-semibold text-white py-4 ml-96 my-8 w-80 border-2 border-white border-solid"
-                style={{ top: '180%' }}
-              >
-                <a href="#">PHP</a>
-              </button>
-            </>
-          )}
-          <button className="bg-indigo-700 font-semibold text-white mr-96 my-8 w-80 rounded-xl shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 border-2 border-white border-solid">
+                <button className="block ml-9 w-80 py-4 bg-slate-800 text-2xl text-center text-slate-100 border-2 border-slate-100 hover:text-slate-800 hover:bg-slate-100 hover:border-slate-800">
+                  <a href="#">FR</a>
+                </button>
+                <button className="block ml-9 w-80 py-4 bg-slate-800 text-2xl text-center text-slate-100 border-2 border-slate-100 hover:text-slate-800 hover:bg-slate-100 hover:border-slate-800">
+                  <a href="#">JAVA</a>
+                </button>
+                <button className="block ml-9 w-80 py-4 bg-slate-800 text-2xl text-center text-slate-100 border-2 border-slate-100 hover:text-slate-800 hover:bg-slate-100 hover:border-slate-800">
+                  <a href="#">QA</a>
+                </button>
+                <button className="block ml-9 w-80 py-4 bg-slate-800 text-2xl text-center text-slate-100 border-2 border-slate-100 hover:text-slate-800 hover:bg-slate-100 hover:border-slate-800">
+                  <a href="#">ML</a>
+                </button>
+                <button className="block ml-9 w-80 py-4 bg-slate-800 text-2xl text-center text-slate-100 border-2 border-slate-100 hover:text-slate-800 hover:bg-slate-100 hover:border-slate-800">
+                  <a href="#">CL</a>
+                </button>
+                <button className="block ml-9 w-80 py-4 bg-slate-800 text-2xl text-center text-slate-100 border-2 border-slate-100 hover:text-slate-800 hover:bg-slate-100 hover:border-slate-800">
+                  <a href="#">PHP</a>
+                </button>
+              </div>
+            )}
+          </div>
+          <button className="w-80 py-4 mt-10 lg:mt-20 mx-10  text-orange-50 text-4xl text-center rounded-2xl shadow-lg cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 border-4 border-orange-50  hover:scale-110 transition-all">
             更新履歴
           </button>
         </div>
