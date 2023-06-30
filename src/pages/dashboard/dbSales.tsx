@@ -32,7 +32,6 @@ const DbSales = (userList: UserList) => {
   const users = userList.userList;
 
   const autocomplete = autoComplete();
-  console.log(autocomplete.autoCalibration);
   const router = useRouter();
 
   // エンジニア名で検索

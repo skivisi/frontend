@@ -21,6 +21,7 @@ const specview = ({ userData }: { userData: UserData }) => {
       {userData.portfolio.length > 0 ? (
         <>
           <div>
+          <h3 className="mt-10 text-xl font-bold">スタッフID</h3>
             <div className="w-full flex border-2 border-slate-300 mt-2 shadow-md">
               <div className="bg-slate-200 block w-1/4 p-1">
                 スタッフID
@@ -30,6 +31,23 @@ const specview = ({ userData }: { userData: UserData }) => {
               </div>
             </div>
 
+            <div className="">
+              <h3 className="mt-10 text-xl font-bold">Github</h3>
+
+              <div className="mt-4">
+                <div className="w-full flex">
+                  <div className="w-full flex border-2 border-slate-300 shadow-md">
+                    <div className="bg-slate-200 block w-1/4 p-1">
+                      Github
+                    </div>
+                    <div className="block w-3/4 p-2 bg-white">
+                      {userData.spec.github}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* github */}
             <div className="">
               <h3 className="mt-10 text-xl font-bold">
                 ポートフォリオ
