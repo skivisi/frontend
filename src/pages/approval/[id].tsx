@@ -34,8 +34,9 @@ export const getServerSideProps = async (context: {
   const { query: userId, req: serverRequest } = context;
   const cookies = serverRequest.cookies;
   const cookie = cookies.userId;
-  const adminId = cookies.adminId;
+  const adminId = cookies.adminId || null;;
   console.log(adminId);
+
 
   return {
     props: {
@@ -58,6 +59,8 @@ const Approval = ({
   const userData = userFetch(true, userId.id);
   const [adminComment, setAdminComment] = useState('');
 
+  console.log(userId.id)
+
   let queryId = Number(userId.id);
 
   const { data, error } = useSWR(`/api/request/`, fetcher);
@@ -66,12 +69,10 @@ const Approval = ({
     return <div>Loading...</div>;
   }
 
-  console.log(data);
-
   const filteredRequest = data.filter(
     (item: Request) => item.userId === queryId
   );
-  // console.log(filteredRequest);
+  console.log(filteredRequest);
   // console.log(filteredRequest[0].applicationId);
 
   // 承認の処理
