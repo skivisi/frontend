@@ -17,7 +17,7 @@ type UserList = {
 // 営業DB(検索機能)
 export const getServerSideProps: GetServerSideProps = async () => {
   const userData = await axios.get(
-    `http://localhost:8000/api/search/users`
+    `${process.env.NEXT_PUBLIC_API_URL}/search/users`
   );
   const userList = userData.data;
 
@@ -79,7 +79,7 @@ const DbSales = (userList: UserList) => {
       const mergedSkills = [...skillSummary, ...skillUpdate];
 
       const response = await axios.get(
-        `http://localhost:8000/api/search/integration`,
+        `${process.env.NEXT_PUBLIC_API_URL}/search/integration`,
         {
           params: {
             affiliation: affiliation,

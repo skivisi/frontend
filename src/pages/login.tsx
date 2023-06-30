@@ -57,7 +57,7 @@ const Login = () => {
       };
 
       axios
-        .post(`http://localhost:8000/api/auth/login`, login)
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, login)
         .then((response) => {
           let userData = response.data;
           console.log(userData);
@@ -69,16 +69,17 @@ const Login = () => {
             secure: true,
           });
           if (
-            affiliation === 'FR' ||
-            affiliation === 'JAVA' ||
-            affiliation === 'QA' ||
-            affiliation === 'ML' ||
-            affiliation === 'CL' ||
-            affiliation === 'PHP'
+            affiliation === '営業'
+            // affiliation === 'FR' ||
+            // affiliation === 'JAVA' ||
+            // affiliation === 'QA' ||
+            // affiliation === 'ML' ||
+            // affiliation === 'CL' ||
+            // affiliation === 'PHP'
           ) {
-            window.location.href = '/dashboard/dbEngineer';
-          } else if (affiliation === '営業') {
             window.location.href = '/dashboard/dbSales';
+          } else {
+            window.location.href = '/dashboard/dbEngineer';
           }
         })
         .catch((error) => {

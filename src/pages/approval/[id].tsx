@@ -81,7 +81,7 @@ const Approval = ({
         adminId: Number(adminId), // 現在のログイン中のcookie
       };
       const response = await axios.put(
-        `http://localhost:8000/api/request/approval/${filteredRequest[0].applicationId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/request/approval/${filteredRequest[0].applicationId}`,
         requestBody
       );
       console.log(response);
@@ -100,7 +100,7 @@ const Approval = ({
         adminComment: adminComment, // 差し戻しコメント
       };
       const response = await axios.put(
-        `http://localhost:8000/api/request/denial/${filteredRequest[0].applicationId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/request/denial/${filteredRequest[0].applicationId}`,
         requestBody
       );
       console.log(response);

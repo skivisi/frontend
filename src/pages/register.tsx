@@ -92,7 +92,7 @@ const Register = () => {
       setUserCount(userCount + 1);
 
       const response = await axios.post(
-        'http://localhost:8000/api/auth/register',
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
         {
           email,
           employeeNumber,
