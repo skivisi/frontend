@@ -55,7 +55,7 @@ const Approval = ({
   cookie: number | null;
   adminId: number | null;
 }) => {
-  // const userData = userFetch(true, userId.id);
+  const userData = userFetch(true, userId.id);
   const [adminComment, setAdminComment] = useState('');
 
   let queryId = Number(userId.id);
@@ -121,7 +121,7 @@ const Approval = ({
       </div>
       <div className="text-sky-900 flex justify-center">
         <form className="bg-blue-200 text-sky-900 max-w-4xl p-10 my-10 shadow-xl">
-          {/* <Specview userData={userData} /> */}
+          <Specview userData={userData} />
 
           <div className="text-center">
             <button

@@ -20,24 +20,25 @@ const LoginAdmin = () => {
     type Login = {
       email: string | null;
       password: string | null;
-    }
+    };
 
-    const loginAdmin:Login = {
-      email:email,
-      password:password
-    }
+    const loginAdmin: Login = {
+      email: email,
+      password: password,
+    };
 
     try {
       axios
         .post(
-          `http://localhost:8000/api/auth/admin/login`,loginAdmin
+          `http://localhost:8000/api/auth/admin/login`,
+          loginAdmin
         )
         .then((response) => {
           let userData = response.data;
           console.log(userData);
           let id = userData.adminId;
           console.log(id);
-          setCookie('adminId', id);
+          setCookie('adminId', id, { path: '/', secure: true });
           window.location.href = '/dashboard/dbAdmin';
         });
     } catch (error) {
