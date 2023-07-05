@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest",
+    "test": "jest --verbose",
     "mock-api": "json-server --watch data/db.json --port 8080",
     "format": "prettier --write --ignore-path .gitignore './**/*.{ts,tsx,json}'"
   },

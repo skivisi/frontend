@@ -36,7 +36,6 @@ export const getServerSideProps = async (context: {
   const cookie = cookies.userId;
   const adminId = cookies.adminId;
 
-
   return {
     props: {
       cookie: cookie || null,
