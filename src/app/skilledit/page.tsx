@@ -58,7 +58,6 @@ const skillEdit = () => {
     abilities: [],
   });
 
-
   // 初回のデータがない場合挿入
   let defaultSkillPoint: SkillPoint = {
     userId: userId,
@@ -95,7 +94,6 @@ const skillEdit = () => {
       typeof skillPoint == 'undefined' ||
       specialAbilities.length == 0
     ) {
-      console.log(2222);
       setSkills((p: SkillsData) => ({
         ...p,
         skillPoint: defaultSkillPoint,
@@ -130,6 +128,7 @@ const skillEdit = () => {
       });
     }
   };
+
 
   // スペシャルスキル編集
   const handleChangeAbilities = (index: number) => {

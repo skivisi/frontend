@@ -3,40 +3,24 @@ import axios from 'axios';
 const RequestButton = ({
   userData,
   defaultData,
-  portfolios,
-  selling,
-  qls,
-  previousWorks,
-  developmentExperiences,
-  uploadFiles,
+  addData,
   requestComment,
+  uploadFiles,
 }: {
   userData: any;
   defaultData: any;
-  portfolios: any;
-  selling: any;
-  qls: any;
-  previousWorks: any;
-  developmentExperiences: any;
-  uploadFiles: any;
+  addData: any;
   requestComment: string;
+  uploadFiles: any;
 }) => {
   // データの送信  ================================================================
   const submitHandler = async (e: any) => {
     e.preventDefault();
 
-    // 既存と新規合算
-    const addRequestContents = {
-      portfolios: portfolios,
-      sellingPoints: selling,
-      qualifications: qls,
-      previousWorks: previousWorks,
-      developmentExperiences: developmentExperiences,
-    };
-
-    for (const [key, value] of Object.entries(addRequestContents)) {
-      if (value.length > 0) {
-        defaultData[key] = [...defaultData[key], ...value];
+    // 既存と追加データ合算
+    for (const [key, value] of Object.entries(addData)) {
+      if ((value as any[]).length > 0) {
+        defaultData[key] = [...defaultData[key], ...(value as any[])];
       }
     }
 
