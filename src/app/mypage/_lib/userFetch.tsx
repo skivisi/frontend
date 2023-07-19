@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
-import { UserObject } from '../../types/t';
 import { UserData } from '../../../../types/types';
 
 export const userFetch = (isTrue: boolean, argId: number) => {
@@ -11,6 +10,7 @@ export const userFetch = (isTrue: boolean, argId: number) => {
   // console.log(process.env.NEXT_PUBLIC_API_URL);
 
   const [cookies, setCookie, removeCookie] = useCookies(['userId']);
+  console.log(cookies);
   const [userData, setUserData] = useState<UserData>({
     user: {
       affiliation: '',
@@ -65,76 +65,81 @@ export const userFetch = (isTrue: boolean, argId: number) => {
     userId: 0,
     specId: 0,
   });
-
   useEffect(() => {
     const fetchId = async () => {
-      const getUserData = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/users?userId=${
-          isTrue ? argId : cookies.userId
-        }`
-      );
-      const {
-        createdAt,
-        email,
-        joinDate,
-        requests,
-        updatedAt,
-        userId,
-        affiliation,
-        businessSituation,
-        employeeNumber,
-        skillPoints,
-        skills,
-        specialAbilities,
-        specs,
-        userName,
-      } = getUserData.data;
-
-      setUserData((p: UserData) => ({
-        ...p,
-        user: {
-          userId: userId,
-          affiliation: affiliation,
-          businessSituation: businessSituation,
-          userName: userName,
-          employeeNumber: employeeNumber,
-        },
-        userId: userId,
-        skill: skills[0],
-        skillPoint: skillPoints[0],
-        specialAbility: specialAbilities,
-        spec: specs[0],
-      }));
-
-      // 最新スペックシートの取得
-      if (specs.length > 0) {
-        const getSpecIds = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/spec/get/${
+      try {
+        const getUserData = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/users?userId=${
             isTrue ? argId : cookies.userId
           }`
         );
         const {
-          specId,
-          developmentExperiences,
-          portfolios,
-          previousWorks,
-          qualifications,
-          sellingPoints,
-          skillSummaries,
-        } = getSpecIds.data;
+          createdAt,
+          email,
+          joinDate,
+          requests,
+          updatedAt,
+          userId,
+          affiliation,
+          businessSituation,
+          employeeNumber,
+          skillPoints,
+          skills,
+          specialAbilities,
+          specs,
+          userName,
+        } = getUserData.data;
 
         setUserData((p: UserData) => ({
           ...p,
-          specId: specId,
-          portfolio: portfolios,
-          sellingPoint: sellingPoints,
-          qualification: qualifications,
-          previousWork: previousWorks,
-          developmentExperience: developmentExperiences,
-          skillSummaries: skillSummaries[0],
+          user: {
+            userId: userId,
+            affiliation: affiliation,
+            businessSituation: businessSituation,
+            userName: userName,
+            employeeNumber: employeeNumber,
+          },
+          userId: userId,
+          skill: skills[0],
+          skillPoint: skillPoints[0],
+          specialAbility: specialAbilities,
+          spec: specs[0],
         }));
+
+        // 最新スペックシートの取得
+        if (specs.length > 0) {
+          const getSpecIds = await axios.get(
+            `${process.env.NEXT_PUBLIC_API_URL}/spec/get/${
+              isTrue ? argId : cookies.userId
+            }`
+          );
+          const {
+            specId,
+            developmentExperiences,
+            portfolios,
+            previousWorks,
+            qualifications,
+            sellingPoints,
+            skillSummaries,
+          } = getSpecIds.data;
+
+          setUserData((p: UserData) => ({
+            ...p,
+            specId: specId,
+            portfolio: portfolios,
+            sellingPoint: sellingPoints,
+            qualification: qualifications,
+            previousWork: previousWorks,
+            developmentExperience: developmentExperiences,
+            skillSummaries: skillSummaries[0],
+          }));
+        }
+      } catch (error) {
+        console.error(error);
+        return error;
       }
     };
+
     fetchId();
   }, [argId, isTrue]);
 

@@ -107,19 +107,22 @@ function Home() {
         setRenderFiles((prevFiles: any) => [...prevFiles, null]);
       }
     }
-  }, [defaultData.developmentExperiences.length]);
+  }, []);
 
   // qualification日付の形式変換
   let tentative: Qualification[] = [];
-  for (let i = 0; i < defaultData?.qualifications?.length; i++) {
-    const date: any = defaultData.qualifications[i].acquisitionDate;
-    const yearAndMonth = date.split('年'); // ["2022", "10月"]
-    const year = yearAndMonth[0]; // "2022"
-    const month = yearAndMonth[1].replace('月', ''); // "10"
-    tentative = [...tentative, { year: year, month: month }];
-  }
+  const processQualifications = () => {
+    for (let i = 0; i < defaultData?.qualifications?.length; i++) {
+      const date: any = defaultData.qualifications[i].acquisitionDate;
+      const yearAndMonth = date.split('年'); // ["2022", "10月"]
+      const year = yearAndMonth[0]; // "2022"
+      const month = yearAndMonth[1].replace('月', ''); // "10"
+      tentative = [...tentative, { year: year, month: month }];
+    }
+  };
+  processQualifications();
 
-  // 既存データの編集
+  // 既存データの編集 =================================================================
   const handleEditDefaultData = (
     e: any,
     category: string,
