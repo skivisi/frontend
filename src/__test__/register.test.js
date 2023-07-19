@@ -138,14 +138,14 @@ describe('validateEmail', () => {
     return null;
   };
 
-  it('returns error when email is not valid', () => {
+  it('validateEmail(エラー)', () => {
     const invalidEmail = 'invalidEmail';
     expect(validateEmail(invalidEmail)).toBe(
       '有効なメールアドレスを入力してください'
     );
   });
 
-  it('returns null when email is valid', () => {
+  it('validateEmail(null時のエラー)', () => {
     const validEmail = 'valid@example.com';
     expect(validateEmail(validEmail)).toBeNull();
   });
@@ -159,7 +159,7 @@ describe('validatePassword', () => {
     }
     return null;
   };
-  it('returns error when password is less than 8 characters', () => {
+  it('validatePassword(エラー)', () => {
     const shortPassword = '1111';
     expect(validatePassword(shortPassword)).toBe(
       'パスワードは8文字以上で入力してください'
@@ -175,7 +175,7 @@ describe('validateConfirmPassword', () => {
       }
       return null;
     };
-    it('returns error when confirmPassword is less than 8 characters', () => {
+    it('confirmPassword(エラー)', () => {
       const shortPassword = '1111';
       expect(validateConfirmPassword(shortPassword)).toBe(
         'パスワードは8文字以上で入力してください'
@@ -192,14 +192,14 @@ describe('validateAffiliation', () => {
     return null;
   };
 
-  it('returns error when affiliation is null', () => {
+  it('affiliation(null時のエラー)', () => {
     const emptyAffiliation = null;
     expect(validateAffiliation(emptyAffiliation)).toBe(
       '所属を入力してください'
     );
   });
 
-  it('returns error when affiliation is an empty string', () => {
+  it('affiliation(空の場合のエラー)', () => {
     const emptyAffiliation = '';
     expect(validateAffiliation(emptyAffiliation)).toBe(
       '所属を入力してください'
@@ -207,7 +207,7 @@ describe('validateAffiliation', () => {
   });
 
   // 有効な値が入力されている場合、nullが返される
-  it('returns null when affiliation is provided', () => {
+  it('affiliation(成功)', () => {
     const validAffiliation = 'FR';
     expect(validateAffiliation(validAffiliation)).toBeNull();
   });
@@ -222,21 +222,21 @@ describe('validateBusinessSituation', () => {
     return null;
   };
 
-  it('returns error when businessSituation is null', () => {
+  it('businessSituation(null時のエラー)', () => {
     const emptyBusinessSituation = null;
     expect(validateBusinessSituation(emptyBusinessSituation)).toBe(
       '業務状況を入力してください'
     );
   });
 
-  it('returns error when businessSituation is an empty string', () => {
+  it('rbusinessSituation(空の場合のエラー)', () => {
     const emptyBusinessSituation = '';
     expect(validateBusinessSituation(emptyBusinessSituation)).toBe(
       '業務状況を入力してください'
     );
   });
 
-  it('returns null when businessSituation is provided', () => {
+  it('businessSituation(成功)', () => {
     const validBusinessSituation = '待機中';
     expect(validateBusinessSituation(validBusinessSituation)).toBeNull();
   });
