@@ -318,6 +318,7 @@ const DevelopmentExperiences = ({
           }
         />
       </div>
+      {/* 追加データの場合 */}
       {handleRemove ? (
         <>
           {renderFiles[
@@ -338,6 +339,7 @@ const DevelopmentExperiences = ({
           )}
         </>
       ) : (
+        // 既存データの場合
         <div className="flex justify-center">
           <Image
             src={

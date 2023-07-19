@@ -5,7 +5,6 @@ export async function POST(req: Request) {
   // const  {skillSummary}  = await req.json();
   // console.log(skillSummary)
   const { specData, userId, specDetail, request } = await req.json();
-  console.log(specDetail.skillSummaries);
 
   // * 1, `api/spec/post/:userId`に新しいspecシートをpost
   const response = await axios.post(
@@ -27,10 +26,13 @@ export async function POST(req: Request) {
     request
   );
 
-  // await axios.post(
-  //   `${process.env.API_SECRET_URL}/spec/autoCalibration`,
-  //   specDetail.skillSummaries
-  // );
+  const newSpecDetail = {
+    skillSummaries: specDetail.skillSummaries,
+  };
+  await axios.post(
+    `${process.env.API_SECRET_URL}/spec/autoCalibration`,
+    newSpecDetail
+  );
 
   return NextResponse.json({ message: 'ok' });
 }
