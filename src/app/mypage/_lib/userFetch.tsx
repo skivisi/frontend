@@ -135,7 +135,7 @@ export const userFetch = (isTrue: boolean, argId: number) => {
           }));
         }
       } catch (error) {
-        console.error(error);
+        // console.error(error);
         return error;
       }
     };

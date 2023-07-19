@@ -103,7 +103,7 @@ describe('Login API', () => {
   );
 
   // ログインが失敗した場合のテスト
-  test('failed login', async () => {
+  test('ログイン失敗', async () => {
     // APIの呼び出しを検証する前にモックを設定する
     axios.post.mockRejectedValue({
       response: {
@@ -211,14 +211,14 @@ describe('validateEmail', () => {
     return null;
   };
 
-  it('returns error when email is not valid', () => {
+  it('validateEmail(エラー)', () => {
     const invalidEmail = 'invalidEmail';
     expect(validateEmail(invalidEmail)).toBe(
       '有効なメールアドレスを入力してください'
     );
   });
 
-  it('returns null when email is valid', () => {
+  it('validateEmail(成功)', () => {
     const validEmail = 'valid@example.com';
     expect(validateEmail(validEmail)).toBeNull();
   });
@@ -232,10 +232,15 @@ describe('validatePassword', () => {
     }
     return null;
   };
-  it('returns error when password is less than 8 characters', () => {
+  it('validatePassword(エラー)', () => {
     const shortPassword = '1111';
     expect(validatePassword(shortPassword)).toBe(
       'パスワードは8文字以上で入力してください'
     );
+  });
+
+  it('validatePassword(成功)', () => {
+    const password = '11111111';
+    expect(validatePassword(password)).toBeNull();
   });
 });
