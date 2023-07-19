@@ -5,11 +5,6 @@ import '../styles/globals.css';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 
-const fetcher = (
-  resource: RequestInfo,
-  init: RequestInit | undefined
-) => fetch(resource, init).then((res) => res.json());
-
 const Login = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string | null>(null);
@@ -70,12 +65,6 @@ const Login = () => {
           });
           if (
             affiliation === '営業'
-            // affiliation === 'FR' ||
-            // affiliation === 'JAVA' ||
-            // affiliation === 'QA' ||
-            // affiliation === 'ML' ||
-            // affiliation === 'CL' ||
-            // affiliation === 'PHP'
           ) {
             window.location.href = '/dashboard/dbSales';
           } else {
@@ -124,8 +113,10 @@ const Login = () => {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              ></label>
+                className="text-sm font-medium leading-6 text-gray-900 hidden"
+              >
+                メールアドレス
+              </label>
               <div className="mt-2">
                 <input
                   id="email"
@@ -147,8 +138,10 @@ const Login = () => {
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                ></label>
+                  className="text-sm font-medium leading-6 text-gray-900 hidden"
+                >
+                  パスワード
+                </label>
                 <div className="text-sm"></div>
               </div>
               <div className="mt-2">

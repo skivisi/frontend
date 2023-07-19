@@ -1,6 +1,6 @@
 import { rest } from "msw";
 import users from "./api/users";
-import spec from "./api/spec";
+import spec from "./api/getSpec";
 
 export const handlers = [
     rest.get( `${process.env.NEXT_PUBLIC_API_URL}/users`, users.get),
