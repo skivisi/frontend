@@ -1,6 +1,5 @@
 import styles from './style.module.css';
 import { Chart } from './Chart';
-import { Suspense } from 'react';
 import { UserData,transformedObject } from '../../../types/types';
 
 const skillview = ({ userData }: { userData: UserData }) => {
@@ -88,9 +87,7 @@ const skillview = ({ userData }: { userData: UserData }) => {
             </div>
 
             {/* レーダーチャートコンポーネント */}
-            <Suspense fallback={<div>ローディング中</div>}>
               <Chart skill={userData.skillPoint} />
-            </Suspense>
           </section>
 
           <section className="flex justify-center mt-10">
