@@ -137,9 +137,6 @@ export const userFetch = (isTrue: boolean, argId: number) => {
       } catch (error) {
         console.error(error);
         return error;
-        // エラーをキャッチしたら、何らかの形でユーザーにエラーを通知します。
-        // エラーメッセージを状態変数に設定し、それを返すことも可能です。
-        // setUserDataなどでエラー状態を管理することもできます。
       }
     };
 
