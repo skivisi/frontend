@@ -18,7 +18,9 @@ const Register = () => {
     string | null
   >(null);
   const [password, setPassword] = useState<string | null>(null);
-  const [confirmPassword, setConfirmPassword] = useState<string | null>(null);
+  const [confirmPassword, setConfirmPassword] = useState<
+    string | null
+  >(null);
   const [userCount, setUserCount] = useState(0);
 
   const [emailError, setEmailError] = useState<string | null>(null);
@@ -157,7 +159,12 @@ const Register = () => {
             onSubmit={handleSubmit}
           >
             <div>
-              <label className="block text-sm font-medium leading-6 text-gray-900"></label>
+              <label
+                htmlFor="userName"
+                className="text-sm font-medium leading-6 text-gray-900 hidden"
+              >
+                userName
+              </label>
               <div className="mt-2">
                 <input
                   id="userName"
@@ -176,8 +183,10 @@ const Register = () => {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              ></label>
+                className="text-sm font-medium leading-6 text-gray-900 hidden"
+              >
+                email
+              </label>
               <div className="mt-2">
                 <input
                   id="email"
@@ -198,7 +207,12 @@ const Register = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium leading-6 text-gray-900"></label>
+              <label
+                htmlFor="employeeNumber"
+                className="text-sm font-medium leading-6 text-gray-900 hidden"
+              >
+                employeeNumber
+              </label>
               <div className="mt-2">
                 <input
                   id="employeeNumber"
@@ -218,9 +232,15 @@ const Register = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium leading-6 text-gray-900"></label>
+              <label
+                htmlFor="joinDate"
+                className="text-sm font-medium leading-6 text-gray-900 hidden"
+              >
+                joinDate
+              </label>
               <div className="mt-2">
                 <DatePicker
+                  id="joinDate"
                   dateFormat="yyyy-MM"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   selected={selectedDate}
@@ -233,9 +253,15 @@ const Register = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium leading-6 text-gray-900"></label>
+              <label
+                htmlFor="affiliation"
+                className="text-sm font-medium leading-6 text-gray-900 hidden"
+              >
+                affiliation
+              </label>
               <div className="mt-2">
                 <select
+                  id="affiliation"
                   className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset"
                   onChange={(e) => setAffiliation(e.target.value)}
                   defaultValue="所属"
@@ -259,9 +285,15 @@ const Register = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium leading-6 text-gray-900"></label>
+              <label
+                htmlFor="businessSituation"
+                className="text-sm font-medium leading-6 text-gray-900 hidden"
+              >
+                businessSituation
+              </label>
               <div className="mt-2">
                 <select
+                  id="businessSituation"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2"
                   required
                   onChange={(e) =>
@@ -286,8 +318,10 @@ const Register = () => {
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                ></label>
+                  className="text-sm font-medium leading-6 text-gray-900 hidden"
+                >
+                  password
+                </label>
                 <div className="text-sm"></div>
               </div>
               <div className="mt-2">
@@ -310,15 +344,17 @@ const Register = () => {
             <div>
               <div className="flex items-center justify-between">
                 <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                ></label>
+                  htmlFor="confirmPassword"
+                  className="text-sm font-medium leading-6 text-gray-900 hidden"
+                >
+                  confirmPassword
+                </label>
                 <div className="text-sm"></div>
               </div>
               <div className="mt-2">
                 <input
-                  id="confirmPasseword"
-                  name="confirmPasseword"
+                  id="confirmPassword"
+                  name="confirmPassword"
                   type="password"
                   autoComplete="current-password"
                   required
@@ -335,6 +371,7 @@ const Register = () => {
             </div>
 
             <div>
+              <label className="hidden">submit</label>
               <button
                 type="submit"
                 className="flex w-full justify-center px-3 py-2.5 shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid text-white"

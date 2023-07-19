@@ -13,7 +13,6 @@ const fetcher = (
 
 const DbAdmin = () => {
   const { data, error } = useSWR('/api/request', fetcher);
-  console.log(data);
 
   if (!data) {
     return <div>Loading...</div>; // データの取得中に表示
