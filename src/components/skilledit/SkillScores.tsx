@@ -14,7 +14,7 @@ const SkillScores = ({
 
   // ラジオボタングループごとに一意のname属性を指定
   const className = `${skillTag}_scores`;
-  const inputName = `${skillTag}_scores`; 
+  const inputName = `${skillTag}_scores`;
 
 // スコア編集
   const handleChange = (event: any) => {
