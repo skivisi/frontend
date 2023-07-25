@@ -56,7 +56,8 @@ function Home() {
     previousWorks: [],
     developmentExperiences: [],
   });
-  console.log(defaultData);
+  // console.log(userData);
+  // console.log(defaultData);
 
   // アップロード画像POST用データ
   const [uploadFiles, setUploadFiles] = useState<InputData>([]);
@@ -81,17 +82,7 @@ function Home() {
       previousWorks: userData.previousWork,
       developmentExperiences: userData.developmentExperience,
     }));
-  }, [
-    defaultData?.qualifications?.length,
-    userData.developmentExperience,
-    userData.portfolio,
-    userData.previousWork,
-    userData.qualification,
-    userData.sellingPoint,
-    userData.skillSummaries,
-    userData.spec?.github,
-    userData.spec?.offHours,
-  ]);
+  }, [userData]);
 
   useEffect(() => {
     if (userData.developmentExperience) {
@@ -107,7 +98,8 @@ function Home() {
         setRenderFiles((prevFiles: any) => [...prevFiles, null]);
       }
     }
-  }, []);
+  }, [defaultData?.developmentExperiences?.length, userData.developmentExperience]);
+
 
   // qualification日付の形式変換
   let tentative: Qualification[] = [];
@@ -208,10 +200,9 @@ function Home() {
 
   // 新規追加データ  =======================================================================
   const [addData, setAddData] = useState<any>({});
-  console.log(addData);
+  // console.log(addData);
   // qualifications日付変換前仮置きデータ
   const [ql, setQl] = useState<any>([]);
-  // console.log(ql);
 
   // // 追加データの入れ物を作る関数
   const newItemsMap: any = {
@@ -235,7 +226,6 @@ function Home() {
       tools: [],
     },
   };
-
   const handleAddDataForm = (category: string) => {
     const newItem = newItemsMap[category];
     if (!newItem) return; // Invalid category.
@@ -404,6 +394,7 @@ function Home() {
                 type="text"
                 name=""
                 id="portfolio"
+                data-testid="portfolio"
                 // onBlur={handleBlur}
                 value={
                   defaultData?.spec.github

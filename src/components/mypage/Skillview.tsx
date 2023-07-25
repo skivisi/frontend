@@ -26,7 +26,7 @@ const skillview = ({ userData }: { userData: UserData }) => {
       return 'C';
     } else if (value < 5 && value >= 4) {
       return 'D';
-    } else if (value < 4 && value >= 2) {
+    } else if (value < 4 && value >= 3) {
       return 'E';
     } else if (value === 2) {
       return 'F';
