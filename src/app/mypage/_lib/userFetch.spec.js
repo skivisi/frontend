@@ -13,7 +13,7 @@ jest.mock('react-cookie', () => ({
   useCookies: jest.fn(),
 }));
 
-('custom-hook_userFetch', () => {
+describe('custom-hook_userFetch', () => {
   test('cookie:userIdの値のユーザーの取得', async () => {
     const mockSetCookie = jest.fn();
     const mockRemoveCookie = jest.fn();

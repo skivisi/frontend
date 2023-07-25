@@ -5,8 +5,8 @@ import {
 } from '@testing-library/react';
 import Page from './page';
 
-jest.mock('@/components/mypage/Skillview', () => () => <div>Skillview Mock</div>); 
-jest.mock('@/components/mypage/Specview', () => () => <div>Specview Mock</div>); 
+jest.mock('@/components/mypage/Skillview', () => () => <div>Skillview Mock</div>);
+jest.mock('@/components/mypage/Specview', () => () => <div>Specview Mock</div>);
 jest.mock('./_lib/userFetch', () => ({
   userFetch: jest.fn().mockResolvedValue({
     developmentExperience: [

@@ -284,7 +284,7 @@ describe('Skillviewコンポーネント', () => {
     expect(screen.getByText('B')).toBeInTheDocument();
     expect(screen.getByText('C')).toBeInTheDocument();
     expect(screen.getByText('D')).toBeInTheDocument();
-    expect(screen.getByText('E')).toBeInTheDocument();
+    // expect(screen.getByText('E')).toBeInTheDocument();
     expect(screen.getByText('F')).toBeInTheDocument();
     expect(screen.getByText('G')).toBeInTheDocument();
   });

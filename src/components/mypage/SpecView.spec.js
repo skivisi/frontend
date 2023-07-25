@@ -196,6 +196,6 @@ describe('Skillviewコンポーネント', () => {
   it('github value', () => {
     render(<Specview userData={equalObject} />);
     
-    expect(screen.getByTestId('github').textContent).toBe('https://github.co/user');
+    expect(screen.getByTestId('github').textContent).toBe('https://github.com/user');
   });
 });

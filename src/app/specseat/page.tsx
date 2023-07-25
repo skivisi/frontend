@@ -57,7 +57,7 @@ function Home() {
     developmentExperiences: [],
   });
   // console.log(userData);
-  console.log(defaultData);
+  // console.log(defaultData);
 
   // アップロード画像POST用データ
   const [uploadFiles, setUploadFiles] = useState<InputData>([]);
@@ -103,16 +103,16 @@ function Home() {
 
   // qualification日付の形式変換
   let tentative: Qualification[] = [];
-  // const processQualifications = () => {
-  //   for (let i = 0; i < defaultData?.qualifications?.length; i++) {
-  //     const date: any = defaultData.qualifications[i].acquisitionDate;
-  //     const yearAndMonth = date.split('年'); // ["2022", "10月"]
-  //     const year = yearAndMonth[0]; // "2022"
-  //     const month = yearAndMonth[1].replace('月', ''); // "10"
-  //     tentative = [...tentative, { year: year, month: month }];
-  //   }
-  // };
-  // processQualifications();
+  const processQualifications = () => {
+    for (let i = 0; i < defaultData?.qualifications?.length; i++) {
+      const date: any = defaultData.qualifications[i].acquisitionDate;
+      const yearAndMonth = date.split('年'); // ["2022", "10月"]
+      const year = yearAndMonth[0]; // "2022"
+      const month = yearAndMonth[1].replace('月', ''); // "10"
+      tentative = [...tentative, { year: year, month: month }];
+    }
+  };
+  processQualifications();
 
   // 既存データの編集 =================================================================
   const handleEditDefaultData = (
@@ -200,10 +200,9 @@ function Home() {
 
   // 新規追加データ  =======================================================================
   const [addData, setAddData] = useState<any>({});
-  console.log(addData);
+  // console.log(addData);
   // qualifications日付変換前仮置きデータ
   const [ql, setQl] = useState<any>([]);
-  // console.log(ql);
 
   // // 追加データの入れ物を作る関数
   const newItemsMap: any = {
@@ -227,7 +226,6 @@ function Home() {
       tools: [],
     },
   };
-
   const handleAddDataForm = (category: string) => {
     const newItem = newItemsMap[category];
     if (!newItem) return; // Invalid category.

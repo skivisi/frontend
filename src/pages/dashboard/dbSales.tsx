@@ -88,7 +88,6 @@ const DbSales = (userList: UserList) => {
         }
       );
       const foundUser = response.data;
-      // console.log(`Request URL: http://localhost:8000/api/search/integration?affiliation=${affiliation}&businessSituation=${businessSituation}&skillSummary=${mergedSkills.join(',')}`);
 
       router.push(
         `/searchResult/searchSales?foundUser=${encodeURIComponent(

@@ -69,7 +69,6 @@ const skillEdit = () => {
     TS: null,
     COM: null,
   };
-
   let defaultAbilities: Ability[] = [
     { skillList: '予知能力', skillSelection: false, tagColor: 1 },
     { skillList: 'テックリード', skillSelection: false, tagColor: 2 },
@@ -82,6 +81,7 @@ const skillEdit = () => {
     { skillList: 'お喋り野郎', skillSelection: false, tagColor: 1 },
     { skillList: 'ガヤ', skillSelection: false, tagColor: 3 },
   ];
+  console.log(skills);
 
   useEffect(() => {
     setSkills((p: SkillsData) => ({
@@ -129,7 +129,6 @@ const skillEdit = () => {
     }
   };
 
-
   // スペシャルスキル編集
   const handleChangeAbilities = (index: number) => {
     const newAbilityValue = [...skills.abilities];
@@ -167,12 +166,12 @@ const skillEdit = () => {
     try {
       if (typeof skill === 'undefined') {
         await axios.post(
-          `http://localhost:8000/api/skill/postSkillData/${userId}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/skill/postSkillData/${userId}`,
           formData
         );
       } else {
         await axios.put(
-          `http://localhost:8000/api/skill/update/${userId}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/skill/update/${userId}`,
           formData
         );
       }
@@ -244,15 +243,16 @@ const skillEdit = () => {
         <div className="w-full flex border-2 border-slate-300 mt-3 h-10 shadow-md">
           <label
             className=" block w-1/4 p-1 bg-teal-800 text-teal-50"
-            htmlFor=""
+            htmlFor="titles"
           >
             タイトル
           </label>
           <input
             className={`${styles.focus} block w-3/4 p-2 bg-white`}
             type="text"
-            name=""
-            id="content"
+            name="titles"
+            data-testid="titles"
+            id="titles"
             defaultValue={
               skills.skill?.InherentName
                 ? skills.skill?.InherentName
@@ -266,13 +266,14 @@ const skillEdit = () => {
         <div className="w-full flex border-2 border-slate-300 shadow-md">
           <label
             className="block w-1/4 p-1 bg-teal-800 text-teal-50"
-            htmlFor=""
+            htmlFor="content"
           >
             内容
           </label>
           <textarea
-            name=""
-            id=""
+            name="content"
+            id="content"
+            data-testid="content"
             className={`${styles.focus} p-2`}
             cols={65}
             rows={5}
@@ -307,6 +308,7 @@ const skillEdit = () => {
                 <button
                   key={index}
                   type="button"
+                  data-testid="buttons"
                   onClick={() => handleChangeAbilities(index)}
                   className={
                     ability.skillSelection === false
