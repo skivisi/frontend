@@ -252,7 +252,7 @@ const skillEdit = () => {
             className={`${styles.focus} block w-3/4 p-2 bg-white`}
             type="text"
             name=""
-            id=""
+            id="content"
             defaultValue={
               skills.skill?.InherentName
                 ? skills.skill?.InherentName

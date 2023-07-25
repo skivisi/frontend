@@ -1,91 +1,5 @@
-import { userFetch } from './userFetch';
-import { server } from '../../../mocks/server';
-import { rest } from 'msw';
-import { renderHook, waitFor } from '@testing-library/react';
-import { useCookies } from 'react-cookie';
-
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
-
-// cookieの値(react-cookie)のモック化
-jest.mock('react-cookie', () => ({
-  useCookies: jest.fn(),
-}));
-
-('custom-hook_userFetch', () => {
-  test('cookie:userIdの値のユーザーの取得', async () => {
-    const mockSetCookie = jest.fn();
-    const mockRemoveCookie = jest.fn();
-    const cookies = { userId: '1' };
-    useCookies.mockReturnValue([
-      cookies,
-      mockSetCookie,
-      mockRemoveCookie,
-    ]);
-    const { result } = renderHook(() => userFetch(false, 0));
-    await waitFor(() => {
-      console.log(result)
-      console.log(equalObject)
-      expect(result.current).toEqual(equalObject);
-    });
-  });
-
-  test('cookie:userIdの値のユーザーの取得（エラー時）', async () => {
-    server.use(
-      rest.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/users`,
-        (req, res, ctx) => {
-          return res(
-            ctx.status(200),
-            ctx.json({ error: 'Bad request' })
-          );
-        }
-      )
-    );
-
-    const mockSetCookie = jest.fn();
-    const mockRemoveCookie = jest.fn();
-    const cookies = { userId: '1' };
-    useCookies.mockReturnValue([
-      cookies,
-      mockSetCookie,
-      mockRemoveCookie,
-    ]);
-    const { result } = renderHook(() => userFetch(false, 0));
-    await waitFor(() => {
-      console.log(result)
-      console.log(equalErrorObject)
-      expect(result.current).toEqual(equalErrorObject);
-    });
-  });
-
-  test('引数:true,argIdの値のユーザーの取得', async () => {
-    const { result } = renderHook(() => userFetch(true, 1));
-    await waitFor(() => {
-      expect(result.current).toEqual(equalObject);
-    });
-  });
-
-  test('引数:true,argIdの値のユーザーの取得（エラー時）', async () => {
-    server.use(
-      rest.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/users`,
-        (req, res, ctx) => {
-          return res(
-            ctx.status(400),
-            ctx.json({ error: 'Bad request' })
-          );
-        }
-      )
-    );
-
-    const { result } = renderHook(() => userFetch(true, 1));
-    await waitFor(() => {
-      expect(result.current).toEqual(equalErrorObject);
-    });
-  });
-});
+import { screen, render } from '@testing-library/react';
+import Specview from './Specview';
 
 const equalObject = {
   developmentExperience: [
@@ -250,3 +164,38 @@ const equalErrorObject = {
   },
   userId: 0,
 };
+
+describe('Skillviewコンポーネント', () => {
+  it('表示の切り替え case: スペックデータがある場合', () => {
+    render(<Specview userData={equalObject} />);
+    const message = screen.queryByText(
+      'スペックシートが登録されてないよ！'
+    );
+    // 要素が存在しないことを確認
+    expect(message).toBeNull();
+  });
+  it('表示の切り替え case: スペックデータがない場合', () => {
+    render(<Specview userData={equalErrorObject} />);
+    // "スキルが登録されてないよ！"というテキストが存在する要素を取得
+    const message = screen.getByText(
+      'スペックシートが登録されてないよ！'
+    );
+    // 要素が存在することを確認
+    expect(message).toBeTruthy();
+  });
+  it('画像の表示 case:画像あり', () => {
+    render(<Specview userData={equalObject} />);
+    // 画像のaltテキストを使って要素を取得
+    const imgElement = screen.getByAltText(
+      'Picture of the architecture'
+    );
+    // 画像要素が存在することを確認
+    expect(imgElement).toBeInTheDocument();
+    expect(screen)
+  });
+  it('github value', () => {
+    render(<Specview userData={equalObject} />);
+    
+    expect(screen.getByTestId('github').textContent).toBe('https://github.co/user');
+  });
+});

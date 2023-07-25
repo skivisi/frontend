@@ -120,7 +120,7 @@ jest.mock('./_lib/userFetch', () => ({
 
 
 test('test changePageState function', () => {
-  const { getByText, rerender } = render(<Page />);
+  const { getByText } = render(<Page />);
 
   const skillButton = getByText('スキル');
   const specButton = getByText('スペック');
@@ -132,18 +132,14 @@ test('test changePageState function', () => {
   expect(h2Element).toBeTruthy();
 
   fireEvent.click(skillButton);
-  rerender(<Page />);
   expect(h2Element.textContent).toBe('スキルシート');
 
   fireEvent.click(LButton);
-  rerender(<Page />);
   expect(h2Element.textContent).toBe('スキルシート');
 
   fireEvent.click(specButton);
-  rerender(<Page />);
   expect(h2Element.textContent).toBe('スペックシート');
 
   fireEvent.click(RButton);
-  rerender(<Page />);
   expect(h2Element.textContent).toBe('スペックシート');
 });

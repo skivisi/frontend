@@ -56,6 +56,7 @@ function Home() {
     previousWorks: [],
     developmentExperiences: [],
   });
+  // console.log(userData);
   console.log(defaultData);
 
   // アップロード画像POST用データ
@@ -81,17 +82,7 @@ function Home() {
       previousWorks: userData.previousWork,
       developmentExperiences: userData.developmentExperience,
     }));
-  }, [
-    defaultData?.qualifications?.length,
-    userData.developmentExperience,
-    userData.portfolio,
-    userData.previousWork,
-    userData.qualification,
-    userData.sellingPoint,
-    userData.skillSummaries,
-    userData.spec?.github,
-    userData.spec?.offHours,
-  ]);
+  }, [userData]);
 
   useEffect(() => {
     if (userData.developmentExperience) {
@@ -107,20 +98,21 @@ function Home() {
         setRenderFiles((prevFiles: any) => [...prevFiles, null]);
       }
     }
-  }, []);
+  }, [defaultData?.developmentExperiences?.length, userData.developmentExperience]);
+
 
   // qualification日付の形式変換
   let tentative: Qualification[] = [];
-  const processQualifications = () => {
-    for (let i = 0; i < defaultData?.qualifications?.length; i++) {
-      const date: any = defaultData.qualifications[i].acquisitionDate;
-      const yearAndMonth = date.split('年'); // ["2022", "10月"]
-      const year = yearAndMonth[0]; // "2022"
-      const month = yearAndMonth[1].replace('月', ''); // "10"
-      tentative = [...tentative, { year: year, month: month }];
-    }
-  };
-  processQualifications();
+  // const processQualifications = () => {
+  //   for (let i = 0; i < defaultData?.qualifications?.length; i++) {
+  //     const date: any = defaultData.qualifications[i].acquisitionDate;
+  //     const yearAndMonth = date.split('年'); // ["2022", "10月"]
+  //     const year = yearAndMonth[0]; // "2022"
+  //     const month = yearAndMonth[1].replace('月', ''); // "10"
+  //     tentative = [...tentative, { year: year, month: month }];
+  //   }
+  // };
+  // processQualifications();
 
   // 既存データの編集 =================================================================
   const handleEditDefaultData = (
@@ -404,6 +396,7 @@ function Home() {
                 type="text"
                 name=""
                 id="portfolio"
+                data-testid="portfolio"
                 // onBlur={handleBlur}
                 value={
                   defaultData?.spec.github
