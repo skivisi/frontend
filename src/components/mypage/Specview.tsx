@@ -15,7 +15,7 @@ import {
 import noimaged from '@/public/noimaged.png';
 
 const specview = ({ userData }: { userData: UserData }) => {
-  console.log(userData);
+  // console.log(userData);
   return (
     <>
       {userData.portfolio.length > 0 ? (
@@ -40,7 +40,7 @@ const specview = ({ userData }: { userData: UserData }) => {
                     <div className="bg-slate-200 block w-1/4 p-1">
                       Github
                     </div>
-                    <div className="block w-3/4 p-2 bg-white">
+                    <div className="block w-3/4 p-2 bg-white" data-testid="github">
                       {userData.spec.github}
                     </div>
                   </div>

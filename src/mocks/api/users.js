@@ -1,12 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
 
 const get = (req, res, ctx) => {
-  if (req.headers.get('x-mock-response') === 'error') {
-    return res(
-      ctx.status(400),
-      ctx.json({ error: 'Bad request' })
-    );
-  }
   return res(
     ctx.status(200),
     ctx.json({
