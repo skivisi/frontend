@@ -1,51 +1,40 @@
 import Header from '@/components/header';
 import Footer from '@/components/footer';
-import { GetServerSideProps } from 'next';
 import axios from 'axios';
-import { ChangeEvent, useEffect, useState } from 'react';
-import Link from 'next/link';
+import { ChangeEvent, useState } from 'react';
 import { useRouter } from 'next/router';
-import { string } from 'zod';
 import { autoComplete } from '../../app/specseat/_lib/autoComplete';
 import { Autocomplete, TextField, Chip } from '@mui/material';
-import {User,SkillData} from '../../../types/types'
+import { SkillData } from '../../../types/types'
 
-type UserList = {
-  userList: User[];
-};
+
 
 // 営業DB(検索機能)
-export const getServerSideProps: GetServerSideProps = async () => {
-  const userData = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/search/users`
-  );
-  const userList = userData.data;
-
-  return {
-    props: {
-      userList,
-    },
-  };
-};
-
-const DbSales = (userList: UserList) => {
-  const users = userList.userList;
-
+const DbSales = () => {
   const autocomplete = autoComplete();
   const router = useRouter();
 
   // エンジニア名で検索
   const [searchUser, setSearchUser] = useState('');
-  const handleSearch = () => {
-    const foundUser = users.filter((user: User) =>
-      user.userName.includes(searchUser)
+  const handleSearch = async() => {
+    try {
+    const response =  await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/search/users`,
+      {
+        params: {
+          userName: searchUser,
+        },
+      }
     );
-
+    const foundUser = response.data;
     router.push(
       `/searchResult/searchSales?foundUser=${encodeURIComponent(
         JSON.stringify(foundUser)
       )}`
     );
+  } catch (error) {
+    console.error(error);
+  }
   };
 
   // 絞り込み検索
