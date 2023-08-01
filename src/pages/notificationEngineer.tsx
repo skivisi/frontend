@@ -25,6 +25,8 @@ const NotificationEngineer = () => {
     fetcher
   );
 
+  console.log(data);
+
   if (!data) {
     return (
       <>
