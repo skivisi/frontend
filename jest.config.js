@@ -24,6 +24,8 @@ const customJestConfig = {
   testEnvironment: 'jest-environment-jsdom',
   setupFiles: ['jest-canvas-mock'],
   setupFilesAfterEnv: ['./jest.setup.js'],
+
+  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
