@@ -5,8 +5,8 @@ import {
 } from '@testing-library/react';
 import Page from './page';
 
-jest.mock('@/components/mypage/Skillview', () => () => <div>Skillview Mock</div>); 
-jest.mock('@/components/mypage/Specview', () => () => <div>Specview Mock</div>); 
+jest.mock('@/components/mypage/Skillview', () => () => <div>Skillview Mock</div>);
+jest.mock('@/components/mypage/Specview', () => () => <div>Specview Mock</div>);
 jest.mock('./_lib/userFetch', () => ({
   userFetch: jest.fn().mockResolvedValue({
     developmentExperience: [
@@ -120,7 +120,7 @@ jest.mock('./_lib/userFetch', () => ({
 
 
 test('test changePageState function', () => {
-  const { getByText, rerender } = render(<Page />);
+  const { getByText } = render(<Page />);
 
   const skillButton = getByText('スキル');
   const specButton = getByText('スペック');
@@ -132,18 +132,14 @@ test('test changePageState function', () => {
   expect(h2Element).toBeTruthy();
 
   fireEvent.click(skillButton);
-  rerender(<Page />);
   expect(h2Element.textContent).toBe('スキルシート');
 
   fireEvent.click(LButton);
-  rerender(<Page />);
   expect(h2Element.textContent).toBe('スキルシート');
 
   fireEvent.click(specButton);
-  rerender(<Page />);
   expect(h2Element.textContent).toBe('スペックシート');
 
   fireEvent.click(RButton);
-  rerender(<Page />);
   expect(h2Element.textContent).toBe('スペックシート');
 });

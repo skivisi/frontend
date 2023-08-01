@@ -1,60 +1,56 @@
 import Header from '@/components/header';
 import Footer from '@/components/footer';
-import { GetServerSideProps } from 'next';
 import axios from 'axios';
-import { ChangeEvent, useEffect, useState } from 'react';
-import Link from 'next/link';
+import { ChangeEvent, useState } from 'react';
 import { useRouter } from 'next/router';
-import { string } from 'zod';
 import { autoComplete } from '../../app/specseat/_lib/autoComplete';
 import { Autocomplete, TextField, Chip } from '@mui/material';
-import {User,SkillData} from '../../../types/types'
-
-type UserList = {
-  userList: User[];
-};
+import { SkillData } from '../../../types/types';
 
 // 営業DB(検索機能)
-export const getServerSideProps: GetServerSideProps = async () => {
-  const userData = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/search/users`
-  );
-  const userList = userData.data;
-
-  return {
-    props: {
-      userList,
-    },
-  };
-};
-
-const DbSales = (userList: UserList) => {
-  const users = userList.userList;
-
+const DbSales = () => {
   const autocomplete = autoComplete();
   const router = useRouter();
 
   // エンジニア名で検索
-  const [searchUser, setSearchUser] = useState('');
-  const handleSearch = () => {
-    const foundUser = users.filter((user: User) =>
-      user.userName.includes(searchUser)
-    );
-
-    router.push(
-      `/searchResult/searchSales?foundUser=${encodeURIComponent(
-        JSON.stringify(foundUser)
-      )}`
-    );
+  const [searchUser, setSearchUser] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const handleSearch = async () => {
+    if (!searchUser.trim()) {
+      setErrorMessage('ユーザー名を入力してください');
+    } else {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/search/users`,
+          {
+            params: {
+              userName: searchUser,
+            },
+          }
+        );
+        const foundUser = response.data;
+        router.push(
+          `/searchResult/searchSales?foundUser=${encodeURIComponent(
+            JSON.stringify(foundUser)
+          )}`
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   // 絞り込み検索
   const [affiliation, setAffiliation] = useState<string>('');
-  const [businessSituation, setBusinessSituation] = useState<string>('');
+  const [businessSituation, setBusinessSituation] =
+    useState<string>('');
   const [skillSummary, setSkillSummary] = useState<string[]>([]);
   const [skillUpdate, setSkillUpdate] = useState<string[]>([]);
-
-  const handleAffiliationChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const [validationError, setValidationError] = useState<string>('');
+  console.log(skillUpdate)
+  const handleAffiliationChange = (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
     setAffiliation(event.target.value);
   };
 
@@ -64,9 +60,11 @@ const DbSales = (userList: UserList) => {
     const { value, checked } = event.target;
 
     if (checked) {
-      setSkillSummary((prevSummary:string[]) => [...prevSummary, value]);
-    }
-    else {
+      setSkillSummary((prevSummary: string[]) => [
+        ...prevSummary,
+        value,
+      ]);
+    } else {
       setSkillSummary((prevSummary) =>
         prevSummary.filter((skill) => skill !== value)
       );
@@ -74,32 +72,40 @@ const DbSales = (userList: UserList) => {
   };
 
   const handleChange = async () => {
-    try {
-      const mergedSkills = [...skillSummary, ...skillUpdate];
+    // 検索条件が選択されていない場合のバリデーションを追加
+    if (
+      !affiliation &&
+      !businessSituation &&
+      skillSummary.length === 0 &&
+      skillUpdate.length === 0
+    ) {
+      setValidationError('検索条件が選択されていません');
+      return;
+    } else {
+      try {
+        const mergedSkills = [...skillSummary, ...skillUpdate];
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/search/integration`,
+          {
+            params: {
+              affiliation: affiliation,
+              businessSituation: businessSituation,
+              skillSummary: mergedSkills.join(','),
+            },
+          }
+        );
+        const foundUser = response.data;
 
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/search/integration`,
-        {
-          params: {
-            affiliation: affiliation,
-            businessSituation: businessSituation,
-            skillSummary: mergedSkills.join(','),
-          },
-        }
-      );
-      const foundUser = response.data;
-      // console.log(`Request URL: http://localhost:8000/api/search/integration?affiliation=${affiliation}&businessSituation=${businessSituation}&skillSummary=${mergedSkills.join(',')}`);
-
-      router.push(
-        `/searchResult/searchSales?foundUser=${encodeURIComponent(
-          JSON.stringify(foundUser)
-        )}`
-      );
-    } catch (error) {
-      console.error(error);
+        router.push(
+          `/searchResult/searchSales?foundUser=${encodeURIComponent(
+            JSON.stringify(foundUser)
+          )}`
+        );
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
-
 
   return (
     <>
@@ -114,11 +120,16 @@ const DbSales = (userList: UserList) => {
               onChange={(e) => setSearchUser(e.target.value)}
               placeholder="ユーザー名を入力してください"
               className="w-72 rounded-md py-1.5 bg-white shadow-xl border-2 border-slate-300"
+              required
             />
+            {errorMessage && (
+              <p className="text-red-500">{errorMessage}</p>
+            )}
           </form>
 
           <button
             onClick={handleSearch}
+            data-testid="search-button-1"
             className="text-xl px-3 py-1 shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid text-white"
           >
             検索する
@@ -276,6 +287,7 @@ const DbSales = (userList: UserList) => {
                   checked={affiliation === 'PHP'}
                   onChange={handleAffiliationChange}
                   id="PHP"
+                  data-testid="radio-PHP"
                   className="hidden peer"
                 />
                 <label
@@ -311,8 +323,8 @@ const DbSales = (userList: UserList) => {
                     <label htmlFor="4" className="pr-8">
                       <input
                         type="checkbox"
-                        id=" 4"
-                        name=" TypeScript"
+                        id="4"
+                        name="TypeScript"
                         value="TypeScript"
                         onChange={handleSkillSummaryChange}
                       />
@@ -876,13 +888,17 @@ const DbSales = (userList: UserList) => {
                   multiple
                   id="tags-filled"
                   options={autocomplete.autoCalibration.map(
-                    (option:SkillData) => option.skill
+                    (option: SkillData) => option.skill
                   )}
                   // onChange={(event, newValue) => {
                   //   setSkillUpdate(Array.isArray(newValue) ? newValue : [newValue]);
                   // }}
                   onChange={(event, newValue) => {
-                    setSkillUpdate(Array.isArray(newValue) ? (newValue as string[]) : [newValue as string]);
+                    setSkillUpdate(
+                      Array.isArray(newValue)
+                        ? (newValue as string[])
+                        : [newValue as string]
+                    );
                   }}
                   freeSolo
                   renderTags={(value: readonly any[], getTagProps) =>
@@ -906,10 +922,15 @@ const DbSales = (userList: UserList) => {
               )}
             </div>
           </div>
-
+          <div>
+            {validationError && (
+              <p className="text-red-500">{validationError}</p>
+            )}
+          </div>
           <button
             className="text-xl mt-5 px-3 py-1 shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid text-white"
             onClick={handleChange}
+            data-testid="search-button-2"
           >
             検索する
           </button>

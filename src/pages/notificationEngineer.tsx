@@ -104,8 +104,9 @@ const NotificationEngineer = () => {
 
   return (
     <>
+    <div className="flex flex-col min-h-screen">
       <Header />
-      <div className="text-sky-900">
+      <div className="text-sky-900 flex-grow">
         <div className="ml-24 my-14 text-2xl flex">
           <div>申請結果通知&nbsp;&nbsp;&nbsp;</div>
           <div>{totalCount}</div>
@@ -119,6 +120,7 @@ const NotificationEngineer = () => {
         </div>
       </div>
       <Footer />
+      </div>
     </>
   );
 };
