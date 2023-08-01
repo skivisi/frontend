@@ -7,6 +7,8 @@ import axios from 'axios';
 import { User } from '../../../types/types';
 import Cookies from 'js-cookie';
 
+
+
 // 検索結果(営業)
 
 type Query = {
@@ -17,7 +19,6 @@ export const getServerSideProps: GetServerSideProps = async (
   context
 ) => {
   const { query, req } = context;
-  
   return {
     props: {
       query,
@@ -39,9 +40,8 @@ const SearchSales = ({
   const affiliationCookie = getCookie('affiliation')
   const adminIdCookie = getCookie('adminId')
   const affiliation = affiliationCookie !== undefined ? affiliationCookie : null;
-  const adminId = Number(adminIdCookie) 
-  console.log(affiliation)
-  console.log(adminId)
+  const adminId = Number(adminIdCookie)
+
 
   // if (!affiliation) {
   //   window.location.reload();
@@ -59,7 +59,7 @@ const SearchSales = ({
       };
       const userId = user.userId;
       await axios.put(
-        `http://localhost:8000/api/businessSituation/${userId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/businessSituation/${userId}`,
         requestBody
       );
 
@@ -85,8 +85,9 @@ const SearchSales = ({
 
   return (
     <>
+    <div className="flex flex-col min-h-screen">
       <Header />
-      <div className="text-sky-900">
+      <div className="text-sky-900 flex-grow">
         <div className="ml-24 my-14 text-2xl flex">
           <div>検索結果&nbsp;&nbsp;&nbsp;</div>
           <div>{users.length}</div>
@@ -183,6 +184,7 @@ const SearchSales = ({
         </div>
       </div>
       <Footer />
+      </div>
     </>
   );
 };

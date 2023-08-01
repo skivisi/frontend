@@ -11,7 +11,6 @@ import { SkillData } from '../../../types/types';
 const DbSales = () => {
   const autocomplete = autoComplete();
   const router = useRouter();
-  console.log(autocomplete);
 
   // エンジニア名で検索
   const [searchUser, setSearchUser] = useState<string>('');
@@ -48,6 +47,7 @@ const DbSales = () => {
   const [skillSummary, setSkillSummary] = useState<string[]>([]);
   const [skillUpdate, setSkillUpdate] = useState<string[]>([]);
   const [validationError, setValidationError] = useState<string>('');
+  console.log(skillUpdate)
   const handleAffiliationChange = (
     event: ChangeEvent<HTMLInputElement>
   ) => {
@@ -287,6 +287,7 @@ const DbSales = () => {
                   checked={affiliation === 'PHP'}
                   onChange={handleAffiliationChange}
                   id="PHP"
+                  data-testid="radio-PHP"
                   className="hidden peer"
                 />
                 <label
@@ -322,8 +323,8 @@ const DbSales = () => {
                     <label htmlFor="4" className="pr-8">
                       <input
                         type="checkbox"
-                        id=" 4"
-                        name=" TypeScript"
+                        id="4"
+                        name="TypeScript"
                         value="TypeScript"
                         onChange={handleSkillSummaryChange}
                       />
