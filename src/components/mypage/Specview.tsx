@@ -21,7 +21,7 @@ const specview = ({ userData }: { userData: UserData }) => {
       {userData.portfolio.length > 0 ? (
         <>
           <div>
-          <h3 className="mt-10 text-xl font-bold">スタッフID</h3>
+            <h3 className="mt-10 text-xl font-bold">スタッフID</h3>
             <div className="w-full flex border-2 border-slate-300 mt-2 shadow-md">
               <div className="bg-slate-200 block w-1/4 p-1">
                 スタッフID
@@ -40,7 +40,10 @@ const specview = ({ userData }: { userData: UserData }) => {
                     <div className="bg-slate-200 block w-1/4 p-1">
                       Github
                     </div>
-                    <div className="block w-3/4 p-2 bg-white" data-testid="github">
+                    <div
+                      className="block w-3/4 p-2 bg-white"
+                      data-testid="github"
+                    >
                       {userData.spec.github}
                     </div>
                   </div>
@@ -389,7 +392,7 @@ const specview = ({ userData }: { userData: UserData }) => {
                       <Image
                         src={
                           i.img
-                            ? `http://127.0.0.1:8000/public/images/${i.img}`
+                            ? `https://axjhbffzfuoqnocmlavs.supabase.co/storage/v1/object/public/skivisi/${i.img}`
                             : noimaged
                         }
                         width={600}
