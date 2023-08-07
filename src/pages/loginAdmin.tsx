@@ -28,18 +28,14 @@ const LoginAdmin = () => {
     };
 
     try {
-      axios
-        .post(
-          `${process.env.NEXT_PUBLIC_API_URL}/auth/admin/login`,loginAdmin
-        )
-        .then((response) => {
-          let userData = response.data;
-          console.log(userData);
-          let id = userData.adminId;
-          console.log(id);
-          setCookie('adminId', id, { path: '/', secure: true });
-          window.location.href = '/dashboard/dbAdmin';
-        });
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/admin/login`, loginAdmin
+      );
+
+      let userData = response.data;
+      let id = userData.adminId;
+      setCookie('adminId', id, { path: '/', secure: true });
+      window.location.href = '/dashboard/dbAdmin';
     } catch (error) {
       console.log(error);
     }
