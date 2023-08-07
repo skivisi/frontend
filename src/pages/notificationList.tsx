@@ -1,9 +1,7 @@
 import axios from 'axios';
 import Header from '../components/header';
 import Footer from '@/components/footer';
-import { GetServerSideProps } from 'next';
 import { useEffect, useState } from 'react';
-import requestHandler from './api/request';
 import useSWR from 'swr';
 import Link from 'next/link';
 import { Request } from '../../types/types';

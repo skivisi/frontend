@@ -8,7 +8,6 @@ import NotificationEngineer from '../pages/notificationEngineer';
 import { setupServer } from 'msw/node';
 import { rest } from 'msw';
 import Cookies from 'js-cookie';
-import { SWRConfig } from 'swr';
 
 const mockData = [
   {
@@ -17,7 +16,7 @@ const mockData = [
     applicationId: 13,
     createdAt: '2023-07-19',
     engineerComment: '',
-    resultedAt: '2023-07-19',
+    resultedAt: '2023-08-02',
     status: 2,
     userId: 1,
   },
@@ -27,7 +26,7 @@ const mockData = [
     applicationId: 14,
     createdAt: '2023-07-20',
     engineerComment: '',
-    resultedAt: '2023-07-20',
+    resultedAt: '2023-08-03',
     status: 3,
     userId: 1,
   },
@@ -47,58 +46,60 @@ beforeAll(() => server.listen()); // テストの前にモックサーバーを�
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close()); // テストの後にモックサーバーを終了
 
-test('requestデータを取得して表示', async () => {
-  let testRequest = null;
-  server.use(
-    rest.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/request/receive/:userId`,
-      (req, res, ctx) => {
-        testRequest = req;
-        return res(ctx.json(mockData));
-      }
-    )
-  );
-
-  Cookies.set('userId', '1');
-
-  render(<NotificationEngineer />);
-
-  const element = await screen.findByText(/2023/i);
-  expect(element).toBeInTheDocument();
-});
-
-test('日付順に並び替え', () => {
-  render(<NotificationEngineer />);
-
-  const sortedData = [
-    {
-      adminComment: '',
-      adminId: 1,
-      applicationId: 14,
-      createdAt: '2023-07-20',
-      engineerComment: '',
-      resultedAt: '2023-07-20',
-      status: 3,
-      userId: 1,
-    },
-    {
-      adminComment: '',
-      adminId: 1,
-      applicationId: 13,
-      createdAt: '2023-07-19',
-      engineerComment: '',
-      resultedAt: '2023-07-19',
-      status: 2,
-      userId: 1,
-    },
-  ];
-
-  const sortRequest = [...mockData].sort((a, b) => {
-    return (
-      new Date(b.resultedAt).getTime() -
-      new Date(a.resultedAt).getTime()
+describe('SSRでcookie取得', () => {
+  test('requestデータを取得して表示', async () => {
+    let testRequest = null;
+    server.use(
+      rest.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/request/receive/:userId`,
+        (req, res, ctx) => {
+          testRequest = req;
+          return res(ctx.json(mockData));
+        }
+      )
     );
-  });
 
-  expect(NotificationEngineer(mockData)).toEqual(sortedData);
+    Cookies.set('userId', '1');
+
+    render(<NotificationEngineer />);
+
+    const element = await screen.findByText(/2023/i);
+    expect(element).toBeInTheDocument();
+  });
+  
+  test('日付順に並び替え', () => {
+    render(<NotificationEngineer />);
+  
+    const sortedData = [
+      {
+        adminComment: '',
+        adminId: 1,
+        applicationId: 14,
+        createdAt: '2023-07-20',
+        engineerComment: '',
+        resultedAt: '2023-08-03',
+        status: 3,
+        userId: 1,
+      },
+      {
+        adminComment: '',
+        adminId: 1,
+        applicationId: 13,
+        createdAt: '2023-07-19',
+        engineerComment: '',
+        resultedAt: '2023-08-02',
+        status: 2,
+        userId: 1,
+      },
+    ];
+  
+    const sortRequest = [...mockData].sort((a, b) => {
+      return (
+        new Date(b.resultedAt).getTime() -
+        new Date(a.resultedAt).getTime()
+      );
+    });
+  
+    expect(sortRequest).toEqual(sortedData);
+  });
 });
