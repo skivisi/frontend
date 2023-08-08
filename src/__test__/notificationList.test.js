@@ -5,11 +5,11 @@ import {
   screen,
 } from '@testing-library/react';
 import NotificationList from '../pages/notificationList';
-
 import useSWR from 'swr';
 
 jest.mock('swr', () => jest.fn());
 
+// テスト前に実行される処理
 beforeEach(() => {
   useSWR.mockImplementation(() => ({
     data: [
@@ -30,31 +30,31 @@ beforeEach(() => {
   }));
 });
 
-test('NotificationList component should render correctly', () => {
+test('NotificationListレンダリング', () => {
   render(<NotificationList />);
 
-  // Check if the data is displayed correctly
+  // データが表示されているか
   expect(screen.getByText('123')).toBeInTheDocument();
   expect(screen.getByText('2020-05-01')).toBeInTheDocument();
   expect(screen.getByText('John Doe')).toBeInTheDocument();
   expect(screen.getByText('Engineering')).toBeInTheDocument();
 
-  // Toggle visibility
+  // トグルイベント
   const toggleButton = screen.getByText(/▼/i);
   fireEvent.click(toggleButton);
 
-  // Check if the comment is shown
+  // コメントが表示されているかを確認
   expect(screen.getByText('Test comment')).toBeInTheDocument();
 
-  // Toggle visibility again
+  // トグルイベント
   fireEvent.click(toggleButton);
 
-  // Check if the comment is hidden
+  // コメントが非表示になっているかを確認
   expect(screen.queryByText('Test comment')).not.toBeInTheDocument();
 });
 
-test('handles server error', async () => {
-  // Mock useSWR for error scenario
+test('サーバーエラーの場合', async () => {
+  // エラーになるモック
   useSWR.mockImplementation(() => ({
     data: null,
     error: new Error('Server error'),
@@ -62,6 +62,6 @@ test('handles server error', async () => {
 
   render(<NotificationList />);
 
-  // Since the error is mocked to be a server error, "通知はありません" should be displayed
+  // "通知がありません"が表示
   expect(screen.getByText(/通知はありません/i)).toBeInTheDocument();
 });

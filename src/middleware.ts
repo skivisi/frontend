@@ -16,7 +16,7 @@ export function middleware(request: NextRequest) {
     );
     // 何もない場合ログインページにリダイレクト
   } else {
-    return NextResponse.rewrite(new URL('/loginAdmin', request.url));
+    return NextResponse.rewrite(new URL('/login', request.url));
   }
 }
 
