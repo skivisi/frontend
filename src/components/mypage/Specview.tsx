@@ -56,9 +56,9 @@ const specview = ({ userData }: { userData: UserData }) => {
         <button
           type="button"
           onClick={pdhDownloadHandler}
-          className="shadow-md mt-10 h-12  cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid"
+          className="shadow-md mt-10 h-16  cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid text-yellow-50 text-xl font-bold px-3"
         >
-          PDFファイルをダウンロードするボタン
+          PDFファイルをダウンロード
         </button>
       ) : (
         ''

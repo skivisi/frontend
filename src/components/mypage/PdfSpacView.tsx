@@ -297,34 +297,32 @@ const PdfSpecView = ({ userData }: { userData: UserData }) => {
 
               {userData.previousWork.map(
                 (i: PreviousWork, index: number) => (
-                  <div className=" flex mt-2" key={i.specId}>
-                    <div>
-                      <div className="w-full flex border-2 border-slate-300 shadow-md">
-                        <div className="bg-slate-200 block w-1/4 p-1">
-                          業界
-                        </div>
-                        <div className="block w-3/4 p-2 bg-white">
-                          {i.industry}
-                        </div>
+                  <div className="mt-2" key={i.specId}>
+                    <div className="w-full flex border-2 border-slate-300 shadow-md">
+                      <div className="bg-slate-200 block w-1/4 p-1">
+                        業界
                       </div>
-                      <div className="w-full flex border-2 border-slate-300 shadow-md">
-                        <div className="bg-slate-200 block w-1/4 p-1">
-                          業種
-                        </div>
-                        <div className="block w-3/4 p-2 bg-white">
-                          {i.occupation}
-                        </div>
+                      <div className="block w-3/4 p-2 bg-white">
+                        {i.industry}
                       </div>
-                      <div className="w-full flex border-2 border-slate-300 shadow-md">
-                        <label
-                          className="bg-slate-200 block w-1/4 p-1"
-                          htmlFor=""
-                        >
-                          業務内容
-                        </label>
-                        <div className="block w-3/4 p-2 bg-white ">
-                          {i.JobDuties.split('\n')}
-                        </div>
+                    </div>
+                    <div className="w-full flex border-2 border-slate-300 shadow-md">
+                      <div className="bg-slate-200 block w-1/4 p-1">
+                        業種
+                      </div>
+                      <div className="block w-3/4 p-2 bg-white">
+                        {i.occupation}
+                      </div>
+                    </div>
+                    <div className="w-full flex border-2 border-slate-300 shadow-md">
+                      <label
+                        className="bg-slate-200 block w-1/4 p-1"
+                        htmlFor=""
+                      >
+                        業務内容
+                      </label>
+                      <div className="block w-3/4 p-2 bg-white ">
+                        {i.JobDuties.split('\n')}
                       </div>
                     </div>
                   </div>
@@ -340,7 +338,6 @@ const PdfSpecView = ({ userData }: { userData: UserData }) => {
               {userData.developmentExperience.map(
                 (i: DevelopmentExperience, index: number) => (
                   <div className="" key={i.specId}>
-                    <div className="flex">
                       <div className=" w-full">
                         <div className="flex border-2 border-slate-300 mt-2 shadow-md">
                           <div className="bg-slate-200 block w-1/4 p-1">
@@ -422,27 +419,25 @@ const PdfSpecView = ({ userData }: { userData: UserData }) => {
                             {'react, vue'}
                           </div>
                         </div>
+                        <div className=" flex border-2 border-slate-300 shadow-md">
+                          <div className="bg-slate-200 block w-1/4 p-1">
+                            業務内容
+                          </div>
+                          <div className="block w-3/4 p-2 bg-white">
+                            {i.jobDuties}
+                          </div>
+                        </div>
+                        <div className="m-3 flex justify-center">
+                          <Image
+                            src={
+                              i.img ? encodedImages[index] : noimaged
+                            }
+                            width={800}
+                            height={400}
+                            alt="Picture of the architecture"
+                          />
+                        </div>
                       </div>
-                      <div className=" items-center">
-                        <Image
-                          src={
-                            i.img ? encodedImages[index] : noimaged
-                          }
-                          width={600}
-                          height={400}
-                          alt="Picture of the architecture"
-                        />
-                      </div>
-                    </div>
-
-                    <div className=" flex border-2 border-slate-300 shadow-md">
-                      <div className="bg-slate-200 block w-1/4 p-1">
-                        業務内容
-                      </div>
-                      <div className="block w-3/4 p-2 bg-white">
-                        {i.jobDuties}
-                      </div>
-                    </div>
                   </div>
                 )
               )}
