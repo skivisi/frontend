@@ -8,13 +8,51 @@ import {
   DevelopmentExperience,
 } from '../../../types/types';
 import noimaged from '@/public/noimaged.png';
+import { useState, useEffect } from 'react';
 
 const PdfSpecView = ({ userData }: { userData: UserData }) => {
+  const [encodedImages, setEncodedImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    // 初期状態を設定
+    setEncodedImages([]);
+
+    userData.developmentExperience.forEach((item) => {
+      encode(item.img);
+    });
+  }, [userData.developmentExperience]);
+
+  function encode(img: string) {
+    const imageUrl = `https://axjhbffzfuoqnocmlavs.supabase.co/storage/v1/object/public/skivisi/${img}`;
+    const image = new window.Image();
+    image.crossOrigin = 'Anonymous';
+
+    image.onload = function (event) {
+      const imgElement = event.target as HTMLImageElement;
+      const canvas = document.createElement('canvas');
+      canvas.width = imgElement.naturalWidth;
+      canvas.height = imgElement.naturalHeight;
+      const ctx = canvas.getContext('2d');
+
+      if (ctx) {
+        ctx.drawImage(imgElement, 0, 0);
+        const base64Image = canvas.toDataURL('image/png');
+        // Base64エンコードされた画像を状態の配列に追加
+        setEncodedImages((prevImages) => [
+          ...prevImages,
+          base64Image,
+        ]);
+      }
+    };
+
+    image.src = imageUrl;
+  }
+
   return (
     <>
       {userData.portfolio.length > 0 ? (
         <>
-          <div id="pdf-id">
+          <div id="pdf-id" className=" m-auto">
             <div>
               <h3 className="mt-10 text-xl font-bold">スタッフID</h3>
               <div className="w-full flex border-2 border-slate-300 mt-2 shadow-md">
@@ -388,9 +426,7 @@ const PdfSpecView = ({ userData }: { userData: UserData }) => {
                       <div className=" items-center">
                         <Image
                           src={
-                            i.img
-                              ? `https://axjhbffzfuoqnocmlavs.supabase.co/storage/v1/object/public/skivisi/${i.img}`
-                              : noimaged
+                            i.img ? encodedImages[index] : noimaged
                           }
                           width={600}
                           height={400}

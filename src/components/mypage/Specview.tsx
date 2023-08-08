@@ -1,14 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-/*
-① 編集ページ遷移
-*/
 
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-import {
-  UserData,
-} from '../../../types/types';
+import { UserData } from '../../../types/types';
 import PdfSpecView from './PdfSpacView';
 
 const specview = ({ userData }: { userData: UserData }) => {
@@ -20,21 +15,35 @@ const specview = ({ userData }: { userData: UserData }) => {
 
     const scaleFactor = 0.75;
 
-    html2canvas(target, { scale: 3.0 }) // scaleの値を調整
-    .then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
+    html2canvas(target, { scale: 3.0 })
+      .then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
 
-      // キャプチャのサイズに基づいて、PDFのページサイズを動的に設定
-      const pdfWidth = canvas.width / 3.0; // scaleの値で割る
-      const pdfHeight = canvas.height / 3.0; // scaleの値で割る
-      const pdf = new jsPDF({
-        orientation: pdfWidth > pdfHeight ? "l" : "p",
-        unit: "px",
-        format: [pdfWidth, pdfHeight],
-      });
+        const imgWidth = canvas.width / 3.0;
+        const imgHeight = canvas.height / 3.0;
 
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth * scaleFactor, pdfHeight * scaleFactor);
-      pdf.save(`test.pdf`);
+        const verticalMargin = 40; // 上下の余白
+        const pdfWidth = imgWidth;
+        const pdfHeight = imgHeight + 2 * verticalMargin; // 余白を追加
+
+        const pdf = new jsPDF({
+          orientation: pdfWidth > pdfHeight ? 'l' : 'p',
+          unit: 'px',
+          format: [pdfWidth, pdfHeight],
+        });
+        // 画像の位置を中央寄せにするためのマージンを計算
+        const marginLeft = (pdfWidth - pdfWidth * scaleFactor) / 2;
+
+        pdf.addImage(
+          imgData,
+          'PNG',
+          marginLeft, // 左のマージンを適用
+          verticalMargin, // 上の余白を適用
+          pdfWidth * scaleFactor,
+          pdfHeight * scaleFactor
+        );
+
+        pdf.save(`test.pdf`);
       })
       .catch((error) => {
         console.error('html2canvas error: ', error);
@@ -44,7 +53,11 @@ const specview = ({ userData }: { userData: UserData }) => {
     <>
       <PdfSpecView userData={userData} />
       {userData.portfolio.length > 0 ? (
-        <button type="button" onClick={pdhDownloadHandler}>
+        <button
+          type="button"
+          onClick={pdhDownloadHandler}
+          className="shadow-md mt-10 h-12  cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid"
+        >
           PDFファイルをダウンロードするボタン
         </button>
       ) : (
