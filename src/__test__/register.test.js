@@ -7,6 +7,7 @@ import {
 } from '@testing-library/react';
 import { setupServer } from 'msw/node';
 import { rest } from 'msw';
+import axios from 'axios';
 
 // モックサーバーをセットアップ
 const server = setupServer();

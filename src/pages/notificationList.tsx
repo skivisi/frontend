@@ -1,9 +1,7 @@
 import axios from 'axios';
 import Header from '../components/header';
 import Footer from '@/components/footer';
-import { GetServerSideProps } from 'next';
 import { useEffect, useState } from 'react';
-import requestHandler from './api/request';
 import useSWR from 'swr';
 import Link from 'next/link';
 import { Request } from '../../types/types';
@@ -54,7 +52,7 @@ const NotificationList = () => {
           <div>{totalCount}</div>
           <div>件</div>
         </div>
-        <div className="mx-auto border-blue-200 rounded-md bg-blue-200 max-w-6xl py-3 mb-2">
+        <div className="mx-auto border-blue-200 rounded-md bg-blue-200 max-w-6xl py-3 mb-2 pb-14">
           <div className="text-center">
             <div className="">
               <div className="flex justify-center mt-14 text-lg space-x-2 md:space-x-32 pr-24">
@@ -106,7 +104,7 @@ const NotificationList = () => {
                     </button>
                   </div>
                   {expanded[request.user?.userId] && (
-                    <div className="pt-7 text-left pl-40">
+                    <div className="pt-14 text-left pl-40 pr-40">
                       <p>{request.engineerComment}</p>
                     </div>
                   )}

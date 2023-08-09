@@ -1,8 +1,5 @@
 import Header from '@/components/header';
 import Footer from '@/components/footer';
-import Image from 'next/image';
-import website from '../../public/Website.png';
-import { useRouter } from 'next/router';
 import axios from 'axios';
 import useSWR from 'swr';
 import Link from 'next/link';
@@ -11,11 +8,6 @@ import { useEffect, useState } from 'react';
 import { userFetch } from '../../app/mypage/_lib/userFetch';
 import Specview from '@/components/mypage/Specview';
 import { Request } from '../../../types/types';
-
-/**
- * スキルの取得
- * function
- */
 
 // 申請承認(管理者)
 const fetcher = (
@@ -79,7 +71,6 @@ const Approval = ({
         `${process.env.NEXT_PUBLIC_API_URL}/request/approval/${filteredRequest[0].applicationId}`,
         requestBody
       );
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -98,9 +89,7 @@ const Approval = ({
         `${process.env.NEXT_PUBLIC_API_URL}/request/denial/${filteredRequest[0].applicationId}`,
         requestBody
       );
-      console.log(response);
     } catch (error) {
-      console.log(error);
       console.log(cookie);
     }
   };
@@ -125,6 +114,7 @@ const Approval = ({
               onClick={(e) => approvalSubmit()}
               type="button"
               className="shadow-md mt-10 h-12  cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid"
+              data-testid="approvalButton"
             >
               <Link href="/dashboard/dbAdmin">
                 <span className="text-white font-bold m-5">
@@ -154,6 +144,7 @@ const Approval = ({
           </div>
           <div className="text-center">
             <button
+              data-testid="sendBackButton"
               onClick={(e) => sendBackSubmit()}
               type="button"
               className="shadow-md mt-10 h-12 cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid"
