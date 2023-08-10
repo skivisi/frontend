@@ -4,7 +4,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 import { UserData } from '../../../types/types';
-import PdfSpecView from './PdfSpacView';
+import PdfSpecView from './PdfSpecView';
 
 const specview = ({ userData }: { userData: UserData }) => {
   // console.log(userData);
