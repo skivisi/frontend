@@ -11,10 +11,7 @@ import RequestButton from './components/RequestButton';
 import {
   DefaultUser,
   InputData,
-  Portfolio,
-  SellingPoint,
   Qualification,
-  PreviousWork,
 } from '../types/t';
 import AddFormButton from './components/AddFormButton';
 import SellingPoints from './components/SellingPoints';
@@ -32,6 +29,7 @@ function handleBlur() {
 function Home() {
   const userData = userFetch(false, 0);
   const autocomplete = autoComplete();
+  console.log(autocomplete)
 
   // 既存データ
   const [defaultData, setDefaultData] = useState<DefaultUser>({
@@ -211,8 +209,8 @@ function Home() {
     qualifications: { credential: '', acquisitionDate: '' },
     previousWorks: { industry: '', occupation: '', JobDuties: '' },
     developmentExperiences: {
-      startYear: 0,
-      startDate: 0,
+      startYear: "2010",
+      startDate: "1",
       duration: '',
       assignedTask: '',
       teamSize: '',
