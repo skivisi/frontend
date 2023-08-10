@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../styles/globals.css';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { ZodError, z } from 'zod';
 
 // 新規登録(エンジニア・営業)
@@ -40,11 +40,12 @@ const Register = () => {
   >(null);
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
+
+    resetErrorMessages();
 
     const RegisterSchema = z.object({
       email: z
@@ -114,7 +115,15 @@ const Register = () => {
       console.log(response.data);
       window.location.href = '/login';
     } catch (error) {
-      if (error instanceof ZodError) {
+      if (axios.isAxiosError(error)) {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.error
+        ) {
+          setConfirmPasswordError(error.response.data.error);
+        }
+      } else if (error instanceof ZodError) {
         // ZodErrorのインスタンスであることを確認
         if (error.errors[0]?.path[0] === 'email') {
           setEmailError(error.errors[0].message);
@@ -132,6 +141,15 @@ const Register = () => {
         console.log(error);
       }
     }
+  };
+
+  const resetErrorMessages = () => {
+    setEmailError(null);
+    setEmployeeNumberError(null);
+    setAffiliationError(null);
+    setBusinessSituationError(null);
+    setPasswordError(null);
+    setConfirmPasswordError(null);
   };
 
   // 入社年月選択の記述
