@@ -21,45 +21,51 @@ export const autoComplete = () => {
 
   useEffect(() => {
     const fetchId = async () => {
-      const autoCalibration = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/autoCalibration/get`
-      );
+      try {
+        const autoCalibration = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/autoCalibration/get`
+        );
+        const autoCalibrations = autoCalibration.data;
 
-      const os = autoCalibration.data.filter(
-        (p: autoCalibration) => p.category === 1
-      );
-      const lang = autoCalibration.data.filter(
-        (p: autoCalibration) => p.category === 2
-      );
-      const framework = autoCalibration.data.filter(
-        (p: autoCalibration) => p.category === 3
-      );
-      const library = autoCalibration.data.filter(
-        (p: autoCalibration) => p.category === 4
-      );
-      const cloud = autoCalibration.data.filter(
-        (p: autoCalibration) => p.category === 5
-      );
-      const tool = autoCalibration.data.filter(
-        (p: autoCalibration) => p.category === 6
-      );
-      const assignedDevelopment = autoCalibration.data.filter(
-        (p: autoCalibration) => p.category === 7
-      );
+        const os = autoCalibrations.filter(
+          (p: autoCalibration) => p.category === 1
+        );
+        const lang = autoCalibrations.filter(
+          (p: autoCalibration) => p.category === 2
+        );
+        const framework = autoCalibrations.filter(
+          (p: autoCalibration) => p.category === 3
+        );
+        const library = autoCalibrations.filter(
+          (p: autoCalibration) => p.category === 4
+        );
+        const cloud = autoCalibrations.filter(
+          (p: autoCalibration) => p.category === 5
+        );
+        const tool = autoCalibrations.filter(
+          (p: autoCalibration) => p.category === 6
+        );
+        const assignedDevelopment = autoCalibrations.filter(
+          (p: autoCalibration) => p.category === 7
+        );
 
-      setAutocomplete((p: autoCalibrations) => ({
-        ...p,
-        autoCalibration:autoCalibration.data,
-        os:os,
-        lang:lang,
-        framework:framework,
-        library: library,
-        cloud: cloud,
-        tool: tool,
-        assignedDevelopment:assignedDevelopment
-      }))
+        setAutocomplete((p: autoCalibrations) => ({
+          ...p,
+          autoCalibration: autoCalibrations,
+          os: os,
+          lang: lang,
+          framework: framework,
+          library: library,
+          cloud: cloud,
+          tool: tool,
+          assignedDevelopment: assignedDevelopment,
+        }));
+      } catch (error) {
+        // console.error(error);
+        return error;
+      }
     };
-    fetchId()
+    fetchId();
   }, []);
 
   return autocomplete;

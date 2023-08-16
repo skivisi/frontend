@@ -167,16 +167,5 @@ describe('Home component', () => {
         'https://github.com/user'
       );
     });
-  });
-   it('レンダリングテスト！', async () => {
-    render(<Home />);
-
-    // `waitFor`関数を使用して、非同期の状態更新が完了するのを待ちます
-    await waitFor(() => {
-        expect(screen.getByTestId('portfolio').value).toEqual(
-          'https://github.com/user'
-        );
-    });
-  });
-  
+  });  
 });
