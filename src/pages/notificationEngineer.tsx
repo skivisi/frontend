@@ -12,6 +12,20 @@ import { User, Request } from '../../types/types';
 const fetcher = (url: RequestInfo) =>
   fetch(url).then((res) => res.json());
 
+  const toJST = (dateString: string): string => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('ja-JP', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      timeZone: 'Asia/Tokyo'
+    }).format(date);
+  }
+
+
 const NotificationEngineer = () => {
   const getCookie = (name: string) => {
     return Cookies.get(name);
@@ -64,7 +78,7 @@ const NotificationEngineer = () => {
           <h4 className="font-semibold text-white py-2 w-24 rounded-xl shadow-md bg-gradient-to-b from-blue-400 border-2 border-white border-solid text-center">
             承認
           </h4>
-          <div className="pt-3">{item.resultedAt}</div>
+          <div className="pt-3">{toJST(item.resultedAt)}</div>
           <p className="pt-3">スキルの申請が承認されました</p>
         </div>
       </div>
