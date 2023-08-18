@@ -5,11 +5,16 @@ import React, { FormEvent, useState } from 'react';
 import Link from 'next/link';
 import '../styles/globals.css';
 import { useCookies } from 'react-cookie';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+
+interface ErrorResponse {
+  error: string;
+}
 
 const LoginAdmin = () => {
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [cookie, setCookie] = useCookies();
 
   const handleSubmit = async (
@@ -36,8 +41,13 @@ const LoginAdmin = () => {
       let id = userData.adminId;
       setCookie('adminId', id, { path: '/', secure: true });
       window.location.href = '/dashboard/dbAdmin';
-    } catch (error) {
+    } catch (error:any) {
+      const axiosError = error as AxiosError<ErrorResponse>;
+      if (axiosError.response && axiosError.response.data && axiosError.response.data.error) {
+        setErrorMessage(axiosError.response.data.error);
+      } else {
       console.log(error);
+      }
     }
   };
 
@@ -106,7 +116,9 @@ const LoginAdmin = () => {
                 ></label>
                 <div className="text-sm"></div>
               </div>
+              {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
             </div>
+
 
             <div>
               <button
