@@ -5,11 +5,25 @@ import '../globals.css';
 import Skillview from '@/components/mypage/Skillview';
 import Specview from '@/components/mypage/Specview';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { userFetch } from './_lib/userFetch';
 
+
 const Page = () => {
-  const userData = userFetch(false, 0);
+  // URLのクエリパラメータから取得したuserIdを保持するステート
+  const [userId, setUserId] = useState<string | null>(null);
+  // コンポーネントのマウント時、またはURLが変更された時にuserIdを更新する
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const uid = searchParams.get('userId');
+    setUserId(uid);
+  }, []);
+  // userIdが存在する場合は数値に変換、存在しない場合は0をデフォルトとして設定
+  let argId = userId ? Number(userId) : 0;
+  // userIdの有無に応じてAPIからユーザデータを取得
+  let userData = userId
+    ? userFetch(true, argId)
+    : userFetch(false, 0);
 
   // タブの切り替え
   const selected =
@@ -69,16 +83,30 @@ const Page = () => {
             {pageState ? 'スキルシート' : 'スペックシート'}
           </h2>
           <div className="text-center">
-            <Link href={pageState ? '/skilledit' : '/specseat'}>
-              <button
-                type="button"
-                className="shadow-md h-12 ml-2 relative bottom-2 cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid transition-all"
-              >
-                <span className="text-white font-bold m-5 text-lg">
-                  編集
-                </span>
-              </button>
-            </Link>
+            {userId ? (
+              <a>
+                <button
+                  type="button"
+                  onClick={() => window.history.back()}
+                  className="shadow-md h-12 ml-2 relative bottom-2 cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid transition-all"
+                >
+                  <span className="text-white font-bold m-5 text-lg">
+                    一覧に戻る
+                  </span>
+                </button>
+              </a>
+            ) : (
+              <Link href={pageState ? '/skilledit' : '/specseat'}>
+                <button
+                  type="button"
+                  className="shadow-md h-12 ml-2 relative bottom-2 cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid transition-all"
+                >
+                  <span className="text-white font-bold m-5 text-lg">
+                    編集
+                  </span>
+                </button>
+              </Link>
+            )}
           </div>
         </div>
 
