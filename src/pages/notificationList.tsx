@@ -12,11 +12,11 @@ const fetcher = (url: RequestInfo) =>
 
 const NotificationList = () => {
   // ユーザー選択
-  const [selectedUserIndex, setSelectedUserIndex] = useState<
+  const [selectedUser, setSelectedUser] = useState<
     number | null
   >(null);
   const handleUserClick = (index: number) => {
-    setSelectedUserIndex(index);
+    setSelectedUser(index);
   };
 
   // requestのデータ取得
@@ -75,7 +75,7 @@ const NotificationList = () => {
             {data.map((request: Request, index: number) => (
               <div
                 className={`flex items-center border-b border-zinc-700 py-2 cursor-pointer ${
-                  selectedUserIndex === index
+                  selectedUser === index
                     ? 'bg-blue-400 hover:bg-blue-400'
                     : 'bg-zinc-50 hover:bg-gray-200'
                 }`}
@@ -109,12 +109,12 @@ const NotificationList = () => {
                 boxShadow: 'inset 0 -5px 4px rgba(0, 0, 0, 0.3)',
               }}
             >
-              {selectedUserIndex !== null ? (
-                <p className="text-xl text-sky-900 w-80 text-center h-40">
-                  {data[selectedUserIndex].engineerComment}
+              {selectedUser !== null ? (
+                <p className="text-xl text-sky-900 w-80 h-40 flex items-center justify-center ">
+                  {data[selectedUser].engineerComment}
                 </p>
               ) : (
-                <p className="text-xl text-sky-900 w-80 text-center h-40">
+                <p className="text-xl text-sky-900 w-80 h-40 flex items-center justify-center ">
                   ユーザーを選択してください。
                   <br />
                   リクエストコメントが表示されます。
@@ -125,15 +125,15 @@ const NotificationList = () => {
               <Link
                 legacyBehavior
                 href={
-                  selectedUserIndex !== null
-                    ? `/approval/${data[selectedUserIndex].user?.userId}`
+                  selectedUser !== null
+                    ? `/approval/${data[selectedUser].user?.userId}`
                     : ''
                 }
               >
                 <button
-                  disabled={selectedUserIndex === null}
+                  disabled={selectedUser === null}
                   className={`font-bold text-2xl rounded-xl p-2 shadow-2xl ${
-                    selectedUserIndex !== null
+                    selectedUser !== null
                       ? 'text-orange-50 bg-gradient-to-b from-orange-400 to-yellow-400 border-4 border-orange-50  hover:scale-110 transition-all'
                       : 'bg-gray-300 text-zinc-200 border-gray-50 border-4'
                   }`}
