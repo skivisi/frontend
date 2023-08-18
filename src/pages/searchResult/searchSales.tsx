@@ -31,6 +31,7 @@ const SearchSales = ({
 }: {
   query: Query;
 }) => {
+  const router = useRouter();
   const [users, setUsers] = useState(JSON.parse(query.foundUser));
   const [businessSituation, setBusinessSituation] = useState('');
 
@@ -47,6 +48,11 @@ const SearchSales = ({
   //   window.location.reload();
   //   return <div>Loading...</div>;
   // }
+
+  const redirectToMyPage = (userId:number) => {
+    // /mypage/page へリダイレクトし、クエリパラメーターとして userId を付加
+    router.push(`/mypage?userId=${userId}`);
+  }
 
   const handleChange = async (user: User) => {
     try {
@@ -136,6 +142,7 @@ const SearchSales = ({
                     <a
                       href="#"
                       className="relative flex justify-center space-x-32 mr-10 mb-2"
+                      onClick={() =>redirectToMyPage(user.userId)}
                     >
                       <div
                         className="absolute"

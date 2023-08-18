@@ -67,6 +67,13 @@ export const userFetch = (isTrue: boolean, argId: number) => {
   });
   useEffect(() => {
     const fetchId = async () => {
+      // argIdかcookies.userIdがundefinedの場合、APIのリクエストを実行しない
+      if (
+        (!isTrue && typeof cookies.userId === 'undefined') ||
+        (isTrue && typeof argId === 'undefined')
+      ) {
+        return;
+      }
       try {
         const getUserData = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/users?userId=${
