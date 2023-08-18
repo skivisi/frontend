@@ -28,7 +28,7 @@ const NotificationList = () => {
       <>
         <Header />
         <div className="ml-24 mt-10 text-2xl text-sky-900 font-bold">
-          通知はありません
+          通知はないよ！
         </div>
         <div className="absolute w-full" style={{ bottom: '0%' }}>
           <Footer />
