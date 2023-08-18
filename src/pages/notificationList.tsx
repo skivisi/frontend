@@ -4,7 +4,7 @@ import Footer from '@/components/footer';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import Link from 'next/link';
-import { Request,User } from '../../types/types';
+import { Request, User } from '../../types/types';
 
 // 申請通知リスト(管理者)
 const fetcher = (url: RequestInfo) =>
@@ -12,9 +12,9 @@ const fetcher = (url: RequestInfo) =>
 
 const NotificationList = () => {
   // ユーザー選択
-  const [selectedUser, setSelectedUser] = useState<
-    number | null
-  >(null);
+  const [selectedUser, setSelectedUser] = useState<number | null>(
+    null
+  );
   const handleUserClick = (index: number) => {
     setSelectedUser(index);
   };
@@ -61,6 +61,18 @@ const NotificationList = () => {
     }
   };
 
+  // リクエスト時間表示の時間形式変更用関数
+  function formatDate(isoString: string) {
+    const date = new Date(isoString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hour = String(date.getHours()).padStart(2, '0');
+    const minute = String(date.getMinutes()).padStart(2, '0');
+
+    return `${year}/${month}/${day}-${hour}:${minute}`;
+  }
+
   return (
     <>
       <div className="min-h-screen">
@@ -71,7 +83,10 @@ const NotificationList = () => {
           <div>件</div>
         </div>
         <section className="flex justify-center mt-10">
-          <div id="left" className="bg-zinc-50 shadow-2xl h-[760px] overflow-y-auto">
+          <div
+            id="left"
+            className="bg-zinc-50 shadow-2xl h-[760px] overflow-y-auto"
+          >
             {data.map((request: Request, index: number) => (
               <div
                 className={`flex items-center border-b border-zinc-700 py-2 cursor-pointer ${
@@ -91,8 +106,11 @@ const NotificationList = () => {
                 </div>
 
                 <div className="w-80 ml-6">
-                  <div className="font-bold text-2xl text-sky-900 border-b border-zinc-200">
+                  <div className="font-bold text-2xl text-sky-900 border-b border-zinc-200 flex justify-between mr-5">
                     {request.user?.businessSituation}
+                    <span className="text-xl">
+                      {formatDate(request.user?.createdAt)}
+                    </span>
                   </div>
                   <div className="font-bold text-4xl text-sky-900">
                     {request.user?.userName}
@@ -102,9 +120,9 @@ const NotificationList = () => {
             ))}
           </div>
 
-          <div id="right" className="bg-blue-400 shadow-2xl">
+          <div id="right" className="bg-blue-400">
             <div
-              className="bg-zinc-50 m-10 px-24 py-56"
+              className="bg-zinc-50 mx-10 mt-10 mb-7 px-24 py-56"
               style={{
                 boxShadow: 'inset 0 -5px 4px rgba(0, 0, 0, 0.3)',
               }}
@@ -117,11 +135,13 @@ const NotificationList = () => {
                 <p className="text-xl text-sky-900 w-80 h-40 flex items-center justify-center ">
                   ユーザーを選択してください。
                   <br />
-                  リクエストコメントが表示されます。
+                  リクエストコメントが表示
+                  <br />
+                  されます。
                 </p>
               )}
             </div>
-            <div className="text-center pb-4 cursor-pointer">
+            <div className="text-center cursor-pointer">
               <Link
                 legacyBehavior
                 href={
