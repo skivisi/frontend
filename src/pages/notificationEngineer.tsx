@@ -12,19 +12,18 @@ import { User, Request } from '../../types/types';
 const fetcher = (url: RequestInfo) =>
   fetch(url).then((res) => res.json());
 
-  const toJST = (dateString: string): string => {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat('ja-JP', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      timeZone: 'Asia/Tokyo'
-    }).format(date);
-  }
-
+const toJST = (dateString: string): string => {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('ja-JP', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    timeZone: 'Asia/Tokyo',
+  }).format(date);
+};
 
 const NotificationEngineer = () => {
   const getCookie = (name: string) => {
@@ -45,8 +44,12 @@ const NotificationEngineer = () => {
     return (
       <>
         <Header />
-        <div>通知はありません</div>
-        <Footer />
+        <div className="ml-24 mt-10 text-2xl text-sky-900 font-bold">
+          通知はないよ！
+        </div>
+        <div className="absolute w-full" style={{ bottom: '0%' }}>
+          <Footer />
+        </div>
       </>
     );
   }
@@ -118,22 +121,24 @@ const NotificationEngineer = () => {
 
   return (
     <>
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      <div className="text-sky-900 flex-grow">
-        <div className="ml-24 my-14 text-2xl flex">
-          <div>申請結果通知&nbsp;&nbsp;&nbsp;</div>
-          <div>{totalCount}</div>
-          <div>件</div>
-        </div>
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <div className="text-sky-900 flex-grow">
+          <div className="ml-24 my-14 text-2xl flex">
+            <div>申請結果通知&nbsp;&nbsp;&nbsp;</div>
+            <div>{totalCount}</div>
+            <div>件</div>
+          </div>
 
-        <div className="mx-48 border-t-2 border-black">{status}</div>
+          <div className="mx-48 border-t-2 border-black">
+            {status}
+          </div>
 
-        <div className="mx-96 pt-20 pb-20 border-black rounded-md ">
-          <div className="shadow-2xl"></div>
+          <div className="mx-96 pt-20 pb-20 border-black rounded-md ">
+            <div className="shadow-2xl"></div>
+          </div>
         </div>
-      </div>
-      <Footer />
+        <Footer />
       </div>
     </>
   );
