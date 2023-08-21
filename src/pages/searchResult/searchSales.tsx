@@ -15,33 +15,44 @@ type Query = {
   foundUser: string;
 };
 
+type cookies = {
+  userId?: string;
+  affiliation?: string;
+};
+
 export const getServerSideProps: GetServerSideProps = async (
   context
 ) => {
   const { query, req } = context;
+  const cookies = req.cookies;
   return {
     props: {
       query,
+      cookies
     },
   };
 };
 
 const SearchSales = ({
   query,
+  cookies
 }: {
   query: Query;
+  cookies: cookies;
 }) => {
   const router = useRouter();
   const [users, setUsers] = useState(JSON.parse(query.foundUser));
   const [businessSituation, setBusinessSituation] = useState('');
 
-  const getCookie = (Name: string) => {
-    return Cookies.get(Name);
-  };
-  const affiliationCookie = getCookie('affiliation')
-  const adminIdCookie = getCookie('adminId')
-  const affiliation = affiliationCookie !== undefined ? affiliationCookie : null;
-  const adminId = Number(adminIdCookie)
+  const affiliationCookie = cookies.affiliation;
+  const affiliation = affiliationCookie ? affiliationCookie : null;
+
+  // const getCookie = (Name: string) => {
+  //   return Cookies.get(Name);
+  // };
+  // const affiliationCookie = getCookie('affiliation')
+  // const adminIdCookie = getCookie('adminId')
+  // const adminId = Number(adminIdCookie)
 
 
   // if (!affiliation) {
@@ -121,6 +132,7 @@ const SearchSales = ({
                     key={index}
                     href="#"
                     className="flex justify-center mt-14 text-lg space-x-32 border-b-2 border-light-blue-500 pb-2"
+                    onClick={() =>redirectToMyPage(user.userId)}
                   >
                     <div className="w-24">{user.employeeNumber}</div>
                     <div className="w-24 pl-4">{user.joinDate}</div>
