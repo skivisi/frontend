@@ -18,27 +18,14 @@ const Register = () => {
     string | null
   >(null);
   const [password, setPassword] = useState<string | null>(null);
-  const [confirmPassword, setConfirmPassword] = useState<
-    string | null
-  >(null);
+  const [confirmPassword, setConfirmPassword] = useState<string | null>(null);
   const [userCount, setUserCount] = useState(0);
-
   const [emailError, setEmailError] = useState<string | null>(null);
-  const [employeeNumberError, setEmployeeNumberError] = useState<
-    number | null
-  >(null);
-  const [affiliationError, setAffiliationError] = useState<
-    string | null
-  >(null);
-  const [businessSituationError, setBusinessSituationError] =
-    useState<string | null>(null);
-  const [passwordError, setPasswordError] = useState<string | null>(
-    null
-  );
-  const [confirmPasswordError, setConfirmPasswordError] = useState<
-    string | null
-  >(null);
-
+  const [employeeNumberError, setEmployeeNumberError] = useState<string | null>(null);
+  const [affiliationError, setAffiliationError] = useState<string | null>(null);
+  const [businessSituationError, setBusinessSituationError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [confirmPasswordError, setConfirmPasswordError] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
@@ -53,10 +40,14 @@ const Register = () => {
         .email('有効なメールアドレスを入力してください'),
       employeeNumber: z
         .number()
-        .refine((value: number) => Number.isInteger(value), {
-          message: '半角数字を入力してください',
-          path: ['employeeNumber'],
-        }),
+        .refine(
+          (value: number) =>
+            !Number.isNaN(value) && Number.isInteger(value),
+          {
+            message: '半角数字を入力してください',
+            path: ['employeeNumber'],
+          }
+        ),
       affiliation: z
         .string()
         .nullable()
@@ -128,7 +119,7 @@ const Register = () => {
         if (error.errors[0]?.path[0] === 'email') {
           setEmailError(error.errors[0].message);
         } else if (error.errors[0]?.path[0] === 'employeeNumber') {
-          setEmployeeNumberError(Number(error.errors[0].message));
+          setEmployeeNumberError(error.errors[0].message);
         } else if (error.errors[0]?.path[0] === 'affiliation') {
           setAffiliationError(error.errors[0].message);
         } else if (error.errors[0]?.path[0] === 'businessSituation') {
