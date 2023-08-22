@@ -362,7 +362,7 @@ const DevelopmentExperiences = ({
               renderFiles[index] !== null
                 ? renderFiles[index]
                 : developmentExperience.img
-                ? `https://axjhbffzfuoqnocmlavs.supabase.co/storage/v1/object/public/skivisi/${developmentExperience.img}`
+                ? `${process.env.NEXT_PUBLIC_SUPABASE_STRAGE_URL}/${developmentExperience.img}`
                 : noimaged
             }
             width={600}
