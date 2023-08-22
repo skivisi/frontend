@@ -362,7 +362,7 @@ const DevelopmentExperiences = ({
               renderFiles[index] !== null
                 ? renderFiles[index]
                 : developmentExperience.img
-                ? `${process.env.NEXT_PUBLIC_API_URL}/${developmentExperience.img}`
+                ? `${process.env.NEXT_PUBLIC_SUPABASE_STRAGE_URL}/${developmentExperience.img}`
                 : noimaged
             }
             width={600}

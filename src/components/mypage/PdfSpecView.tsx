@@ -24,7 +24,7 @@ const PdfSpecView = ({ userData }: { userData: UserData }) => {
   }, [userData.developmentExperience]);
 
   function encode(img: string) {
-    const imageUrl = `${process.env.NEXT_PUBLIC_API_URL}/${img}`;
+    const imageUrl = `${process.env.NEXT_PUBLIC_SUPABASE_STRAGE_URL}/${img}`;
     // const imageUrl = `https://axjhbffzfuoqnocmlavs.supabase.co/storage/v1/object/public/skivisi/${img}`;
     const image = new window.Image();
     image.crossOrigin = 'Anonymous';
