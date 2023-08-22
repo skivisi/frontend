@@ -74,11 +74,6 @@ export const userFetch = (isTrue: boolean, argId: number) => {
           }`
         );
         const {
-          createdAt,
-          email,
-          joinDate,
-          requests,
-          updatedAt,
           userId,
           affiliation,
           businessSituation,
