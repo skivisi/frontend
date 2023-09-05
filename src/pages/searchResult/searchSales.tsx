@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { User } from '../../../types/types';
 import Cookies from 'js-cookie';
+import Link from 'next/link';
+
 
 
 
@@ -104,8 +106,20 @@ const SearchSales = ({
     <>
     <div className="flex flex-col min-h-screen">
       <Header />
+      <div className="ml-20 mt-6 text-2xl flex">
+          <Link href="/dashboard/dbSales">
+                <button
+                  type="button"
+                  className="shadow-md h-12 ml-2 relative bottom-2 cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid transition-all"
+                >
+                  <span className="text-white font-bold m-5 text-lg">
+                    ＜前のページ
+                  </span>
+                </button>
+              </Link>
+              </div>
       <div className="text-sky-900 flex-grow">
-        <div className="ml-24 my-14 text-2xl flex">
+        <div className="ml-24 my-3.5 text-2xl flex">
           <div>検索結果&nbsp;&nbsp;&nbsp;</div>
           <div>{users.length}</div>
           <div>件</div>
