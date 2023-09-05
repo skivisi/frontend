@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
-import { UserData } from '../../../../types/types';
+import { UserData, Spec } from '../../../../types/types';
 
 export const userFetch = (isTrue: boolean, argId: number) => {
   // console.log(process.env.API_SECRET_URL);
@@ -110,6 +110,13 @@ export const userFetch = (isTrue: boolean, argId: number) => {
 
         // 最新スペックシートの取得
         if (specs.length > 0) {
+          // specsをcreatedAtで降順にソートする
+          const sortedSpecs = specs.sort(
+            (a: Spec, b: Spec) =>
+              new Date(b.createdAt).getTime() -
+              new Date(a.createdAt).getTime()
+          );
+          const latestSpec = sortedSpecs[0]; // 最新のspecを取得
           const getSpecIds = await axios.get(
             `${process.env.NEXT_PUBLIC_API_URL}/spec/get/${
               isTrue ? argId : cookies.userId
@@ -127,6 +134,7 @@ export const userFetch = (isTrue: boolean, argId: number) => {
 
           setUserData((p: UserData) => ({
             ...p,
+            spec: latestSpec,
             specId: specId,
             portfolio: portfolios,
             sellingPoint: sellingPoints,

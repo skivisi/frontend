@@ -314,7 +314,16 @@ const PdfSpecView = ({ userData }: { userData: UserData }) => {
                           開始年月
                         </div>
                         <div className="block w-3/4 p-2 bg-white">
-                          {i.startDate}
+                          {i.startYear}年{i.startDate}月
+                        </div>
+                      </div>
+
+                      <div className=" flex border-2 border-slate-300 shadow-md">
+                        <div className="bg-slate-200 block w-1/4 p-1">
+                          期間
+                        </div>
+                        <div className="block w-3/4 p-2 bg-white">
+                          {i.duration}
                         </div>
                       </div>
 
@@ -323,7 +332,7 @@ const PdfSpecView = ({ userData }: { userData: UserData }) => {
                           担当役割
                         </div>
                         <div className="block w-3/4 p-2 bg-white">
-                          {i.assignedTask}
+                          {i.duration}{i.assignedTask}
                         </div>
                       </div>
 

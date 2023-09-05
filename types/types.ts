@@ -164,8 +164,8 @@ type SkillSummaries = {
   cloud: string[];
   tool: string[];
   developmentDomain: string[];
-  skillSummaryId:number
-  specId:number
+  skillSummaryId: number;
+  specId: number;
 };
 //mypage/Skillview.tsxで使用
 type Spec = {
@@ -237,5 +237,6 @@ export type { SellingPoint };
 export type { Qualification };
 export type { PreviousWork };
 export type { DevelopmentExperience };
-export type {  transformedObject };
+export type { transformedObject };
 export type { SkillPoints };
+export type { Spec };
