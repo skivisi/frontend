@@ -7,8 +7,8 @@ import {
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { act } from 'react-dom/test-utils';
-import DbSales from './DbSales';
-import { autoComplete } from '../../app/specseat/_lib/autoComplete';
+import DbSales from '../pages/dashboard/DbSales';
+import { autoComplete } from '../app/specseat/_lib/autoComplete';
 // import AutoComplete from '@mui/material/Autocomplete';
 // import React from 'react';
 
