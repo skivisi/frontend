@@ -332,7 +332,7 @@ const PdfSpecView = ({ userData }: { userData: UserData }) => {
                           担当役割
                         </div>
                         <div className="block w-3/4 p-2 bg-white">
-                          {i.duration}{i.assignedTask}
+                          {i.assignedTask}
                         </div>
                       </div>
 
