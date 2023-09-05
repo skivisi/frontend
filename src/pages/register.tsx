@@ -153,14 +153,14 @@ const Register = () => {
 
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-sky-900">
             パワプロに登録☝️
           </h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm my-2 px-4 py-2 border-2 border-blue-200 rounded-md bg-blue-200">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm my-2 px-10 py-10 border-2 border-blue-200 rounded-md bg-blue-200 shadow-2xl ">
           <form
             className="space-y-6"
             action="#"
@@ -271,7 +271,7 @@ const Register = () => {
               <div className="mt-2">
                 <select
                   id="affiliation"
-                  className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset"
+                  className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset "
                   onChange={(e) => setAffiliation(e.target.value)}
                   defaultValue="所属"
                   required
@@ -383,7 +383,7 @@ const Register = () => {
               <label className="hidden">submit</label>
               <button
                 type="submit"
-                className="flex w-full justify-center px-3 py-2.5 shadow-md cursor-pointer bg-gradient-to-b from-orange-400 to-yellow-400 rounded-xl border-2 border-white border-solid text-white"
+                className="flex w-full justify-center px-3 py-2.5 shadow-md cursor-pointer text-orange-50 bg-gradient-to-b from-orange-400 to-yellow-400 border-4 border-orange-50  hover:scale-110 transition-all rounded-xl "
               >
                 登録
               </button>

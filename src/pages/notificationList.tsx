@@ -109,7 +109,7 @@ const NotificationList = () => {
                   <div className="font-bold text-2xl text-sky-900 border-b border-zinc-200 flex justify-between mr-5">
                     {request.user?.businessSituation}
                     <span className="text-xl">
-                      {formatDate(request.user?.createdAt)}
+                      {formatDate(request.createdAt)}
                     </span>
                   </div>
                   <div className="font-bold text-4xl text-sky-900">
