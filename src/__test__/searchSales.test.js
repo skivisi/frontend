@@ -5,7 +5,7 @@ import {
   waitFor,
 } from '@testing-library/react';
 import Cookies from 'js-cookie';
-import SearchSales from './SearchSales';
+import SearchSales from '../pages/searchResult/SearchSales';
 import React from 'react';
 import axios from 'axios';
 
