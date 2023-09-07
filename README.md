@@ -4,10 +4,12 @@
 
 管理者及び営業はダッシュボードにてエンジニアの所有しているにスペック（使用言語、フレームワーク、ライブラリ等）に応じて絞り込み検索を行うことができる。
 
+URL:https://skivisi-frontend-i9onf0mqm-ronaudo9.vercel.app/
+
 ## インストール方法
 
 ```bash
-git clone 
+git clone git@github.com:skivisi/frontend.git
 cd frontend
 npm install
 npm run dev
