@@ -26,7 +26,7 @@ npm run dev
 
 ```bash
 メールアドレス:sales-test@example.com
-パスワード:admin-pawapuro
+パスワード:sales-pawapuro
 ```
 
 ##管理者のテストログイン
