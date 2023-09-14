@@ -151,7 +151,7 @@ export const userFetch = (isTrue: boolean, argId: number) => {
     };
 
     fetchId();
-  }, [argId, isTrue]);
+  }, [argId, isTrue, cookies.userId]);
 
   return userData;
 };

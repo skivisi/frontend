@@ -1,20 +1,6 @@
 import Header from '@/components/header';
 import './globals.css';
-import { Noto_Sans_JP, Kosugi_Maru } from 'next/font/google';
 import Footer from '@/components/footer';
-
-const noto = Noto_Sans_JP({
-  weight: ['400', '700'],
-  subsets: ['latin'],
-  variable: '--font-noto',
-  display: 'swap',
-});
-const kosugi = Kosugi_Maru({
-  weight: ['400'],
-  subsets: ['latin'],
-  variable: '--font-kosugi',
-  display: 'swap',
-});
 
 export const metadata = {
   title: 'パワプロ',
@@ -30,7 +16,6 @@ export default function RootLayout({
     <>
       <html lang='ja'>
         <body
-          className={`${kosugi.variable} ${noto.variable} font-noto`}
         >
           <Header/>
           {children}

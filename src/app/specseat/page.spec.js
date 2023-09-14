@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { screen, render, waitFor } from '@testing-library/react';
 import Home from './page';
 import { userFetch } from '../mypage/_lib/userFetch';
