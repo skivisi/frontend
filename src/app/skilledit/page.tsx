@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
@@ -100,7 +101,7 @@ const skillEdit = () => {
         abilities: defaultAbilities,
       }));
     }
-  }, [skill, skillPoint, specialAbilities]);
+  }, [defaultAbilities, defaultSkillPoint, skill, skillPoint, specialAbilities]);
 
   // 特有スキル編集
   const handleChangeInherent = (
