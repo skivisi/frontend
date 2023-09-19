@@ -10,11 +10,11 @@ jobs:
       - node/install-packages:
           pkg-manager: npm
       - run:
-          command: npm run test
-          name: Run tests
-      - run:
           command: npm run format
           name: run lint
+      - run:
+          command: npm run test
+          name: Run tests
   notify:
     docker:
       - image: 'cimg/base:stable'
@@ -26,10 +26,9 @@ jobs:
           event: pass
           mentions: 'flamberge1191'
           template: success_tagged_deploy_1
-          
 workflows:
   pipeline:
     jobs:
       - lint_and_unit_test
-      - notify
-          # context: slack-secrets
+      - notify:
+          context: slack-secrets
