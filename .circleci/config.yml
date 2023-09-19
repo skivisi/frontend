@@ -15,6 +15,9 @@ jobs:
       - run:
           command: npm run test
           name: Run tests
+      - run:
+          command: npm run build
+          name: run App build
   notify:
     docker:
       - image: 'cimg/base:stable'
