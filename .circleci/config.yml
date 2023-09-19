@@ -24,7 +24,6 @@ jobs:
       - run:
           name: deploy
           command:  npm deploy
-
   production_deployment:
     docker:
       - image: circleci/node:latest
