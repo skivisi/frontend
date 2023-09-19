@@ -16,26 +16,15 @@ jobs:
   preview_deployment:
     docker:
       - image: circleci/node:latest
-    environment:
-      VERCEL_ORG_ID: $VERCEL_ORG_ID
-      VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID
     steps:
       - checkout
       - run:
-          name: Install Vercel CLI
-          command: npm install vercel@latest
+          name: install
+          command: npm install
       - run:
-          name: Add local node_modules/.bin to PATH
-          command: echo "export PATH=$PATH:./node_modules/.bin" >> $BASH_ENV
-      - run:
-          name: Pull Vercel Environment Information
-          command: vercel pull --yes --environment=preview --token "$VERCEL_TOKEN"
-      - run:
-          name: Build Project Artifacts
-          command: vercel build --token=$VERCEL_TOKEN
-      - run:
-          name: Deploy Project Artifacts to Vercel
-          command: vercel deploy --prebuilt --token=$VERCEL_TOKEN
+          name: deploy
+          command:  npm deploy
+
   production_deployment:
     docker:
       - image: circleci/node:latest
