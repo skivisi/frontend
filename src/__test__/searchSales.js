@@ -8,6 +8,7 @@ import Cookies from 'js-cookie';
 import SearchSales from '../pages/searchResult/SearchSales';
 import React from 'react';
 import axios from 'axios';
+import '../mocks/mockResizeObserver'
 
 jest.mock('axios');
 
@@ -162,7 +163,7 @@ describe('SearchSales', () => {
         `${process.env.NEXT_PUBLIC_API_URL}/businessSituation/${user.userId}`,
         { businessSituation: newBusinessSituation }
       );
-      console.log(newBusinessSituation);
+      // console.log(newBusinessSituation);
 
       // setUsersが適切な引数で呼び出されたことを確認する
       expect(setUsersState).toHaveBeenCalledWith(

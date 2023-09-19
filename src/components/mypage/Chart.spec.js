@@ -1,6 +1,7 @@
 
 import { render, screen } from '@testing-library/react';
 import { Chart } from './Chart';
+import '../../mocks/mockResizeObserver'
 
 describe('Chart component', () => {
   it('renders correctly', () => {
