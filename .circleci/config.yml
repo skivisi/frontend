@@ -23,10 +23,7 @@ jobs:
       - checkout
       - run:
           name: Install Vercel CLI
-          command: |
-            npm config set prefix ~/.npm-global
-            export PATH=~/.npm-global/bin:$PATH
-            npm install --global vercel@latest
+          command: npm install --global vercel@latest
       - run:
           name: Pull Vercel Environment Information
           command: vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
@@ -46,10 +43,7 @@ jobs:
       - checkout
       - run:
           name: Install Vercel CLI
-          command: |
-            npm config set prefix ~/.npm-global
-            export PATH=~/.npm-global/bin:$PATH
-            npm install --global vercel@latest
+          command: npm install --global vercel@latest
       - run:
           name: Pull Vercel Environment Information
           command: vercel pull --yes --environment=production --token=$VERCEL_TOKEN
@@ -60,6 +54,10 @@ jobs:
           name: Deploy Project Artifacts to Vercel
           command: vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
 workflows:
+  send-notification:
+    jobs:
+      - notify:
+          context: slack-secrets
   preview_and_production:
     jobs:
       - preview_deployment:
@@ -70,8 +68,4 @@ workflows:
           filters:
             branches:
               only: /main/
-  send-notification:
-    jobs:
-      - notify:
-          context: slack-secrets
   
