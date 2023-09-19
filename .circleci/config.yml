@@ -31,5 +31,5 @@ workflows:
   pipeline:
     jobs:
       - lint_and_unit_test
-      - notify:
-          context: slack-secrets
+      - notify
+          # context: slack-secrets
