@@ -23,7 +23,7 @@ jobs:
           command: npm install
       - run:
           name: deploy
-          command:  npm deploy
+          command:  npm run deploy
   production_deployment:
     docker:
       - image: circleci/node:latest
