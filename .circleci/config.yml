@@ -3,7 +3,7 @@ orbs:
   slack: circleci/slack@4.12.5
   node: circleci/node@5.1.0
 jobs:
-  unit-test: 
+  lint_and_unit_test: 
     executor: node/default # use the default executor defined within the orb
     steps:
       - checkout
@@ -12,6 +12,9 @@ jobs:
       - run:
           command: npm run test
           name: Run tests
+      - run:
+          command: npm run format
+          name: run lint
   notify:
     docker:
       - image: 'cimg/base:stable'
@@ -25,10 +28,8 @@ jobs:
           template: success_tagged_deploy_1
           
 workflows:
-  test:
+  pipeline:
     jobs:
-      - unit-test
-  send-notification:
-    jobs:
+      - lint_and_unit_test
       - notify:
           context: slack-secrets
