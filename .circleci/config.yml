@@ -10,6 +10,7 @@ jobs:
     steps:
       - slack/notify:
           event: fail
+          mentions: '@m.​hatano'
           template: basic_fail_1
       - slack/notify:
           event: pass
