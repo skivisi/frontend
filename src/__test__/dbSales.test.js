@@ -7,7 +7,7 @@ import {
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { act } from 'react-dom/test-utils';
-import DbSales from '../pages/dashboard/DbSales';
+import DbSales from '../pages/dashboard/dbSales';
 import { autoComplete } from '../app/specseat/_lib/autoComplete';
 // import AutoComplete from '@mui/material/Autocomplete';
 // import React from 'react';
@@ -16,7 +16,7 @@ jest.mock('axios');
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
-jest.mock('../app/specseat/_lib/autoComplete');
+jest.mock('../../app/specseat/_lib/autoComplete');
 
 describe('DbSales', () => {
   let mockRouterPush = jest.fn();
