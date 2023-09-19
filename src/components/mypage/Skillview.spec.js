@@ -1,5 +1,6 @@
 import { screen, render } from '@testing-library/react';
 import Skillview from './Skillview';
+import '../../mocks/mockResizeObserver'
 
 const equalObject = {
   developmentExperience: [

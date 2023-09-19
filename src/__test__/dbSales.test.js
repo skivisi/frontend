@@ -16,7 +16,7 @@ jest.mock('axios');
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
-jest.mock('../../app/specseat/_lib/autoComplete');
+jest.mock('../app/specseat/_lib/autoComplete');
 
 describe('DbSales', () => {
   let mockRouterPush = jest.fn();

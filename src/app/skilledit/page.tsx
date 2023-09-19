@@ -101,7 +101,7 @@ const skillEdit = () => {
         abilities: defaultAbilities,
       }));
     }
-  }, [defaultAbilities, defaultSkillPoint, skill, skillPoint, specialAbilities]);
+  }, []);
 
   // 特有スキル編集
   const handleChangeInherent = (
