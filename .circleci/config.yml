@@ -1,3 +1,5 @@
+# 1,　条件分岐 ブランチ・テスト後通知
+# 2, キャッシュ戦略
 version: 2.1
 orbs:
   slack: circleci/slack@4.12.5
@@ -18,16 +20,15 @@ jobs:
       - run:
           command: npm run build
           name: run App build
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
   notify:
     docker:
       - image: 'cimg/base:stable'
     steps:
       - slack/notify:
-          event: fail
-          template: basic_fail_1
-      - slack/notify:
           event: pass
-          mentions: 'flamberge1191'
           template: success_tagged_deploy_1
 workflows:
   pipeline:
@@ -35,3 +36,5 @@ workflows:
       - lint_and_unit_test
       - notify:
           context: slack-secrets
+          requires:
+            - lint_and_unit_test
