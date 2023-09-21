@@ -3,17 +3,21 @@ import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 
 const Header = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(['userId','affiliation','adminId']);
+  const [cookies, setCookie, removeCookie] = useCookies([
+    'userId',
+    'affiliation',
+    'adminId',
+  ]);
 
   const handleLogout = () => {
     if (cookies.userId) {
-      removeCookie('userId',{ path: '/' });
+      removeCookie('userId', { path: '/' });
     }
     if (cookies.affiliation) {
-      removeCookie('affiliation',{ path: '/' });
+      removeCookie('affiliation', { path: '/' });
     }
     if (cookies.adminId) {
-      removeCookie('adminId',{ path: '/' });
+      removeCookie('adminId', { path: '/' });
     }
   };
 
@@ -37,7 +41,10 @@ const Header = () => {
     <div>
       <header className="text-gray-600 body-font bg-gradient-to-tr from-blue-600 to-sky-300 shadow-lg">
         <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-          <a  onClick={handleDash} className="cursor-pointer flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+          <a
+            onClick={handleDash}
+            className="cursor-pointer flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
+          >
             <span className="text-3xl text-white font-bold">
               パワプロ
             </span>

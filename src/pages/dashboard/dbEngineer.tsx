@@ -37,7 +37,7 @@ const DbEngineer = ({ requestData }: { requestData: Request[] }) => {
   };
 
   const request = requestData;
-  console.log(request)
+  console.log(request);
 
   // 申請結果通知の件数を計算
   const approvedCount = (request || []).filter(

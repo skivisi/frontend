@@ -32,7 +32,7 @@ const DevelopmentExperiences = ({
     <div key={index} className="mt-6">
       {handleRemove && (
         <button
-        data-testid="remove-button"
+          data-testid="remove-button"
           onClick={(e) =>
             handleRemove(e, 'developmentExperiences', index)
           }
@@ -41,11 +41,14 @@ const DevelopmentExperiences = ({
         </button>
       )}
       <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
-        <label className="bg-slate-200 block w-1/4 p-1" htmlFor="startYear">
+        <label
+          className="bg-slate-200 block w-1/4 p-1"
+          htmlFor="startYear"
+        >
           開始年
         </label>
         <select
-        data-testid="startYear-input"
+          data-testid="startYear-input"
           name=""
           id="startYear"
           className={`${styles.focus} border-2 border-transparent w-1/4 text-center`}
@@ -65,11 +68,14 @@ const DevelopmentExperiences = ({
         >
           <OptionYears />
         </select>
-        <label className="bg-slate-200 block w-1/4 p-1" htmlFor="startDate">
+        <label
+          className="bg-slate-200 block w-1/4 p-1"
+          htmlFor="startDate"
+        >
           開始月
         </label>
         <select
-        data-testid="startDate-input"
+          data-testid="startDate-input"
           name=""
           id="startDate"
           className={`${styles.focus} border-2 border-transparent w-1/4 text-center`}
@@ -91,14 +97,17 @@ const DevelopmentExperiences = ({
         </select>
       </div>
       <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
-        <label className="bg-slate-200 block w-1/4 p-1" htmlFor="duration">
+        <label
+          className="bg-slate-200 block w-1/4 p-1"
+          htmlFor="duration"
+        >
           期間
         </label>
         <input
-        data-testid="duration-input"
+          data-testid="duration-input"
           className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
           type="text"
-          id='duration'
+          id="duration"
           value={
             developmentExperience.duration
               ? developmentExperience.duration
@@ -115,14 +124,17 @@ const DevelopmentExperiences = ({
         />
       </div>
       <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
-        <label className="bg-slate-200 block w-1/4 p-1" htmlFor="assignedTask">
+        <label
+          className="bg-slate-200 block w-1/4 p-1"
+          htmlFor="assignedTask"
+        >
           担当役割
         </label>
         <input
-         data-testid="assignedTask-input"
+          data-testid="assignedTask-input"
           className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
           type="text"
-          id='assignedTask'
+          id="assignedTask"
           value={
             developmentExperience.assignedTask
               ? developmentExperience.assignedTask
@@ -139,14 +151,17 @@ const DevelopmentExperiences = ({
         />
       </div>
       <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
-        <label className="bg-slate-200 block w-1/4 p-1" htmlFor="teamSize">
+        <label
+          className="bg-slate-200 block w-1/4 p-1"
+          htmlFor="teamSize"
+        >
           チーム人数
         </label>
         <input
-        data-testid="teamSize-input"
+          data-testid="teamSize-input"
           className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
           type="text"
-          id='teamSize'
+          id="teamSize"
           value={
             developmentExperience.teamSize
               ? developmentExperience.teamSize
@@ -163,14 +178,17 @@ const DevelopmentExperiences = ({
         />
       </div>
       <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
-        <label className="bg-slate-200 block w-1/4 p-1" htmlFor="totalProjectHeadcount">
+        <label
+          className="bg-slate-200 block w-1/4 p-1"
+          htmlFor="totalProjectHeadcount"
+        >
           PJ全体人数
         </label>
         <input
-        data-testid="totalProjectHeadcount-input"
+          data-testid="totalProjectHeadcount-input"
           className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
           type="text"
-          id='totalProjectHeadcount'
+          id="totalProjectHeadcount"
           value={
             developmentExperience.totalProjectHeadcount
               ? developmentExperience.totalProjectHeadcount
@@ -187,14 +205,17 @@ const DevelopmentExperiences = ({
         />
       </div>
       <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
-        <label className="bg-slate-200 block w-1/4 p-1" htmlFor="projectName">
+        <label
+          className="bg-slate-200 block w-1/4 p-1"
+          htmlFor="projectName"
+        >
           プロジェクト名
         </label>
         <input
-        data-testid="projectName-input"
+          data-testid="projectName-input"
           className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
           type="text"
-          id='projectName'
+          id="projectName"
           value={
             developmentExperience.projectName
               ? developmentExperience.projectName
@@ -211,7 +232,10 @@ const DevelopmentExperiences = ({
         />
       </div>
       <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
-        <label className="bg-slate-200 block w-1/4 p-1" htmlFor="environments">
+        <label
+          className="bg-slate-200 block w-1/4 p-1"
+          htmlFor="environments"
+        >
           動作環境
         </label>
         {autocomplete.os && (
@@ -230,7 +254,10 @@ const DevelopmentExperiences = ({
         )}
       </div>
       <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
-        <label className="bg-slate-200 block w-1/4 p-1" htmlFor="programmingLanguages">
+        <label
+          className="bg-slate-200 block w-1/4 p-1"
+          htmlFor="programmingLanguages"
+        >
           言語
         </label>
         {autocomplete.lang && (
@@ -249,7 +276,10 @@ const DevelopmentExperiences = ({
         )}
       </div>
       <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
-        <label className="bg-slate-200 block w-1/4 p-1" htmlFor="frameworks">
+        <label
+          className="bg-slate-200 block w-1/4 p-1"
+          htmlFor="frameworks"
+        >
           フレームワーク
         </label>
         {autocomplete.framework && (
@@ -268,7 +298,10 @@ const DevelopmentExperiences = ({
         )}
       </div>
       <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
-        <label className="bg-slate-200 block w-1/4 p-1" htmlFor="tools">
+        <label
+          className="bg-slate-200 block w-1/4 p-1"
+          htmlFor="tools"
+        >
           ツール･その他
         </label>
         {autocomplete.tool && (
@@ -287,11 +320,14 @@ const DevelopmentExperiences = ({
         )}
       </div>
       <div className="flex-row w-full flex border-2 border-slate-300 shadow-md">
-        <label className="bg-slate-200 block w-1/4 p-1" htmlFor="jobDuties">
+        <label
+          className="bg-slate-200 block w-1/4 p-1"
+          htmlFor="jobDuties"
+        >
           業務内容
         </label>
         <textarea
-        data-testid="jobDuties-input"
+          data-testid="jobDuties-input"
           name=""
           id="jobDuties"
           className={`${styles.focus} border-2 border-transparent p-2 w-3/4`}
@@ -319,10 +355,10 @@ const DevelopmentExperiences = ({
           アーキテクチャ
         </label>
         <input
-        data-testid="img-input"
+          data-testid="img-input"
           className="block mt-1 ml-2"
           type="file"
-          id='img'
+          id="img"
           accept=".png, .jpeg, .jpg"
           onChange={(e) =>
             handleValueChange(

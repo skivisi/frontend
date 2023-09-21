@@ -80,9 +80,15 @@ const skillEdit = () => {
   console.log(skills);
 
   // エラーメッセージのステートをそれぞれ作成
-  const [skillNameError, setSkillNameError] = useState<string | null>(null);
-  const [skillDescError, setSkillDescError] = useState<string | null>(null);
-  const [skillPointsError, setSkillPointsError] = useState<string | null>(null);
+  const [skillNameError, setSkillNameError] = useState<string | null>(
+    null
+  );
+  const [skillDescError, setSkillDescError] = useState<string | null>(
+    null
+  );
+  const [skillPointsError, setSkillPointsError] = useState<
+    string | null
+  >(null);
 
   useEffect(() => {
     setSkills((p: SkillsData) => ({
@@ -147,7 +153,6 @@ const skillEdit = () => {
     });
   };
 
-
   // 編集内容の送信
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -155,42 +160,44 @@ const skillEdit = () => {
     let hasValidationError = false;
 
     // 特有スキルのタイトルの入力チェック
-  if (!skills.skill?.InherentName) {
-    setSkillNameError('特有スキルのタイトルは必須です。');
-    hasValidationError = true;
-  } else {
-    setSkillNameError(null);
-  }
-  console.log(skillNameError);
-  //　特有スキルの内容の入力チェック
-  if (!skills.skill?.InherentDescription) {
-    setSkillDescError('特有スキルの内容は必須です。');
-    hasValidationError = true;
-  } else {
-    setSkillDescError(null);
-  }
+    if (!skills.skill?.InherentName) {
+      setSkillNameError('特有スキルのタイトルは必須です。');
+      hasValidationError = true;
+    } else {
+      setSkillNameError(null);
+    }
+    console.log(skillNameError);
+    //　特有スキルの内容の入力チェック
+    if (!skills.skill?.InherentDescription) {
+      setSkillDescError('特有スキルの内容は必須です。');
+      hasValidationError = true;
+    } else {
+      setSkillDescError(null);
+    }
 
-  const skillPoints = [
-    skills.skillPoint?.FR,
-    skills.skillPoint?.BK,
-    skills.skillPoint?.DB,
-    skills.skillPoint?.SBR,
-    skills.skillPoint?.AR,
-    skills.skillPoint?.TS,
-    skills.skillPoint?.COM
-  ];
-  // スキルポイントのバリデーションチェック
-  const anyEmptySkillPoints = skillPoints.some(point => point === null || point === undefined);
-  if (anyEmptySkillPoints) {
-    setSkillPointsError('全てのスキルポイントを入力してください。');
-    hasValidationError = true;
-  } else {
-    setSkillPointsError(null);
-  }
-   // バリデーションエラーがある場合はここで終了
-   if (hasValidationError) {
-    return;
-  };
+    const skillPoints = [
+      skills.skillPoint?.FR,
+      skills.skillPoint?.BK,
+      skills.skillPoint?.DB,
+      skills.skillPoint?.SBR,
+      skills.skillPoint?.AR,
+      skills.skillPoint?.TS,
+      skills.skillPoint?.COM,
+    ];
+    // スキルポイントのバリデーションチェック
+    const anyEmptySkillPoints = skillPoints.some(
+      (point) => point === null || point === undefined
+    );
+    if (anyEmptySkillPoints) {
+      setSkillPointsError('全てのスキルポイントを入力してください。');
+      hasValidationError = true;
+    } else {
+      setSkillPointsError(null);
+    }
+    // バリデーションエラーがある場合はここで終了
+    if (hasValidationError) {
+      return;
+    }
 
     const formData = {
       InherentName: skills.skill?.InherentName,
@@ -203,7 +210,7 @@ const skillEdit = () => {
       TS: skills.skillPoint?.TS,
       COM: skills.skillPoint?.COM,
       abilities: skills.abilities,
-  };
+    };
 
     try {
       if (typeof skill === 'undefined') {
@@ -211,7 +218,7 @@ const skillEdit = () => {
           `${process.env.NEXT_PUBLIC_API_URL}/skill/postSkillData/${userId}`,
           formData
         );
-      } else{
+      } else {
         await axios.put(
           `${process.env.NEXT_PUBLIC_API_URL}/skill/update/${userId}`,
           formData
@@ -277,7 +284,11 @@ const skillEdit = () => {
             setSkills={setSkills}
           />
         </div>
-        {skillPointsError && <div className="bg-red-200 text-red-700 p-3 mb-4 rounded">{skillPointsError}</div>}
+        {skillPointsError && (
+          <div className="bg-red-200 text-red-700 p-3 mb-4 rounded">
+            {skillPointsError}
+          </div>
+        )}
       </section>
 
       {/* 特有スキル */}
@@ -306,7 +317,11 @@ const skillEdit = () => {
             }
           />
         </div>
-        {skillNameError && <div className="bg-red-200 text-red-700 p-3 mb-4 rounded">{skillNameError}</div>}
+        {skillNameError && (
+          <div className="bg-red-200 text-red-700 p-3 mb-4 rounded">
+            {skillNameError}
+          </div>
+        )}
         <div className="w-full flex border-2 border-slate-300 shadow-md">
           <label
             className="block w-1/4 p-1 bg-teal-800 text-teal-50"
@@ -331,7 +346,11 @@ const skillEdit = () => {
             }
           ></textarea>
         </div>
-        {skillDescError && <div className="bg-red-200 text-red-700 p-3 mb-4 rounded">{skillDescError}</div>}
+        {skillDescError && (
+          <div className="bg-red-200 text-red-700 p-3 mb-4 rounded">
+            {skillDescError}
+          </div>
+        )}
       </section>
 
       {/* スペシャルアビリティ */}

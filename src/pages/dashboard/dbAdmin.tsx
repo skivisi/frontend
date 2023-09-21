@@ -5,7 +5,7 @@ import useSWR from 'swr';
 import { Request } from '../../../types/types';
 
 // 管理者DB
- export const fetcher = (
+export const fetcher = (
   resource: RequestInfo,
   init: RequestInit | undefined
 ) => fetch(resource, init).then((res) => res.json());

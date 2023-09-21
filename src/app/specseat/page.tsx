@@ -8,11 +8,7 @@ import { userFetch } from '../mypage/_lib/userFetch';
 import { autoComplete } from './_lib/autoComplete';
 import { recreateFiles } from './_lib/recreateFiles';
 import RequestButton from './components/RequestButton';
-import {
-  DefaultUser,
-  InputData,
-  Qualification,
-} from '../types/t';
+import { DefaultUser, InputData, Qualification } from '../types/t';
 import AddFormButton from './components/AddFormButton';
 import SellingPoints from './components/SellingPoints';
 import Portfolios from './components/Portfolios';
@@ -29,7 +25,7 @@ function handleBlur() {
 function Home() {
   const userData = userFetch(false, 0);
   const autocomplete = autoComplete();
-  console.log(autocomplete)
+  console.log(autocomplete);
 
   // 既存データ
   const [defaultData, setDefaultData] = useState<DefaultUser>({
@@ -96,8 +92,10 @@ function Home() {
         setRenderFiles((prevFiles: any) => [...prevFiles, null]);
       }
     }
-  }, [defaultData?.developmentExperiences?.length, userData.developmentExperience]);
-
+  }, [
+    defaultData?.developmentExperiences?.length,
+    userData.developmentExperience,
+  ]);
 
   // qualification日付の形式変換
   let tentative: Qualification[] = [];
@@ -209,8 +207,8 @@ function Home() {
     qualifications: { credential: '', acquisitionDate: '' },
     previousWorks: { industry: '', occupation: '', JobDuties: '' },
     developmentExperiences: {
-      startYear: "2010",
-      startDate: "1",
+      startYear: '2010',
+      startDate: '1',
       duration: '',
       assignedTask: '',
       teamSize: '',
