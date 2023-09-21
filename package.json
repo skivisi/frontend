@@ -12,7 +12,6 @@
     "format": "prettier --write --ignore-path .gitignore './**/*.{ts,tsx,json}'",
     "deploy": "vercel --token $VERCEL_TOKEN --confirm",
     "deploy-p": "vercel --token $VERCEL_TOKEN --prod --confirm"
-
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

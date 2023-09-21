@@ -36,8 +36,8 @@ type Qualification = {
   credential?: string;
   qualificationId?: number;
   specId?: number;
-  year?: string
-  month?: string
+  year?: string;
+  month?: string;
 };
 
 type SellingPoint = {

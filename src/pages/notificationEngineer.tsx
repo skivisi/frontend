@@ -106,7 +106,9 @@ const NotificationEngineer = () => {
         </div>
       </div>
     ) : (
-      <div className="ml-24 mt-10 text-2xl text-sky-900 font-bold">通知はないよ！</div>
+      <div className="ml-24 mt-10 text-2xl text-sky-900 font-bold">
+        通知はないよ！
+      </div>
     )
   );
 

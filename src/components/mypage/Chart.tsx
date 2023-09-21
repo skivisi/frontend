@@ -21,7 +21,7 @@ ChartJS.register(
   Legend
 );
 
-export const Chart = ({ skill }: { skill: SkillPoints}) => {
+export const Chart = ({ skill }: { skill: SkillPoints }) => {
   const chartData: ChartData<'radar'> = {
     labels: [
       'フロントエンド',

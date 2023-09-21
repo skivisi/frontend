@@ -6,7 +6,7 @@ function Portfolios({
   index,
   handleRemove, // 追加フォーム削除ボタンがある場合
   handleChange, // 追加フォームsetState関数
-  handleEdit,   // 既存データsetState関数
+  handleEdit, // 既存データsetState関数
 }: {
   portfolio: any;
   index: number;
@@ -16,13 +16,9 @@ function Portfolios({
 }) {
   const handleValueChange = handleEdit ? handleEdit : handleChange;
   return (
-    <div key={index} className={handleRemove && "mt-3"}>
+    <div key={index} className={handleRemove && 'mt-3'}>
       {handleRemove && (
-        <button
-          onClick={(e) =>
-            handleRemove(e, 'portfolios', index)
-          }
-        >
+        <button onClick={(e) => handleRemove(e, 'portfolios', index)}>
           <HighlightOffIcon />
         </button>
       )}

@@ -28,7 +28,7 @@ export async function POST(req: Request) {
 
   const newSpecDetail = {
     skillSummaries: specDetail.skillSummaries,
-    developmentExperiences:specDetail.developmentExperiences
+    developmentExperiences: specDetail.developmentExperiences,
   };
   await axios.post(
     `${process.env.API_SECRET_URL}/spec/autoCalibration`,

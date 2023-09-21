@@ -47,7 +47,7 @@ const DbSales = () => {
   const [skillSummary, setSkillSummary] = useState<string[]>([]);
   const [skillUpdate, setSkillUpdate] = useState<string[]>([]);
   const [validationError, setValidationError] = useState<string>('');
-  console.log(skillUpdate)
+  console.log(skillUpdate);
   const handleAffiliationChange = (
     event: ChangeEvent<HTMLInputElement>
   ) => {

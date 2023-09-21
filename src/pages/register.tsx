@@ -18,14 +18,25 @@ const Register = () => {
     string | null
   >(null);
   const [password, setPassword] = useState<string | null>(null);
-  const [confirmPassword, setConfirmPassword] = useState<string | null>(null);
+  const [confirmPassword, setConfirmPassword] = useState<
+    string | null
+  >(null);
   const [userCount, setUserCount] = useState(0);
   const [emailError, setEmailError] = useState<string | null>(null);
-  const [employeeNumberError, setEmployeeNumberError] = useState<string | null>(null);
-  const [affiliationError, setAffiliationError] = useState<string | null>(null);
-  const [businessSituationError, setBusinessSituationError] = useState<string | null>(null);
-  const [passwordError, setPasswordError] = useState<string | null>(null);
-  const [confirmPasswordError, setConfirmPasswordError] = useState<string | null>(null);
+  const [employeeNumberError, setEmployeeNumberError] = useState<
+    string | null
+  >(null);
+  const [affiliationError, setAffiliationError] = useState<
+    string | null
+  >(null);
+  const [businessSituationError, setBusinessSituationError] =
+    useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(
+    null
+  );
+  const [confirmPasswordError, setConfirmPasswordError] = useState<
+    string | null
+  >(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>

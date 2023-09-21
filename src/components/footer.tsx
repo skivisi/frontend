@@ -1,5 +1,3 @@
-
-
 const Footer = () => {
   return (
     <footer className="text-gray-600 body-font mt-32 body-font bg-gradient-to-br from-blue-600 to-sky-300">
