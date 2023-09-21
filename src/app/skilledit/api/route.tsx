@@ -1,13 +1,11 @@
 import { NextResponse } from 'next/server';
 
-
 export async function POST(req: Request) {
-    const  skills = await req.json();
-    console.log(skills.skill)
-    console.log(skills.skillPoint)
-  return NextResponse.json({ message:"ok" });
+  const skills = await req.json();
+  console.log(skills.skill);
+  console.log(skills.skillPoint);
+  return NextResponse.json({ message: 'ok' });
 }
-
 
 // postの形
 // {

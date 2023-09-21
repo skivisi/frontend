@@ -3,7 +3,7 @@ orbs:
   slack: circleci/slack@4.12.5
   node: circleci/node@5.1.0
 jobs:
-  unit-test: 
+  unit-test:
     executor: node/default # use the default executor defined within the orb
     steps:
       - checkout
@@ -23,7 +23,7 @@ jobs:
           event: pass
           mentions: 'flamberge1191'
           template: success_tagged_deploy_1
-          
+
 workflows:
   test:
     jobs:

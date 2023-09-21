@@ -63,9 +63,7 @@ const Login = () => {
             path: '/',
             secure: true,
           });
-          if (
-            affiliation === '営業'
-          ) {
+          if (affiliation === '営業') {
             window.location.href = '/dashboard/dbSales';
           } else {
             window.location.href = '/dashboard/dbEngineer';

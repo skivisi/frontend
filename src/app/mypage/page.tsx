@@ -8,7 +8,6 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { userFetch } from './_lib/userFetch';
 
-
 const Page = () => {
   // URLのクエリパラメータから取得したuserIdを保持するステート
   const [userId, setUserId] = useState<string | null>(null);

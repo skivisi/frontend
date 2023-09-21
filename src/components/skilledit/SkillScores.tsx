@@ -11,12 +11,11 @@ const SkillScores = ({
   skillPoint: any;
   setSkills: any;
 }) => {
-
   // ラジオボタングループごとに一意のname属性を指定
   const className = `${skillTag}_scores`;
   const inputName = `${skillTag}_scores`;
 
-// スコア編集
+  // スコア編集
   const handleChange = (event: any) => {
     setSkills((prevSkills: any) => ({
       ...prevSkills,

@@ -14,7 +14,9 @@ interface ErrorResponse {
 const LoginAdmin = () => {
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(
+    null
+  );
   const [cookie, setCookie] = useCookies();
 
   const handleSubmit = async (
@@ -34,19 +36,24 @@ const LoginAdmin = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/admin/login`, loginAdmin
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/admin/login`,
+        loginAdmin
       );
 
       let userData = response.data;
       let id = userData.adminId;
       setCookie('adminId', id, { path: '/', secure: true });
       window.location.href = '/dashboard/dbAdmin';
-    } catch (error:any) {
+    } catch (error: any) {
       const axiosError = error as AxiosError<ErrorResponse>;
-      if (axiosError.response && axiosError.response.data && axiosError.response.data.error) {
+      if (
+        axiosError.response &&
+        axiosError.response.data &&
+        axiosError.response.data.error
+      ) {
         setErrorMessage(axiosError.response.data.error);
       } else {
-      console.log(error);
+        console.log(error);
       }
     }
   };
@@ -116,9 +123,10 @@ const LoginAdmin = () => {
                 ></label>
                 <div className="text-sm"></div>
               </div>
-              {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
+              {errorMessage && (
+                <p className="text-red-500 text-sm">{errorMessage}</p>
+              )}
             </div>
-
 
             <div>
               <button

@@ -8,7 +8,7 @@ function QualificationForm({
   index,
   handleRemove, // 追加フォーム削除ボタンがある場合
   handleChange, // 追加フォームsetState関数
-  handleEdit,   // 既存データsetState関数
+  handleEdit, // 既存データsetState関数
 }: {
   qualification: any;
   index: number;
@@ -17,20 +17,20 @@ function QualificationForm({
   handleEdit?: any;
 }) {
   const handleValueChange = handleEdit ? handleEdit : handleChange;
-    // 描画時日時分解
-    function decodeYearAndMonth(value: string, setIndex: string) {
-      const yearAndMonth = value.split('年'); // ["2022", "10月"]
-      const year = yearAndMonth[0]; // "2022"
-      const month = yearAndMonth[1].replace('月', ''); // "10"
-      if (setIndex == 'year') {
-        return year;
-      } else {
-        return month;
-      }
+  // 描画時日時分解
+  function decodeYearAndMonth(value: string, setIndex: string) {
+    const yearAndMonth = value.split('年'); // ["2022", "10月"]
+    const year = yearAndMonth[0]; // "2022"
+    const month = yearAndMonth[1].replace('月', ''); // "10"
+    if (setIndex == 'year') {
+      return year;
+    } else {
+      return month;
     }
+  }
 
   return (
-    <div key={index} className={handleRemove && "mt-3"}>
+    <div key={index} className={handleRemove && 'mt-3'}>
       {handleRemove && (
         <button
           onClick={(e) => handleRemove(e, 'qualifications', index)}
@@ -39,7 +39,10 @@ function QualificationForm({
         </button>
       )}
       <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
-        <label className="bg-slate-200 block w-1/4 p-1" htmlFor="year">
+        <label
+          className="bg-slate-200 block w-1/4 p-1"
+          htmlFor="year"
+        >
           取得年
         </label>
         <select
@@ -60,7 +63,10 @@ function QualificationForm({
         >
           <OptionYears />
         </select>
-        <label className="bg-slate-200 block w-1/4 p-1" htmlFor="month">
+        <label
+          className="bg-slate-200 block w-1/4 p-1"
+          htmlFor="month"
+        >
           取得月
         </label>
         <select
@@ -83,13 +89,16 @@ function QualificationForm({
         </select>
       </div>
       <div className="w-full flex flex-row border-2 border-slate-300 shadow-md">
-        <label className="bg-slate-200 block w-1/4 p-1" htmlFor="credential">
+        <label
+          className="bg-slate-200 block w-1/4 p-1"
+          htmlFor="credential"
+        >
           資格
         </label>
         <input
           className={`${styles.focus} border-2 border-transparent block w-3/4 p-2`}
           type="text"
-          id='credential'
+          id="credential"
           value={qualification.credential || ''}
           onChange={(e) =>
             handleValueChange(
